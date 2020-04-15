@@ -16,5 +16,17 @@ public class RequestParam {
             "generalpvp_bullethit",
             "generalpvp_bulletfired"
     };
+
+    public static final String[] OPERATORS = {
+            "operatorpvp_timeplayed",
+            "operatorpvp_roundwon",
+            "operatorpvp_roundlost",
+            "operatorpvp_kills",
+            "operatorpvp_death",
+            "operatorpvp_headshot",
+            "operatorpvp_mellkills",
+            "operatorpvp_totalxp"
+    };
+
 }
 

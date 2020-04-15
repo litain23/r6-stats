@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 public class API {
     private static final String RANK_URL_TEMPLATE = "https://public-ubiservices.ubi.com/v1/spaces/%s/sandboxes/%s/r6karma/players?board_id=pvp_ranked&profile_ids=%s&region_id=%s&season_id=%s";
@@ -19,6 +21,29 @@ public class API {
 
     public API(AuthToken token) {
         this.authToken = token;
+    }
+
+    public List<Operators> getOperatorsStat(String platform, String id) {
+        Profile profile = getProfile(platform, id);
+        String operatorsUrl = String.format(GENERAL_URL_TEMPLATE,
+                Platform.platformToSpaceId(platform),
+                Platform.platformToPlatformId(platform),
+                profile.getUserId(),
+                String.join(",", RequestParam.OPERATORS)
+        );
+
+        String responseOperator = getDataUsingApi(operatorsUrl, authToken);
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(responseOperator, JsonObject.class);
+        jsonObject = jsonObject.getAsJsonObject("results");
+        String operatorStr = jsonObject.get(profile.getUserId()).toString();
+
+        System.out.println(operatorStr);
+        Map<String, Integer> operatorStat = gson.fromJson(operatorStr, Map.class);
+        for(String key : operatorStat.keySet()) {
+            System.out.println(String.format("%s : %s", key, operatorStat.get(key)));
+        }
+        return null;
     }
 
     public GeneralPvp getGenernalPvp(String platform, String id) {
@@ -36,7 +61,6 @@ public class API {
         jsonObject = jsonObject.getAsJsonObject("results");
         String generalPvpStr = jsonObject.get(findIdProfile.getUserId()).toString();
         return gson.fromJson(generalPvpStr, GeneralPvp.class);
-
     }
 
     public Profile getProfile(String platform, String id) {
