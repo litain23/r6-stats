@@ -11,6 +11,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class API {
     private static final String RANK_URL_TEMPLATE = "https://public-ubiservices.ubi.com/v1/spaces/%s/sandboxes/%s/r6karma/players?board_id=pvp_ranked&profile_ids=%s&region_id=%s&season_id=%s";
@@ -38,12 +39,48 @@ public class API {
         jsonObject = jsonObject.getAsJsonObject("results");
         String operatorStr = jsonObject.get(profile.getUserId()).toString();
 
-        System.out.println(operatorStr);
-        Map<String, Integer> operatorStat = gson.fromJson(operatorStr, Map.class);
-        for(String key : operatorStat.keySet()) {
-            System.out.println(String.format("%s : %s", key, operatorStat.get(key)));
-        }
-        return null;
+        Map<String, Double> operatorStat = gson.fromJson(operatorStr, Map.class);
+
+        List<Operators> operatorsList = operatorStat
+                .keySet()
+                .stream()
+                .collect(Collectors.groupingBy(key -> {
+                    String[] splitKey = key.split(":");
+                    String index = splitKey[1] + ":" + splitKey[2];
+                    return index;
+                }, Collectors.toMap(key -> {
+                    String prefix = "operatorpvp_";
+                    String changeKey = key.substring(prefix.length());
+                    return changeKey.split(":")[0];
+                }, key -> operatorStat.get(key))))
+                .entrySet()
+                .stream()
+                .filter(entry -> {
+                    String index = entry.getKey();
+                    return OperatorIndex.getIndexToOperator().containsKey(index);
+                })
+                .map(entry -> {
+                    Map<String, Double> stat = entry.getValue();
+                    Operators op = Operators.builder()
+                            .death(stat.getOrDefault("death", 0.0).intValue())
+                            .roundlost(stat.getOrDefault("roundlost", 0.0).intValue())
+                            .roundwon(stat.getOrDefault("roundwon", 0.0).intValue())
+                            .timeplayed(stat.getOrDefault("timeplayed", 0.0).intValue())
+                            .totalxp(stat.getOrDefault("totalxp", 0.0).intValue())
+                            .meleekills(stat.getOrDefault("meleekills", 0.0).intValue())
+                            .headshot(stat.getOrDefault("headshot", 0.0).intValue())
+                            .kills(stat.getOrDefault("kills", 0.0).intValue())
+                            .index(entry.getKey())
+                            .name(OperatorIndex.getIndexToOperator().get(entry.getKey()))
+                            .uniqueStatisticPvp(stat.getOrDefault("uniqueStatisticPvp", 0.0).intValue())
+                            .build();
+
+                    return op;
+                })
+                .collect(Collectors.toList());
+        System.out.println(operatorsList.size());
+
+        return operatorsList;
     }
 
     public GeneralPvp getGenernalPvp(String platform, String id) {

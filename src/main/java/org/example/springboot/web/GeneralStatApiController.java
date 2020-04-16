@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class GeneralApiController {
+public class GeneralStatApiController {
 
     @GetMapping("/api/v1/general/{platform}/{id}")
     public GeneralResponseDto findById(@PathVariable String platform,
@@ -21,5 +21,4 @@ public class GeneralApiController {
         GeneralPvp pvp = api.getGenernalPvp(platform,id);
         return new GeneralResponseDto(pvp);
     }
-
 }

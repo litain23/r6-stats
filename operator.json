@@ -1,0 +1,1670 @@
+{
+  "smoke": {
+    "id": "smoke",
+    "category": "def",
+    "name": {
+      "oasisId": "62253"
+    },
+    "ctu": {
+      "oasisId": "62015"
+    },
+    "index": "2:1",
+    "figure": {
+      "small": "assets/images/small-smoke.2726e308.png",
+      "large": "assets/images/large-smoke.1bf90066.png"
+    },
+    "mask": "assets/images/mask-smoke.c8449168.png",
+    "badge": "assets/images/badge-smoke.874e9888.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_smoke_poisongaskill:2:1",
+        "label": {
+          "oasisId": "194660"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_smoke_poisongaskill:2:1",
+        "label": {
+          "oasisId": "194660"
+        }
+      }
+    }
+  },
+  "mute": {
+    "id": "mute",
+    "category": "def",
+    "name": {
+      "oasisId": "62252"
+    },
+    "ctu": {
+      "oasisId": "62015"
+    },
+    "index": "3:1",
+    "figure": {
+      "small": "assets/images/small-mute.96a65665.png",
+      "large": "assets/images/large-mute.ae51429f.png"
+    },
+    "mask": "assets/images/mask-mute.d9917f85.png",
+    "badge": "assets/images/badge-mute.3e4f2b01.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_mute_gadgetjammed:3:1",
+        "label": {
+          "oasisId": "194664"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_mute_gadgetjammed:3:1",
+        "label": {
+          "oasisId": "194664"
+        }
+      }
+    }
+  },
+  "sledge": {
+    "id": "sledge",
+    "category": "atk",
+    "name": {
+      "oasisId": "62245"
+    },
+    "ctu": {
+      "oasisId": "62015"
+    },
+    "index": "4:1",
+    "figure": {
+      "small": "assets/images/small-sledge.9ade04d3.png",
+      "large": "assets/images/large-sledge.832f6c6b.png"
+    },
+    "mask": "assets/images/mask-sledge.08fa548b.png",
+    "badge": "assets/images/badge-sledge.00141f92.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_sledge_hammerhole:4:1",
+        "label": {
+          "oasisId": "194672"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_sledge_hammerhole:4:1",
+        "label": {
+          "oasisId": "194672"
+        }
+      }
+    }
+  },
+  "thatcher": {
+    "id": "thatcher",
+    "category": "atk",
+    "name": {
+      "oasisId": "65143"
+    },
+    "ctu": {
+      "oasisId": "62015"
+    },
+    "index": "5:1",
+    "figure": {
+      "small": "assets/images/small-thatcher.df2b7de4.png",
+      "large": "assets/images/large-thatcher.73132fcd.png"
+    },
+    "mask": "assets/images/mask-thatcher.b7c658b3.png",
+    "badge": "assets/images/badge-thatcher.b1cac8e7.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_thatcher_gadgetdestroywithemp:5:1",
+        "label": {
+          "oasisId": "194673"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_thatcher_gadgetdestroywithemp:5:1",
+        "label": {
+          "oasisId": "194673"
+        }
+      }
+    }
+  },
+  "castle": {
+    "id": "castle",
+    "category": "def",
+    "name": {
+      "oasisId": "62248"
+    },
+    "ctu": {
+      "oasisId": "62183"
+    },
+    "index": "2:2",
+    "figure": {
+      "small": "assets/images/small-castle.cd963832.png",
+      "large": "assets/images/large-castle.6a1677f5.png"
+    },
+    "mask": "assets/images/mask-castle.08abe353.png",
+    "badge": "assets/images/badge-castle.378f8f4e.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_castle_kevlarbarricadedeployed:2:2",
+        "label": {
+          "oasisId": "194663"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_castle_kevlarbarricadedeployed:2:2",
+        "label": {
+          "oasisId": "194663"
+        }
+      }
+    }
+  },
+  "ash": {
+    "id": "ash",
+    "category": "atk",
+    "name": {
+      "oasisId": "62246"
+    },
+    "ctu": {
+      "oasisId": "62183"
+    },
+    "index": "3:2",
+    "figure": {
+      "small": "assets/images/small-ash.692668cc.png",
+      "large": "assets/images/large-ash.9d28aebe.png"
+    },
+    "mask": "assets/images/mask-ash.ad5c86d0.png",
+    "badge": "assets/images/badge-ash.16913d82.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_ash_bonfirewallbreached:3:2",
+        "label": {
+          "oasisId": "194677"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_ash_bonfirewallbreached:3:2",
+        "label": {
+          "oasisId": "194677"
+        }
+      }
+    }
+  },
+  "pulse": {
+    "id": "pulse",
+    "category": "def",
+    "name": {
+      "oasisId": "62250"
+    },
+    "ctu": {
+      "oasisId": "62183"
+    },
+    "index": "4:2",
+    "figure": {
+      "small": "assets/images/small-pulse.927fa707.png",
+      "large": "assets/images/large-pulse.30ab3682.png"
+    },
+    "mask": "assets/images/mask-pulse.0b2985b7.png",
+    "badge": "assets/images/badge-pulse.9de627c5.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_pulse_heartbeatspot:4:2",
+        "label": {
+          "oasisId": "194665"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_pulse_heartbeatspot:4:2",
+        "label": {
+          "oasisId": "194665"
+        }
+      }
+    }
+  },
+  "thermite": {
+    "id": "thermite",
+    "category": "atk",
+    "name": {
+      "oasisId": "62247"
+    },
+    "ctu": {
+      "oasisId": "62183"
+    },
+    "index": "5:2",
+    "figure": {
+      "small": "assets/images/small-thermite.f9441d1f.png",
+      "large": "assets/images/large-thermite.e973bb04.png"
+    },
+    "mask": "assets/images/mask-thermite.a46a67f0.png",
+    "badge": "assets/images/badge-thermite.9010fa33.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_thermite_reinforcementbreached:5:2",
+        "label": {
+          "oasisId": "194681"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_thermite_reinforcementbreached:5:2",
+        "label": {
+          "oasisId": "194681"
+        }
+      }
+    }
+  },
+  "doc": {
+    "id": "doc",
+    "category": "def",
+    "name": {
+      "oasisId": "62251"
+    },
+    "ctu": {
+      "oasisId": "62016"
+    },
+    "index": "2:3",
+    "figure": {
+      "small": "assets/images/small-doc.2cc6664a.png",
+      "large": "assets/images/large-doc.0b0321eb.png"
+    },
+    "mask": "assets/images/mask-doc.951579fc.png",
+    "badge": "assets/images/badge-doc.29fe751b.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_doc_teammaterevive:2:3",
+        "label": {
+          "oasisId": "194666"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_doc_teammaterevive:2:3",
+        "label": {
+          "oasisId": "194666"
+        }
+      }
+    }
+  },
+  "rook": {
+    "id": "rook",
+    "category": "def",
+    "name": {
+      "oasisId": "62249"
+    },
+    "ctu": {
+      "oasisId": "62016"
+    },
+    "index": "3:3",
+    "figure": {
+      "small": "assets/images/small-rook.55b6bc4c.png",
+      "large": "assets/images/large-rook.eed2777a.png"
+    },
+    "mask": "assets/images/mask-rook.be9b0ac9.png",
+    "badge": "assets/images/badge-rook.eb954a4e.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_rook_armortakenteammate:3:3",
+        "label": {
+          "oasisId": "194667"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_rook_armortakenteammate:3:3",
+        "label": {
+          "oasisId": "194667"
+        }
+      }
+    }
+  },
+  "twitch": {
+    "id": "twitch",
+    "category": "atk",
+    "name": {
+      "oasisId": "65156"
+    },
+    "ctu": {
+      "oasisId": "62016"
+    },
+    "index": "4:3",
+    "figure": {
+      "small": "assets/images/small-twitch.0421265d.png",
+      "large": "assets/images/large-twitch.84ad765c.png"
+    },
+    "mask": "assets/images/mask-twitch.715147fc.png",
+    "badge": "assets/images/badge-twitch.83cbfa97.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_twitch_gadgetdestroybyshockdrone:4:3",
+        "label": {
+          "oasisId": "194686"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_twitch_gadgetdestroybyshockdrone:4:3",
+        "label": {
+          "oasisId": "194686"
+        }
+      }
+    }
+  },
+  "montagne": {
+    "id": "montagne",
+    "category": "atk",
+    "name": {
+      "oasisId": "65159"
+    },
+    "ctu": {
+      "oasisId": "62016"
+    },
+    "index": "5:3",
+    "figure": {
+      "small": "assets/images/small-montagne.0bc51336.png",
+      "large": "assets/images/large-montagne.d48591cc.png"
+    },
+    "mask": "assets/images/mask-montagne.b392c015.png",
+    "badge": "assets/images/badge-montagne.2078ee84.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_montagne_shieldblockdamage:5:3",
+        "label": {
+          "oasisId": "194688"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_montagne_shieldblockdamage:5:3",
+        "label": {
+          "oasisId": "194688"
+        }
+      }
+    }
+  },
+  "glaz": {
+    "id": "glaz",
+    "category": "atk",
+    "name": {
+      "oasisId": "62242"
+    },
+    "ctu": {
+      "oasisId": "62185"
+    },
+    "index": "2:4",
+    "figure": {
+      "small": "assets/images/small-glaz.a89bfa89.png",
+      "large": "assets/images/large-glaz.8cd96a16.png"
+    },
+    "mask": "assets/images/mask-glaz.f3a01dea.png",
+    "badge": "assets/images/badge-glaz.43dd3bdf.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_glaz_sniperkill:2:4",
+        "label": {
+          "oasisId": "194689"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_glaz_sniperkill:2:4",
+        "label": {
+          "oasisId": "194689"
+        }
+      }
+    }
+  },
+  "fuze": {
+    "id": "fuze",
+    "category": "atk",
+    "name": {
+      "oasisId": "65168"
+    },
+    "ctu": {
+      "oasisId": "62185"
+    },
+    "index": "3:4",
+    "figure": {
+      "small": "assets/images/small-fuze.279743fa.png",
+      "large": "assets/images/large-fuze.5f8fb3ba.png"
+    },
+    "mask": "assets/images/mask-fuze.090fe626.png",
+    "badge": "assets/images/badge-fuze.9e7e9222.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_fuze_clusterchargekill:3:4",
+        "label": {
+          "oasisId": "194691"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_fuze_clusterchargekill:3:4",
+        "label": {
+          "oasisId": "194691"
+        }
+      }
+    }
+  },
+  "kapkan": {
+    "id": "kapkan",
+    "category": "def",
+    "name": {
+      "oasisId": "65171"
+    },
+    "ctu": {
+      "oasisId": "62185"
+    },
+    "index": "4:4",
+    "figure": {
+      "small": "assets/images/small-kapkan.b796e606.png",
+      "large": "assets/images/large-kapkan.606a9fc0.png"
+    },
+    "mask": "assets/images/mask-kapkan.93f60641.png",
+    "badge": "assets/images/badge-kapkan.562d0701.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_kapkan_boobytrapkill:4:4",
+        "label": {
+          "oasisId": "194668"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_kapkan_boobytrapkill:4:4",
+        "label": {
+          "oasisId": "194668"
+        }
+      }
+    }
+  },
+  "tachanka": {
+    "id": "tachanka",
+    "category": "def",
+    "name": {
+      "oasisId": "65174"
+    },
+    "ctu": {
+      "oasisId": "62185"
+    },
+    "index": "5:4",
+    "figure": {
+      "small": "assets/images/small-tachanka.4c41f39c.png",
+      "large": "assets/images/large-tachanka.41caebce.png"
+    },
+    "mask": "assets/images/mask-tachanka.a613ee38.png",
+    "badge": "assets/images/badge-tachanka.ae7943f0.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_tachanka_turretkill:5:4",
+        "label": {
+          "oasisId": "194669"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_tachanka_turretkill:5:4",
+        "label": {
+          "oasisId": "194669"
+        }
+      }
+    }
+  },
+  "blitz": {
+    "id": "blitz",
+    "category": "atk",
+    "name": {
+      "oasisId": "62243"
+    },
+    "ctu": {
+      "oasisId": "62184"
+    },
+    "index": "2:5",
+    "figure": {
+      "small": "assets/images/small-blitz.0553bf11.png",
+      "large": "assets/images/large-blitz.2e74d4b8.png"
+    },
+    "mask": "assets/images/mask-blitz.bcde0a33.png",
+    "badge": "assets/images/badge-blitz.cd45df08.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_blitz_flashedenemy:2:5",
+        "label": {
+          "oasisId": "195161"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_blitz_flashedenemy:2:5",
+        "label": {
+          "oasisId": "195161"
+        }
+      }
+    }
+  },
+  "iq": {
+    "id": "iq",
+    "category": "atk",
+    "name": {
+      "oasisId": "113052"
+    },
+    "ctu": {
+      "oasisId": "62184"
+    },
+    "index": "3:5",
+    "figure": {
+      "small": "assets/images/small-iq.0d7885fb.png",
+      "large": "assets/images/large-iq.22b58f3b.png"
+    },
+    "mask": "assets/images/mask-iq.855499c7.png",
+    "badge": "assets/images/badge-iq.b1acee1a.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_iq_gadgetspotbyef:3:5",
+        "label": {
+          "oasisId": "194696"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_iq_gadgetspotbyef:3:5",
+        "label": {
+          "oasisId": "194696"
+        }
+      }
+    }
+  },
+  "jager": {
+    "id": "jager",
+    "category": "def",
+    "name": {
+      "oasisId": "113049"
+    },
+    "ctu": {
+      "oasisId": "62184"
+    },
+    "index": "4:5",
+    "figure": {
+      "small": "assets/images/small-jager.bc9087b7.png",
+      "large": "assets/images/large-jager.edd9f749.png"
+    },
+    "mask": "assets/images/mask-jager.58cba6d5.png",
+    "badge": "assets/images/badge-jager.600b2773.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_jager_gadgetdestroybycatcher:4:5",
+        "label": {
+          "oasisId": "194670"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_jager_gadgetdestroybycatcher:4:5",
+        "label": {
+          "oasisId": "194670"
+        }
+      }
+    }
+  },
+  "bandit": {
+    "id": "bandit",
+    "category": "def",
+    "name": {
+      "oasisId": "65165"
+    },
+    "ctu": {
+      "oasisId": "62184"
+    },
+    "index": "5:5",
+    "figure": {
+      "small": "assets/images/small-bandit.113ec809.png",
+      "large": "assets/images/large-bandit.463ee829.png"
+    },
+    "mask": "assets/images/mask-bandit.8879a650.png",
+    "badge": "assets/images/badge-bandit.385144d9.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_bandit_batterykill:5:5",
+        "label": {
+          "oasisId": "194671"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_bandit_batterykill:5:5",
+        "label": {
+          "oasisId": "194671"
+        }
+      }
+    }
+  },
+  "buck": {
+    "id": "buck",
+    "category": "atk",
+    "name": {
+      "oasisId": "62244"
+    },
+    "ctu": {
+      "oasisId": "192111"
+    },
+    "index": "2:6",
+    "figure": {
+      "small": "assets/images/small-buck.6b66cd57.png",
+      "large": "assets/images/large-buck.78712d24.png"
+    },
+    "mask": "assets/images/mask-buck.e9bc3630.png",
+    "badge": "assets/images/badge-buck.2fc3e097.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_buck_kill:2:6",
+        "label": {
+          "oasisId": "200102"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_buck_kill:2:6",
+        "label": {
+          "oasisId": "200102"
+        }
+      }
+    }
+  },
+  "frost": {
+    "id": "frost",
+    "category": "def",
+    "name": {
+      "oasisId": "186159"
+    },
+    "ctu": {
+      "oasisId": "192111"
+    },
+    "index": "3:6",
+    "figure": {
+      "small": "assets/images/small-frost.a7f18f5b.png",
+      "large": "assets/images/large-frost.f4325d10.png"
+    },
+    "mask": "assets/images/mask-frost.51971e4d.png",
+    "badge": "assets/images/badge-frost.e5362220.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_frost_dbno:3:6",
+        "label": {
+          "oasisId": "200104"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_frost_beartrap_kill:3:6",
+        "label": {
+          "oasisId": "200103"
+        }
+      }
+    }
+  },
+  "blackbeard": {
+    "id": "blackbeard",
+    "category": "atk",
+    "name": {
+      "oasisId": "187249"
+    },
+    "ctu": {
+      "oasisId": "62186"
+    },
+    "index": "2:7",
+    "figure": {
+      "small": "assets/images/small-blackbeard.cba9e22d.png",
+      "large": "assets/images/large-blackbeard.2292a791.png"
+    },
+    "mask": "assets/images/mask-blackbeard.4dbca572.png",
+    "badge": "assets/images/badge-blackbeard.fccd7e2c.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_blackbeard_gunshieldblockdamage:2:7",
+        "label": {
+          "oasisId": "202310"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_blackbeard_gunshieldblockdamage:2:7",
+        "label": {
+          "oasisId": "202310"
+        }
+      }
+    }
+  },
+  "valkyrie": {
+    "id": "valkyrie",
+    "category": "def",
+    "name": {
+      "oasisId": "187252"
+    },
+    "ctu": {
+      "oasisId": "62186"
+    },
+    "index": "3:7",
+    "figure": {
+      "small": "assets/images/small-valkyrie.b2df5bae.png",
+      "large": "assets/images/large-valkyrie.c1f143fb.png"
+    },
+    "mask": "assets/images/mask-valkyrie.c9335769.png",
+    "badge": "assets/images/badge-valkyrie.f87cb6bd.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_valkyrie_camdeployed:3:7",
+        "label": {
+          "oasisId": "202311"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_valkyrie_camdeployed:3:7",
+        "label": {
+          "oasisId": "202311"
+        }
+      }
+    }
+  },
+  "capitao": {
+    "id": "capitao",
+    "category": "atk",
+    "name": {
+      "oasisId": "207674"
+    },
+    "ctu": {
+      "oasisId": "207757"
+    },
+    "index": "2:8",
+    "figure": {
+      "small": "assets/images/small-capitao.31c21fd0.png",
+      "large": "assets/images/large-capitao.984e75b7.png"
+    },
+    "mask": "assets/images/mask-capitao.f56d66af.png",
+    "badge": "assets/images/badge-capitao.6603e417.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_capitao_lethaldartkills:2:8",
+        "label": {
+          "oasisId": "207946"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_capitao_lethaldartkills:2:8",
+        "label": {
+          "oasisId": "207946"
+        }
+      }
+    }
+  },
+  "hibana": {
+    "id": "hibana",
+    "category": "atk",
+    "name": {
+      "oasisId": "209183"
+    },
+    "ctu": {
+      "oasisId": "210241"
+    },
+    "index": "2:9",
+    "figure": {
+      "small": "assets/images/small-hibana.494345ca.png",
+      "large": "assets/images/large-hibana.d3ceb775.png"
+    },
+    "mask": "assets/images/mask-hibana.b41fbe46.png",
+    "badge": "assets/images/badge-hibana.c2a8477d.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_hibana_detonate_projectile:2:9",
+        "label": {
+          "oasisId": "217323"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_hibana_detonate_projectile:2:9",
+        "label": {
+          "oasisId": "217323"
+        }
+      }
+    }
+  },
+  "echo": {
+    "id": "echo",
+    "category": "def",
+    "name": {
+      "oasisId": "209180"
+    },
+    "ctu": {
+      "oasisId": "210241"
+    },
+    "index": "3:9",
+    "figure": {
+      "small": "assets/images/small-echo.6c60bd2a.png",
+      "large": "assets/images/large-echo.592cfb34.png"
+    },
+    "mask": "assets/images/mask-echo.43fff691.png",
+    "badge": "assets/images/badge-echo.a77c7d7e.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_echo_enemy_sonicburst_affected:3:9",
+        "label": {
+          "oasisId": "217324"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_echo_enemy_sonicburst_affected:3:9",
+        "label": {
+          "oasisId": "217324"
+        }
+      }
+    }
+  },
+  "jackal": {
+    "id": "jackal",
+    "category": "atk",
+    "name": {
+      "oasisId": "222182"
+    },
+    "ctu": {
+      "oasisId": "217493"
+    },
+    "index": "2:A",
+    "figure": {
+      "small": "assets/images/small-jackal.8c3e4191.png",
+      "large": "assets/images/large-jackal.e7ec96e6.png"
+    },
+    "mask": "assets/images/mask-jackal.b183ae54.png",
+    "badge": "assets/images/badge-jackal.0326ca29.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_cazador_assist_kill:2:A",
+        "label": {
+          "oasisId": "229326"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_cazador_assist_kill:2:A",
+        "label": {
+          "oasisId": "229327"
+        }
+      }
+    }
+  },
+  "mira": {
+    "id": "mira",
+    "category": "def",
+    "name": {
+      "oasisId": "222172"
+    },
+    "ctu": {
+      "oasisId": "217493"
+    },
+    "index": "3:A",
+    "figure": {
+      "small": "assets/images/small-mira.4196bc07.png",
+      "large": "assets/images/large-mira.0c9e3bd8.png"
+    },
+    "mask": "assets/images/mask-mira.3d592121.png",
+    "badge": "assets/images/badge-mira.22fb72a5.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_black_mirror_gadget_deployed:3:A",
+        "label": {
+          "oasisId": "229328"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_black_mirror_gadget_deployed:3:A",
+        "label": {
+          "oasisId": "229329"
+        }
+      }
+    }
+  },
+  "ying": {
+    "id": "ying",
+    "category": "atk",
+    "name": {
+      "oasisId": "239334"
+    },
+    "ctu": {
+      "oasisId": "231289"
+    },
+    "index": "2:B",
+    "figure": {
+      "small": "assets/images/small-ying.6bec33ff.png",
+      "large": "assets/images/large-ying.ce15b076.png"
+    },
+    "mask": "assets/images/mask-ying.0e91da74.png",
+    "badge": "assets/images/badge-ying.b88be612.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_dazzler_gadget_detonate:2:B",
+        "label": {
+          "oasisId": "243475"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_dazzler_gadget_detonate:2:B",
+        "label": {
+          "oasisId": "243475"
+        }
+      }
+    }
+  },
+  "lesion": {
+    "id": "lesion",
+    "category": "def",
+    "name": {
+      "oasisId": "239337"
+    },
+    "ctu": {
+      "oasisId": "231289"
+    },
+    "index": "3:B",
+    "figure": {
+      "small": "assets/images/small-lesion.8165c6b9.png",
+      "large": "assets/images/large-lesion.d48d6d33.png"
+    },
+    "mask": "assets/images/mask-lesion.576ad9e4.png",
+    "badge": "assets/images/badge-lesion.07c3d352.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_caltrop_enemy_affected:3:B",
+        "label": {
+          "oasisId": "243474"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_caltrop_enemy_affected:3:B",
+        "label": {
+          "oasisId": "243474"
+        }
+      }
+    }
+  },
+  "ela": {
+    "id": "ela",
+    "category": "def",
+    "name": {
+      "oasisId": "254595"
+    },
+    "ctu": {
+      "oasisId": "254591"
+    },
+    "index": "2:C",
+    "figure": {
+      "small": "assets/images/small-ela.b8458c84.png",
+      "large": "assets/images/large-ela.a50c192d.png"
+    },
+    "mask": "assets/images/mask-ela.eba6e6df.png",
+    "badge": "assets/images/badge-ela.63ec2d26.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_concussionmine_detonate:2:C",
+        "label": {
+          "oasisId": "254989"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_concussionmine_detonate:2:C",
+        "label": {
+          "oasisId": "254989"
+        }
+      }
+    }
+  },
+  "zofia": {
+    "id": "zofia",
+    "category": "atk",
+    "name": {
+      "oasisId": "254606"
+    },
+    "ctu": {
+      "oasisId": "254591"
+    },
+    "index": "3:C",
+    "figure": {
+      "small": "assets/images/small-zofia.28fa7ba7.png",
+      "large": "assets/images/large-zofia.f9f7568b.png"
+    },
+    "mask": "assets/images/mask-zofia.29e5102f.png",
+    "badge": "assets/images/badge-zofia.2a892bf5.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_concussiongrenade_detonate:3:C",
+        "label": {
+          "oasisId": "254990"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_concussiongrenade_detonate:3:C",
+        "label": {
+          "oasisId": "254990"
+        }
+      }
+    }
+  },
+  "dokkaebi": {
+    "id": "dokkaebi",
+    "category": "atk",
+    "name": {
+      "oasisId": "273652"
+    },
+    "ctu": {
+      "oasisId": "273753"
+    },
+    "index": "2:D",
+    "figure": {
+      "small": "assets/images/small-dokkaebi.495c6155.png",
+      "large": "assets/images/large-dokkaebi.17504ff4.png"
+    },
+    "mask": "assets/images/mask-dokkaebi.869d8445.png",
+    "badge": "assets/images/badge-dokkaebi.2f83a34f.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_phoneshacked:2:D",
+        "label": {
+          "oasisId": "283005"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_phoneshacked:2:D",
+        "label": {
+          "oasisId": "283005"
+        }
+      }
+    }
+  },
+  "vigil": {
+    "id": "vigil",
+    "category": "def",
+    "name": {
+      "oasisId": "273663"
+    },
+    "ctu": {
+      "oasisId": "273753"
+    },
+    "index": "3:D",
+    "figure": {
+      "small": "assets/images/small-vigil.0a3f4bbb.png",
+      "large": "assets/images/large-vigil.00339c34.png"
+    },
+    "mask": "assets/images/mask-vigil.8ef2f701.png",
+    "badge": "assets/images/badge-vigil.4db5385b.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_attackerdrone_diminishedrealitymode:3:D",
+        "label": {
+          "oasisId": "283004"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_attackerdrone_diminishedrealitymode:3:D",
+        "label": {
+          "oasisId": "283004"
+        }
+      }
+    }
+  },
+  "lion": {
+    "id": "lion",
+    "category": "atk",
+    "name": {
+      "oasisId": "281463"
+    },
+    "ctu": {
+      "oasisId": "282958"
+    },
+    "index": "3:E",
+    "figure": {
+      "small": "assets/images/small-lion.d9a0faed.png",
+      "large": "assets/images/large-lion.68296c0e.png"
+    },
+    "mask": "assets/images/mask-lion.488ea9cc.png",
+    "badge": "assets/images/badge-lion.69637075.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_tagger_tagdevice_spot:3:E",
+        "label": {
+          "oasisId": "282608"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_tagger_tagdevice_spot:3:E",
+        "label": {
+          "oasisId": "282608"
+        }
+      }
+    }
+  },
+  "finka": {
+    "id": "finka",
+    "category": "atk",
+    "name": {
+      "oasisId": "281457"
+    },
+    "ctu": {
+      "oasisId": "282958"
+    },
+    "index": "4:E",
+    "figure": {
+      "small": "assets/images/small-finka.53104c13.png",
+      "large": "assets/images/large-finka.46fb7c59.png"
+    },
+    "mask": "assets/images/mask-finka.82e49f1a.png",
+    "badge": "assets/images/badge-finka.71d3a243.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_rush_adrenalinerush:4:E",
+        "label": {
+          "oasisId": "282609"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_rush_adrenalinerush:4:E",
+        "label": {
+          "oasisId": "282609"
+        }
+      }
+    }
+  },
+  "maestro": {
+    "id": "maestro",
+    "category": "def",
+    "name": {
+      "oasisId": "285888"
+    },
+    "ctu": {
+      "oasisId": "285859"
+    },
+    "index": "2:F",
+    "figure": {
+      "small": "assets/images/small-maestro.7f3f2bcb.png",
+      "large": "assets/images/large-maestro.fc1e1753.png"
+    },
+    "mask": "assets/images/mask-maestro.210c8915.png",
+    "badge": "assets/images/badge-maestro.b6cf7905.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_barrage_killswithturret:2:F",
+        "label": {
+          "oasisId": "288335"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_barrage_killswithturret:2:F",
+        "label": {
+          "oasisId": "288335"
+        }
+      }
+    }
+  },
+  "alibi": {
+    "id": "alibi",
+    "category": "def",
+    "name": {
+      "oasisId": "282399"
+    },
+    "ctu": {
+      "oasisId": "285859"
+    },
+    "index": "3:F",
+    "figure": {
+      "small": "assets/images/small-alibi.9b68753a.png",
+      "large": "assets/images/large-alibi.3cf80a66.png"
+    },
+    "mask": "assets/images/mask-alibi.2f8c8bb3.png",
+    "badge": "assets/images/badge-alibi.7fba8d33.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_deceiver_revealedattackers:3:F",
+        "label": {
+          "oasisId": "282404"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_deceiver_revealedattackers:3:F",
+        "label": {
+          "oasisId": "282403"
+        }
+      }
+    }
+  },
+  "maverick": {
+    "id": "maverick",
+    "category": "atk",
+    "name": {
+      "oasisId": "288504"
+    },
+    "ctu": {
+      "oasisId": "289336"
+    },
+    "index": "2:10",
+    "figure": {
+      "small": "assets/images/small-maverick.9e685421.png",
+      "large": "assets/images/large-maverick.2676adff.png"
+    },
+    "mask": "assets/images/mask-maverick.d7db4066.png",
+    "badge": "assets/images/badge-maverick.7eab7c75.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_maverick_wallbreached:2:10",
+        "label": {
+          "oasisId": "293475"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_maverick_wallbreached:2:10",
+        "label": {
+          "oasisId": "293475"
+        }
+      }
+    }
+  },
+  "clash": {
+    "id": "clash",
+    "category": "def",
+    "name": {
+      "oasisId": "288526"
+    },
+    "ctu": {
+      "oasisId": "289336"
+    },
+    "index": "3:10",
+    "figure": {
+      "small": "assets/images/small-clash.5d0756a5.png",
+      "large": "assets/images/large-clash.fb3f6fb3.png"
+    },
+    "mask": "assets/images/mask-clash.118cccde.png",
+    "badge": "assets/images/badge-clash.133f243d.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_clash_sloweddown:3:10",
+        "label": {
+          "oasisId": "293483"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_clash_sloweddown:3:10",
+        "label": {
+          "oasisId": "293483"
+        }
+      }
+    }
+  },
+  "nomad": {
+    "id": "nomad",
+    "category": "atk",
+    "name": {
+      "oasisId": "293435"
+    },
+    "ctu": {
+      "oasisId": "292860"
+    },
+    "index": "2:11",
+    "figure": {
+      "small": "assets/images/small-nomad.50642fb1.png",
+      "large": "assets/images/large-nomad.ec871764.png"
+    },
+    "mask": "assets/images/mask-nomad.fdb16c87.png",
+    "badge": "assets/images/badge-nomad.dbd9a315.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_nomad_airjabdetonate:2:11",
+        "label": {
+          "oasisId": "293935"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_nomad_airjabdetonate:2:11",
+        "label": {
+          "oasisId": "293935"
+        }
+      }
+    }
+  },
+  "kaid": {
+    "id": "kaid",
+    "category": "def",
+    "name": {
+      "oasisId": "293436"
+    },
+    "ctu": {
+      "oasisId": "292860"
+    },
+    "index": "3:11",
+    "figure": {
+      "small": "assets/images/small-kaid.e38b6341.png",
+      "large": "assets/images/large-kaid.d801cd6f.png"
+    },
+    "mask": "assets/images/mask-kaid.e8bb2088.png",
+    "badge": "assets/images/badge-kaid.ae2bfa7a.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_kaid_electroclawelectrify:3:11",
+        "label": {
+          "oasisId": "294144"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_kaid_electroclawelectrify:3:11",
+        "label": {
+          "oasisId": "294144"
+        }
+      }
+    }
+  },
+  "mozzie": {
+    "id": "mozzie",
+    "category": "def",
+    "name": {
+      "oasisId": "298616"
+    },
+    "ctu": {
+      "oasisId": "298584"
+    },
+    "index": "2:12",
+    "figure": {
+      "small": "assets/images/small-mozzie.52a71f0e.png",
+      "large": "assets/images/large-mozzie.78048c99.png"
+    },
+    "mask": "assets/images/mask-mozzie.be4d5555.png",
+    "badge": "assets/images/badge-mozzie.adeac188.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_mozzie_droneshacked:2:12",
+        "label": {
+          "oasisId": "298664"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_mozzie_droneshacked:2:12",
+        "label": {
+          "oasisId": "298664"
+        }
+      }
+    }
+  },
+  "gridlock": {
+    "id": "gridlock",
+    "category": "atk",
+    "name": {
+      "oasisId": "298589"
+    },
+    "ctu": {
+      "oasisId": "298584"
+    },
+    "index": "3:12",
+    "figure": {
+      "small": "assets/images/small-gridlock.99921908.png",
+      "large": "assets/images/large-gridlock.c16be815.png"
+    },
+    "mask": "assets/images/mask-gridlock.4b807b65.png",
+    "badge": "assets/images/badge-gridlock.6b572bdc.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_gridlock_traxdeployed:3:12",
+        "label": {
+          "oasisId": "298667"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_gridlock_traxdeployed:3:12",
+        "label": {
+          "oasisId": "298667"
+        }
+      }
+    }
+  },
+  "nakk": {
+    "id": "nakk",
+    "category": "atk",
+    "name": {
+      "oasisId": "299657"
+    },
+    "ctu": {
+      "oasisId": "299652"
+    },
+    "index": "2:13",
+    "figure": {
+      "small": "assets/images/small-nakk.b0b6a64e.png",
+      "large": "assets/images/large-nakk.483f7020.png"
+    },
+    "mask": "assets/images/mask-nakk.e93d394c.png",
+    "badge": "assets/images/badge-nakk.d3b4f1af.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_nokk_observationtooldeceived:2:13",
+        "label": {
+          "oasisId": "304013"
+        }
+      }
+    }
+  },
+  "warden": {
+    "id": "warden",
+    "category": "def",
+    "name": {
+      "oasisId": "299668"
+    },
+    "ctu": {
+      "oasisId": "303929"
+    },
+    "index": "2:14",
+    "figure": {
+      "small": "assets/images/small-warden.e2a1061e.png",
+      "large": "assets/images/large-warden.cefa3812.png"
+    },
+    "mask": "assets/images/mask-warden.b00a6d50.png",
+    "badge": "assets/images/badge-warden.fd12fbd9.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_warden_killswithglasses:2:14",
+        "label": {
+          "oasisId": "304018"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_warden_killswithglasses:2:14",
+        "label": {
+          "oasisId": "304018"
+        }
+      }
+    }
+  },
+  "goyo": {
+    "id": "goyo",
+    "category": "def",
+    "name": {
+      "oasisId": "304196"
+    },
+    "ctu": {
+      "oasisId": "308458"
+    },
+    "index": "2:15",
+    "figure": {
+      "small": "assets/images/small-goyo.f055a316.png",
+      "large": "assets/images/large-goyo.4a706a53.png"
+    },
+    "mask": "assets/images/mask-goyo.a404b891.png",
+    "badge": "assets/images/badge-goyo.3e765688.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_goyo_volcandetonate:2:15",
+        "label": {
+          "oasisId": "309864"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_goyo_volcandetonate:2:15",
+        "label": {
+          "oasisId": "309864"
+        }
+      }
+    }
+  },
+  "amaru": {
+    "id": "amaru",
+    "category": "atk",
+    "name": {
+      "oasisId": "308469"
+    },
+    "ctu": {
+      "oasisId": "308460"
+    },
+    "index": "2:16",
+    "figure": {
+      "small": "assets/images/small-amaru.054aff78.png",
+      "large": "assets/images/large-amaru.0dba2fcf.png"
+    },
+    "mask": "assets/images/mask-amaru.a2ddfb3d.png",
+    "badge": "assets/images/badge-amaru.24a70133.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_amaru_distancereeled:2:16",
+        "label": {
+          "oasisId": "309863"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_amaru_distancereeled:2:16",
+        "label": {
+          "oasisId": "309863"
+        }
+      }
+    }
+  },
+  "kali": {
+    "id": "kali",
+    "category": "atk",
+    "name": {
+      "oasisId": "310757"
+    },
+    "ctu": {
+      "oasisId": "310754"
+    },
+    "index": "2:17",
+    "figure": {
+      "small": "assets/images/small-kali.357efec7.png",
+      "large": "assets/images/large-kali.4e4b9dfa.png"
+    },
+    "mask": "assets/images/mask-kali.062657d2.png",
+    "badge": "assets/images/badge-kali.ff0fee46.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_kali_gadgetdestroywithexplosivelance:2:17",
+        "label": {
+          "oasisId": "312718"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_kali_gadgetdestroywithexplosivelance:2:17",
+        "label": {
+          "oasisId": "312718"
+        }
+      }
+    }
+  },
+  "wamai": {
+    "id": "wamai",
+    "category": "def",
+    "name": {
+      "oasisId": "310768"
+    },
+    "ctu": {
+      "oasisId": "310754"
+    },
+    "index": "3:17",
+    "figure": {
+      "small": "assets/images/small-wamai.2d1691c4.png",
+      "large": "assets/images/large-wamai.34e21447.png"
+    },
+    "mask": "assets/images/mask-wamai.b4f444a4.png",
+    "badge": "assets/images/badge-wamai.4e4bf506.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_wamai_gadgetdestroybymagnet:3:17",
+        "label": {
+          "oasisId": "312719"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_wamai_gadgetdestroybymagnet:3:17",
+        "label": {
+          "oasisId": "312719"
+        }
+      }
+    }
+  },
+  "oryx": {
+    "id": "oryx",
+    "category": "def",
+    "name": {
+      "oasisId": "317965"
+    },
+    "ctu": {
+      "oasisId": "318172"
+    },
+    "index": "2:18",
+    "figure": {
+      "small": "assets/images/small-oryx.a8e94e41.png",
+      "large": "assets/images/large-oryx.1e480406.png"
+    },
+    "mask": "assets/images/mask-oryx.9bd0b149.png",
+    "badge": "assets/images/badge-oryx.6472c8ee.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_oryx_killsafterdash:2:18",
+        "label": {
+          "oasisId": "318856"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_oryx_killsafterdash:2:18",
+        "label": {
+          "oasisId": "318856"
+        }
+      }
+    }
+  },
+  "iana": {
+    "id": "iana",
+    "category": "atk",
+    "name": {
+      "oasisId": "317976"
+    },
+    "ctu": {
+      "oasisId": "318171"
+    },
+    "index": "2:19",
+    "figure": {
+      "small": "assets/images/small-iana.4d41a3e2.png",
+      "large": "assets/images/large-iana.0d0741d7.png"
+    },
+    "mask": "assets/images/mask-iana.10a7091c.png",
+    "badge": "assets/images/badge-iana.6fa68bc8.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_iana_killsafterreplicator:2:19",
+        "label": {
+          "oasisId": "318857"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_iana_killsafterreplicator:2:19",
+        "label": {
+          "oasisId": "318857"
+        }
+      }
+    }
+  },
+  "caveira": {
+    "id": "caveira",
+    "category": "def",
+    "name": {
+      "oasisId": "207671"
+    },
+    "ctu": {
+      "oasisId": "207757"
+    },
+    "index": "1:8",
+    "figure": {
+      "small": "assets/images/small-caveira.f7bb7af3.png",
+      "large": "assets/images/large-caveira.e4d82365.png"
+    },
+    "mask": "assets/images/mask-caveira.2971b2c5.png",
+    "badge": "assets/images/badge-caveira.757e9259.png",
+    "uniqueStatistic": {
+      "pvp": {
+        "statisticId": "operatorpvp_caveira_interrogations:1:8",
+        "label": {
+          "oasisId": "207945"
+        }
+      },
+      "pve": {
+        "statisticId": "operatorpve_caveira_aikilledinstealth:1:8",
+        "label": {
+          "oasisId": "207952"
+        }
+      }
+    }
+  }
+}
