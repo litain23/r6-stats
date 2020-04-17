@@ -61,6 +61,9 @@ public class API {
                 })
                 .map(entry -> {
                     Map<String, Double> stat = entry.getValue();
+                    Map<String, String> operatorIndexMap = OperatorIndex.getIndexToOperator();
+                    String name = operatorIndexMap.get(entry.getKey());
+                    String uniqueStatistic = operatorIndexMap.get(name);
                     Operators op = Operators.builder()
                             .death(stat.getOrDefault("death", 0.0).intValue())
                             .roundlost(stat.getOrDefault("roundlost", 0.0).intValue())
@@ -71,8 +74,9 @@ public class API {
                             .headshot(stat.getOrDefault("headshot", 0.0).intValue())
                             .kills(stat.getOrDefault("kills", 0.0).intValue())
                             .index(entry.getKey())
-                            .name(OperatorIndex.getIndexToOperator().get(entry.getKey()))
-                            .uniqueStatisticPvp(stat.getOrDefault("uniqueStatisticPvp", 0.0).intValue())
+                            .name(name)
+                            .uniqueStatisticPvp(stat.getOrDefault(uniqueStatistic, 0.0).intValue())
+                            .uniqueStatisticName(uniqueStatistic)
                             .build();
 
                     return op;

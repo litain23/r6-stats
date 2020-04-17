@@ -17,6 +17,7 @@ public class OperatorIndex {
         indexToOperator = new HashMap<>();
         Gson gson = new Gson();
         try {
+            String prefix = "operatorpvp_";
             JsonObject object = gson.fromJson(new FileReader("operator.json"), JsonObject.class);
 
             Set<Map.Entry<String, JsonElement>> entrySet = object.entrySet();
@@ -25,10 +26,14 @@ public class OperatorIndex {
                 JsonObject value = entry.getValue().getAsJsonObject();
                 String index = value.get("index").getAsString();
                 value = value.get("uniqueStatistic").getAsJsonObject().get("pvp").getAsJsonObject();
-                String statisticId = value.get("statisticId").getAsString();
+
+                // ex : operatorpvp_caveira_interrogations:1:8
+                // return caveira_interrogations
+                String statisticId = value.get("statisticId").getAsString().split(":")[0].substring(prefix.length());
 
                 indexToOperator.put(index, operatorName);
                 indexToOperator.put(operatorName, statisticId);
+                indexToOperator.put(statisticId, index);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
