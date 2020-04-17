@@ -5,6 +5,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Map;
 
@@ -16,6 +19,7 @@ public class UbiAuthApi {
     private final static String LOGIN_API_URL = "https://public-ubiservices.ubi.com/v3/profiles/sessions";
     private static UbiAuthApi ubiAuthApi = new UbiAuthApi();
     public final static String UPP_APP_ID = "39baebad-39e5-4552-8c25-2c9b919064e2";
+    private static AuthToken token = null;
 
 
     private static String encodeBase64(String email, String pw) throws UnsupportedEncodingException {
@@ -23,6 +27,10 @@ public class UbiAuthApi {
     }
 
     public static AuthToken getAuthToken() {
+        if(token != null && checkTokenSessionTime()) {
+            return token;
+        }
+
         try {
             JsonObject loginIdPw = new Gson().fromJson(new FileReader("ubi-login.json"), JsonObject.class);
             String email = loginIdPw.get("email").getAsString();
@@ -46,7 +54,8 @@ public class UbiAuthApi {
             int responseCode = conn.getResponseCode();
             if(responseCode == HttpURLConnection.HTTP_ACCEPTED || responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                return new Gson().fromJson(br.readLine(), AuthToken.class);
+                token = new Gson().fromJson(br.readLine(), AuthToken.class);
+                return token;
             } else {
                 return null;
             }
@@ -62,5 +71,20 @@ public class UbiAuthApi {
         }
 
         return null;
+    }
+
+    private static boolean checkTokenSessionTime() {
+        String expirationTimeStr = token.getExpiration().split("\\.")[0];
+        ZoneId UTC_1 = ZoneId.of("UTC+1");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime expirationTime = LocalDateTime.parse(expirationTimeStr, formatter);
+        // 세션 기간 만료는 3시간이지만, 2시간마다 갱신
+        LocalDateTime now = LocalDateTime.now(UTC_1);
+
+        if(now.isBefore(expirationTime)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
