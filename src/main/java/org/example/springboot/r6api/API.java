@@ -1,6 +1,7 @@
 package org.example.springboot.r6api;
 
 import com.google.gson.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -41,6 +42,8 @@ public class API {
 
         Map<String, Double> operatorStat = gson.fromJson(operatorStr, Map.class);
 
+
+
         List<Operators> operatorsList = operatorStat
                 .keySet()
                 .stream()
@@ -57,21 +60,21 @@ public class API {
                 .stream()
                 .filter(entry -> {
                     String index = entry.getKey();
-                    return OperatorIndex.getIndexToOperator().containsKey(index);
+                    return OperatorIdx.getIndexToOperator().containsKey(index);
                 })
                 .map(entry -> {
                     Map<String, Double> stat = entry.getValue();
-                    Map<String, String> operatorIndexMap = OperatorIndex.getIndexToOperator();
+                    Map<String, String> operatorIndexMap = OperatorIdx.getIndexToOperator();
                     String name = operatorIndexMap.get(entry.getKey());
                     String uniqueStatistic = operatorIndexMap.get(name);
                     Operators op = Operators.builder()
                             .death(stat.getOrDefault("death", 0.0).intValue())
-                            .roundlost(stat.getOrDefault("roundlost", 0.0).intValue())
-                            .roundwon(stat.getOrDefault("roundwon", 0.0).intValue())
-                            .timeplayed(stat.getOrDefault("timeplayed", 0.0).intValue())
-                            .totalxp(stat.getOrDefault("totalxp", 0.0).intValue())
-                            .meleekills(stat.getOrDefault("meleekills", 0.0).intValue())
-                            .headshot(stat.getOrDefault("headshot", 0.0).intValue())
+                            .roundLost(stat.getOrDefault("roundlost", 0.0).intValue())
+                            .roundWon(stat.getOrDefault("roundwon", 0.0).intValue())
+                            .timePlayed(stat.getOrDefault("timeplayed", 0.0).intValue())
+                            .totalXp(stat.getOrDefault("totalxp", 0.0).intValue())
+                            .meleeKills(stat.getOrDefault("meleekills", 0.0).intValue())
+                            .headShot(stat.getOrDefault("headshot", 0.0).intValue())
                             .kills(stat.getOrDefault("kills", 0.0).intValue())
                             .index(entry.getKey())
                             .name(name)

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class OperatorIndex {
+public class OperatorIdx {
     private static final Map<String, String> indexToOperator;
     static {
         indexToOperator = new HashMap<>();

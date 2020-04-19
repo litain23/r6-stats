@@ -11,12 +11,12 @@ public class OperatorListResponseDto {
     private int uniqueStatisticPvp;
     private int kills;
     private int death;
-    private int headshot;
-    private int meleekills;
-    private int totalxp;
-    private int timeplayed;
-    private int roundwon;
-    private int roundlost;
+    private int headShot;
+    private int meleeKills;
+    private int totalXp;
+    private int timePlayed;
+    private int roundWon;
+    private int roundLost;
 
     public OperatorListResponseDto(Operators operator) {
         this.name = operator.getName();
@@ -25,12 +25,12 @@ public class OperatorListResponseDto {
         this.uniqueStatisticName = operator.getUniqueStatisticName();
         this.kills = operator.getKills();
         this.death = operator.getDeath();
-        this.headshot = operator.getHeadshot();
-        this.meleekills = operator.getMeleekills();
-        this.totalxp = operator.getTotalxp();
-        this.timeplayed = operator.getTimeplayed();
-        this.roundlost = operator.getRoundlost();
-        this.roundwon = operator.getRoundwon();
+        this.headShot = operator.getHeadShot();
+        this.meleeKills = operator.getMeleeKills();
+        this.totalXp = operator.getTotalXp();
+        this.timePlayed = operator.getTimePlayed();
+        this.roundLost = operator.getRoundLost();
+        this.roundWon = operator.getRoundWon();
     }
 
 }
