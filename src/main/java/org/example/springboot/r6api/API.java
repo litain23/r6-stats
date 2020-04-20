@@ -71,7 +71,7 @@ public class API {
         return gson.fromJson(jsonArray.get(0), Profile.class);
     }
 
-    public RankStat getRank(String platform, String id, int season) {
+    public String getRankStat(String platform, String id, int season) {
         Profile findIdProfile = getProfile(platform, id);
 
         String region = "apac";
@@ -90,14 +90,10 @@ public class API {
 
         JsonObject rankStat = gson.fromJson(responseRankData, JsonObject.class);
         rankStat = rankStat.get("players").getAsJsonObject().get(findIdProfile.getUserId()).getAsJsonObject();
+        System.out.println(rankStat.toString());
 
-        return gson.fromJson(rankStat, RankStat.class);
+        return rankStat.toString();
     }
-
-    public RankStat getRank(String platform, String id) {
-        return getRank(platform, id, -1);
-    }
-
 
     private String getDataUsingApi(String requestUrl, AuthToken token) {
         try {

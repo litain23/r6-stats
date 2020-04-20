@@ -32,12 +32,15 @@ public class OperatorsService {
         token = UbiAuthApi.getAuthToken();
         API api = new API(token);
 
-        User user = userRepository.save(
-                User.builder()
-                        .platform(platform)
-                        .userId(id)
-                        .build()
-        );
+        User user = userRepository.findByPlatformAndAndUserId(platform, id);
+        if(user == null) {
+            user = userRepository.save(
+                    User.builder()
+                            .platform(platform)
+                            .userId(id)
+                            .build()
+            );
+        }
 
         List<Operators> operatorsList = parseResponseStr(api.getOperatorsStat(platform, id));
 
@@ -73,7 +76,7 @@ public class OperatorsService {
             Map<String, Double> operatorStat = groupByIndexMap.getOrDefault(index, Collections.EMPTY_MAP);
 
             Operators op = Operators.builder()
-                    .death(operatorStat.getOrDefault("death", 0.0).intValue())
+                    .deaths(operatorStat.getOrDefault("death", 0.0).intValue())
                     .roundLost(operatorStat.getOrDefault("roundlost", 0.0).intValue())
                     .roundWon(operatorStat.getOrDefault("roundwon", 0.0).intValue())
                     .timePlayed(operatorStat.getOrDefault("timeplayed", 0.0).intValue())

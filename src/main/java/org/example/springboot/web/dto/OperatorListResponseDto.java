@@ -10,7 +10,7 @@ public class OperatorListResponseDto {
     private String uniqueStatisticName;
     private int uniqueStatisticOasisId;
     private int kills;
-    private int death;
+    private int deaths;
     private int headShot;
     private int meleeKills;
     private int totalXp;
@@ -24,7 +24,7 @@ public class OperatorListResponseDto {
         this.uniqueStatisticOasisId = operator.getUniqueStatisticOasisId();
         this.uniqueStatisticName = operator.getUniqueStatisticName();
         this.kills = operator.getKills();
-        this.death = operator.getDeath();
+        this.deaths = operator.getDeaths();
         this.headShot = operator.getHeadShot();
         this.meleeKills = operator.getMeleeKills();
         this.totalXp = operator.getTotalXp();

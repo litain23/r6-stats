@@ -3,7 +3,7 @@ package org.example.springboot.domain.user;
 import lombok.Builder;
 import lombok.Getter;
 import org.example.springboot.domain.operators.Operators;
-import org.springframework.cglib.core.GeneratorStrategy;
+import org.example.springboot.domain.rankstat.RankStat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,6 +26,10 @@ public class User {
     @OneToMany
     @JoinColumn(name = "user_id")
     private List<Operators> operatorsList = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<RankStat> rankList = new ArrayList<>();
 
     public User() { }
 
