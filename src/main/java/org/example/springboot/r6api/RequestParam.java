@@ -24,7 +24,7 @@ public class RequestParam {
             "operatorpvp_kills",
             "operatorpvp_death",
             "operatorpvp_headshot",
-            "operatorpvp_mellkills",
+            "operatorpvp_meleekills",
             "operatorpvp_totalxp",
             "operatorpvp_smoke_poisongaskill",
             "operatorpvp_mute_gadgetjammed",

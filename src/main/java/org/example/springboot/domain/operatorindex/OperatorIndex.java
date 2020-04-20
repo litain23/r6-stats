@@ -2,9 +2,11 @@ package org.example.springboot.domain.operatorindex;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
+@ToString
 @Getter
 @Entity
 public class OperatorIndex {

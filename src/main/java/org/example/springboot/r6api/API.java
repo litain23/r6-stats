@@ -25,7 +25,9 @@ public class API {
         this.authToken = token;
     }
 
-    public List<Operators> getOperatorsStat(String platform, String id) {
+
+
+    public Map<String, Double> getOperatorsStat(String platform, String id) {
         Profile profile = getProfile(platform, id);
         String operatorsUrl = String.format(GENERAL_URL_TEMPLATE,
                 Platform.platformToSpaceId(platform),
@@ -39,55 +41,8 @@ public class API {
         JsonObject jsonObject = gson.fromJson(responseOperator, JsonObject.class);
         jsonObject = jsonObject.getAsJsonObject("results");
         String operatorStr = jsonObject.get(profile.getUserId()).toString();
-
         Map<String, Double> operatorStat = gson.fromJson(operatorStr, Map.class);
-
-
-
-        List<Operators> operatorsList = operatorStat
-                .keySet()
-                .stream()
-                .collect(Collectors.groupingBy(key -> {
-                    String[] splitKey = key.split(":");
-                    String index = splitKey[1] + ":" + splitKey[2];
-                    return index;
-                }, Collectors.toMap(key -> {
-                    String prefix = "operatorpvp_";
-                    String changeKey = key.substring(prefix.length());
-                    return changeKey.split(":")[0];
-                }, key -> operatorStat.get(key))))
-                .entrySet()
-                .stream()
-                .filter(entry -> {
-                    String index = entry.getKey();
-                    return OperatorIdx.getIndexToOperator().containsKey(index);
-                })
-                .map(entry -> {
-                    Map<String, Double> stat = entry.getValue();
-                    Map<String, String> operatorIndexMap = OperatorIdx.getIndexToOperator();
-                    String name = operatorIndexMap.get(entry.getKey());
-                    String uniqueStatistic = operatorIndexMap.get(name);
-                    Operators op = Operators.builder()
-                            .death(stat.getOrDefault("death", 0.0).intValue())
-                            .roundLost(stat.getOrDefault("roundlost", 0.0).intValue())
-                            .roundWon(stat.getOrDefault("roundwon", 0.0).intValue())
-                            .timePlayed(stat.getOrDefault("timeplayed", 0.0).intValue())
-                            .totalXp(stat.getOrDefault("totalxp", 0.0).intValue())
-                            .meleeKills(stat.getOrDefault("meleekills", 0.0).intValue())
-                            .headShot(stat.getOrDefault("headshot", 0.0).intValue())
-                            .kills(stat.getOrDefault("kills", 0.0).intValue())
-                            .index(entry.getKey())
-                            .name(name)
-                            .uniqueStatisticPvp(stat.getOrDefault(uniqueStatistic, 0.0).intValue())
-                            .uniqueStatisticName(uniqueStatistic)
-                            .build();
-
-                    return op;
-                })
-                .collect(Collectors.toList());
-        System.out.println(operatorsList.size());
-
-        return operatorsList;
+        return operatorStat;
     }
 
     public GeneralPvp getGenernalPvp(String platform, String id) {

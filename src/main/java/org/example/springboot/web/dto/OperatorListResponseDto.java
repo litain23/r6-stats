@@ -1,14 +1,14 @@
 package org.example.springboot.web.dto;
 
 import lombok.Getter;
-import org.example.springboot.r6api.Operators;
+import org.example.springboot.domain.operators.Operators;
 
 @Getter
 public class OperatorListResponseDto {
     private String name;
     private String index;
     private String uniqueStatisticName;
-    private int uniqueStatisticPvp;
+    private int uniqueStatisticOasisId;
     private int kills;
     private int death;
     private int headShot;
@@ -21,7 +21,7 @@ public class OperatorListResponseDto {
     public OperatorListResponseDto(Operators operator) {
         this.name = operator.getName();
         this.index = operator.getIndex();
-        this.uniqueStatisticPvp = operator.getUniqueStatisticPvp();
+        this.uniqueStatisticOasisId = operator.getUniqueStatisticOasisId();
         this.uniqueStatisticName = operator.getUniqueStatisticName();
         this.kills = operator.getKills();
         this.death = operator.getDeath();
