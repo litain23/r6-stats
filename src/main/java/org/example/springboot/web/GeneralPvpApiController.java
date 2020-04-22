@@ -1,24 +1,21 @@
 package org.example.springboot.web;
 
-import org.example.springboot.r6api.API;
-import org.example.springboot.r6api.AuthToken;
-import org.example.springboot.r6api.GeneralPvp;
-import org.example.springboot.r6api.UbiAuthApi;
+import lombok.RequiredArgsConstructor;
+import org.example.springboot.service.operators.GeneralPvpService;
 import org.example.springboot.web.dto.GeneralPvpResponseDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 public class GeneralPvpApiController {
+    private final GeneralPvpService generalPvpService;
 
     @GetMapping("/api/v1/general/{platform}/{id}")
     public GeneralPvpResponseDto findById(@PathVariable String platform,
                                           @PathVariable String id) {
-        AuthToken token = UbiAuthApi.getAuthToken();
-        API api = new API(token);
 
-        GeneralPvp pvp = api.getGeneralPvp(platform,id);
-        return new GeneralPvpResponseDto(pvp);
+        return generalPvpService.getGeneralPvp(platform, id);
     }
 }

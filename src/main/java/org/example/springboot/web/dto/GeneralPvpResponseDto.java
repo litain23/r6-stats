@@ -2,36 +2,36 @@ package org.example.springboot.web.dto;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
-import org.example.springboot.r6api.GeneralPvp;
+import org.example.springboot.domain.generalpvp.GeneralPvp;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Getter
 public class GeneralPvpResponseDto {
-    private int generalpvpMatchlost;
-    private int generalpvpDeath;
-    private int generalpvpPenetrationkills;
-    private int generalpvpMatchwon;
-    private int generalpvpBullethit;
-    private int generalpvpMeleekills;
-    private int generalpvpKillassists;
-    private int generalpvpMatchplayed;
-    private int generalpvpTimeplayed;
-    private int generalpvpRevive;
-    private int generalpvpKills;
-    private int generalpvpHeadshot;
+    private int totalMatchLost;
+    private int totalMatchWon;
+    private int totalMatchPlayed;
+    private int totalKills;
+    private int totalDeath;
+    private int totalPenetrationKills;
+    private int totalMeleeKills;
+    private int totalKillAssists;
+    private int totalHeadShot;
+    private int totalRevive;
+    private int totalBulletHit;
+    private int totalTimePlayed;
 
     public GeneralPvpResponseDto(GeneralPvp pvp) {
-        this.generalpvpMatchlost = pvp.getGeneralpvpMatchlost();
-        this.generalpvpDeath = pvp.getGeneralpvpDeath();
-        this.generalpvpPenetrationkills = pvp.getGeneralpvpPenetrationkills();
-        this.generalpvpMatchwon = pvp.getGeneralpvpMatchwon();
-        this.generalpvpBullethit = pvp.getGeneralpvpBullethit();
-        this.generalpvpMeleekills = pvp.getGeneralpvpMeleekills();
-        this.generalpvpKillassists = pvp.getGeneralpvpKillassists();
-        this.generalpvpMatchplayed = pvp.getGeneralpvpMatchplayed();
-        this.generalpvpTimeplayed = pvp.getGeneralpvpTimeplayed();
-        this.generalpvpRevive = pvp.getGeneralpvpRevive();
-        this.generalpvpKills = pvp.getGeneralpvpKills();
-        this.generalpvpHeadshot = pvp.getGeneralpvpHeadshot();
+        this.totalMatchLost = pvp.getTotalMatchLost();
+        this.totalMatchWon = pvp.getTotalMatchWon();
+        this.totalMatchPlayed = pvp.getTotalMatchPlayed();
+        this.totalKills = pvp.getTotalKills();
+        this.totalDeath = pvp.getTotalDeath();
+        this.totalPenetrationKills = pvp.getTotalPenetrationKills();
+        this.totalMeleeKills = pvp.getTotalMeleeKills();
+        this.totalKillAssists = pvp.getTotalKillAssists();
+        this.totalHeadShot = pvp.getTotalHeadShot();
+        this.totalRevive = pvp.getTotalRevive();
+        this.totalBulletHit = pvp.getTotalBulletHit();
+        this.totalTimePlayed = pvp.getTotalMatchPlayed();
     }
 }

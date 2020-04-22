@@ -33,7 +33,7 @@ public class User {
     private List<RankStat> rankList = new ArrayList<>();
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "generalpvp_id")
     private GeneralPvp generalPvp;
 
     public User() { }
@@ -46,5 +46,8 @@ public class User {
 
     public void setOperatorsList(List<Operators> operatorsList) {
         this.operatorsList = operatorsList;
+    }
+    public void setGeneralPvp(GeneralPvp generalPvp) {
+        this.generalPvp = generalPvp;
     }
 }

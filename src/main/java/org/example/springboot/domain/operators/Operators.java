@@ -12,6 +12,10 @@ public class Operators {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+
+//    private User user;
+
     private String name;
     private String index;
     private String category;
