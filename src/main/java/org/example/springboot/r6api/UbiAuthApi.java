@@ -12,6 +12,8 @@ import java.util.Base64;
 import java.util.Map;
 
 import com.google.gson.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.swing.plaf.IconUIResource;
 
@@ -32,10 +34,7 @@ public class UbiAuthApi {
         }
 
         try {
-            JsonObject loginIdPw = new Gson().fromJson(new FileReader("ubi-login.json"), JsonObject.class);
-            String email = loginIdPw.get("email").getAsString();
-            String passwd = loginIdPw.get("pw").getAsString();
-            String encodedIdPw = encodeBase64(email, passwd);
+            String encodedIdPw = getEncodedIdPw();
 
             URL url = new URL(LOGIN_API_URL);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -56,22 +55,39 @@ public class UbiAuthApi {
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 token = new Gson().fromJson(br.readLine(), AuthToken.class);
                 return token;
-            } else {
-                return null;
+            } else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED || responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
+                throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "ubi-soft login failed");
             }
 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-        } catch (ProtocolException e) {
+        }  catch (ProtocolException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
         }
-
         return null;
     }
+
+    private static String getEncodedIdPw() throws FileNotFoundException, UnsupportedEncodingException{
+        try {
+            Map<String, String> loginIdPwMap = new Gson().fromJson(new FileReader("ubi-login.json"), Map.class);
+            String email = loginIdPwMap.get("email");
+            String passwd = loginIdPwMap.get("pw");
+            return encodeBase64(email, passwd);
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("ubi-login.json don't exist");
+        } catch (UnsupportedEncodingException e) {
+            throw new UnsupportedEncodingException("Unsupported encoding");
+        }
+    }
+
 
     private static boolean checkTokenSessionTime() {
         String expirationTimeStr = token.getExpiration().split("\\.")[0];
