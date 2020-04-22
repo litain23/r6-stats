@@ -2,6 +2,7 @@ package org.example.springboot.domain.user;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.example.springboot.domain.generalpvp.GeneralPvp;
 import org.example.springboot.domain.operators.Operators;
 import org.example.springboot.domain.rankstat.RankStat;
 
@@ -30,6 +31,10 @@ public class User {
     @OneToMany
     @JoinColumn(name = "user_id")
     private List<RankStat> rankList = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private GeneralPvp generalPvp;
 
     public User() { }
 

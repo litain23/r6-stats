@@ -22,7 +22,7 @@ public class RankStat {
     private int maxMmr;
 
     private int kills;
-    private int deaths;
+    private int death;
 
     private int season;
     private String region;
@@ -46,13 +46,13 @@ public class RankStat {
     public RankStat() {}
 
     @Builder
-    public RankStat(int rank, int maxRank, int mmr, int maxMmr, int kills, int deaths, int season, String region, int wins, int losses, int abandons, String updateTime) {
+    public RankStat(int rank, int maxRank, int mmr, int maxMmr, int kills, int death, int season, String region, int wins, int losses, int abandons, String updateTime) {
         this.rank = rank;
         this.maxRank = maxRank;
         this.mmr = mmr;
         this.maxMmr = maxMmr;
         this.kills = kills;
-        this.deaths = deaths;
+        this.death = death;
         this.season = season;
         this.region = region;
         this.wins = wins;

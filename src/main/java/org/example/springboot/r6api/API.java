@@ -27,7 +27,7 @@ public class API {
 
 
 
-    public Map<String, Double> getOperatorsStat(String platform, String id) {
+    public String getOperatorsStat(String platform, String id) {
         Profile profile = getProfile(platform, id);
         String operatorsUrl = String.format(GENERAL_URL_TEMPLATE,
                 Platform.platformToSpaceId(platform),
@@ -41,11 +41,10 @@ public class API {
         JsonObject jsonObject = gson.fromJson(responseOperator, JsonObject.class);
         jsonObject = jsonObject.getAsJsonObject("results");
         String operatorStr = jsonObject.get(profile.getUserId()).toString();
-        Map<String, Double> operatorStat = gson.fromJson(operatorStr, Map.class);
-        return operatorStat;
+        return operatorStr;
     }
 
-    public GeneralPvp getGenernalPvp(String platform, String id) {
+    public String getGeneralPvp(String platform, String id) {
         Profile findIdProfile = getProfile(platform, id);
         String generalPvpUrl = String.format(GENERAL_URL_TEMPLATE,
                 Platform.platformToSpaceId(platform),
@@ -59,7 +58,29 @@ public class API {
         JsonObject jsonObject = gson.fromJson(responseGeneralPvp, JsonObject.class);
         jsonObject = jsonObject.getAsJsonObject("results");
         String generalPvpStr = jsonObject.get(findIdProfile.getUserId()).toString();
-        return gson.fromJson(generalPvpStr, GeneralPvp.class);
+        return generalPvpStr;
+    }
+
+    public String getRankStat(String platform, String id, int season) {
+        Profile findIdProfile = getProfile(platform, id);
+
+        String region = "apac";
+        String rankUrl = String.format(RANK_URL_TEMPLATE,
+                Platform.platformToSpaceId(platform),
+                Platform.platformToPlatformId(platform),
+                findIdProfile.getUserId(),
+                region,
+                season
+        );
+
+        String responseRankData = getDataUsingApi(rankUrl, authToken);
+        Gson gson = new GsonBuilder()
+                .setFieldNamingStrategy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        JsonObject rankStat = gson.fromJson(responseRankData, JsonObject.class);
+        rankStat = rankStat.get("players").getAsJsonObject().get(findIdProfile.getUserId()).getAsJsonObject();
+        return rankStat.toString();
     }
 
     public Profile getProfile(String platform, String id) {
@@ -69,30 +90,6 @@ public class API {
         JsonObject jsonObject = gson.fromJson(responseProfile, JsonObject.class);
         JsonArray jsonArray =jsonObject.get("profiles").getAsJsonArray();
         return gson.fromJson(jsonArray.get(0), Profile.class);
-    }
-
-    public String getRankStat(String platform, String id, int season) {
-        Profile findIdProfile = getProfile(platform, id);
-
-        String region = "apac";
-        String rankUrl =
-                String.format(RANK_URL_TEMPLATE,
-                            Platform.platformToSpaceId(platform),
-                            Platform.platformToPlatformId(platform),
-                            findIdProfile.getUserId(),
-                            region,
-                            season);
-
-        String responseRankData = getDataUsingApi(rankUrl, authToken);
-        Gson gson = new GsonBuilder()
-                .setFieldNamingStrategy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
-
-        JsonObject rankStat = gson.fromJson(responseRankData, JsonObject.class);
-        rankStat = rankStat.get("players").getAsJsonObject().get(findIdProfile.getUserId()).getAsJsonObject();
-        System.out.println(rankStat.toString());
-
-        return rankStat.toString();
     }
 
     private String getDataUsingApi(String requestUrl, AuthToken token) {

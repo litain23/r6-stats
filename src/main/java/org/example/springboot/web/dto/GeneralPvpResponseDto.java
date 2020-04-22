@@ -6,7 +6,7 @@ import org.example.springboot.r6api.GeneralPvp;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Getter
-public class GeneralResponseDto {
+public class GeneralPvpResponseDto {
     private int generalpvpMatchlost;
     private int generalpvpDeath;
     private int generalpvpPenetrationkills;
@@ -20,7 +20,7 @@ public class GeneralResponseDto {
     private int generalpvpKills;
     private int generalpvpHeadshot;
 
-    public GeneralResponseDto(GeneralPvp pvp) {
+    public GeneralPvpResponseDto(GeneralPvp pvp) {
         this.generalpvpMatchlost = pvp.getGeneralpvpMatchlost();
         this.generalpvpDeath = pvp.getGeneralpvpDeath();
         this.generalpvpPenetrationkills = pvp.getGeneralpvpPenetrationkills();

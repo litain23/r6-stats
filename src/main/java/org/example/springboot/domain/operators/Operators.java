@@ -18,7 +18,7 @@ public class Operators {
     private String uniqueStatisticName;
     private int uniqueStatisticOasisId;
     private int kills;
-    private int deaths;
+    private int death;
     private int headShot;
     private int meleeKills;
     private int totalXp;
@@ -29,14 +29,14 @@ public class Operators {
     public Operators() { }
 
     @Builder
-    public Operators(String name, String index, String category, String uniqueStatisticName, int uniqueStatisticOasisId, int kills, int deaths, int headShot, int meleeKills, int totalXp, int timePlayed, int roundWon, int roundLost) {
+    public Operators(String name, String index, String category, String uniqueStatisticName, int uniqueStatisticOasisId, int kills, int death, int headShot, int meleeKills, int totalXp, int timePlayed, int roundWon, int roundLost) {
         this.name = name;
         this.index = index;
         this.category = category;
         this.uniqueStatisticName = uniqueStatisticName;
         this.uniqueStatisticOasisId = uniqueStatisticOasisId;
         this.kills = kills;
-        this.deaths = deaths;
+        this.death = death;
         this.headShot = headShot;
         this.meleeKills = meleeKills;
         this.totalXp = totalXp;

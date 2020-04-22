@@ -55,7 +55,8 @@ public class OperatorsService {
                 .collect(Collectors.toList());
     }
 
-    private List<Operators> parseResponseStr(Map<String, Double> operatorMap) {
+    private List<Operators> parseResponseStr(String operatorStr) {
+        Map<String, Double> operatorMap = new Gson().fromJson(operatorStr, Map.class);
         Map<String, Map<String, Double>> groupByIndexMap = operatorMap.keySet()
                 .stream()
                 .collect(Collectors.groupingBy(key -> {
@@ -76,7 +77,7 @@ public class OperatorsService {
             Map<String, Double> operatorStat = groupByIndexMap.getOrDefault(index, Collections.EMPTY_MAP);
 
             Operators op = Operators.builder()
-                    .deaths(operatorStat.getOrDefault("death", 0.0).intValue())
+                    .death(operatorStat.getOrDefault("death", 0.0).intValue())
                     .roundLost(operatorStat.getOrDefault("roundlost", 0.0).intValue())
                     .roundWon(operatorStat.getOrDefault("roundwon", 0.0).intValue())
                     .timePlayed(operatorStat.getOrDefault("timeplayed", 0.0).intValue())

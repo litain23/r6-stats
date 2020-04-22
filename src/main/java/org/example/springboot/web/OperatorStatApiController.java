@@ -1,16 +1,13 @@
 package org.example.springboot.web;
 
 import lombok.RequiredArgsConstructor;
-import org.example.springboot.r6api.*;
 import org.example.springboot.service.operators.OperatorsService;
-import org.example.springboot.web.dto.GeneralResponseDto;
 import org.example.springboot.web.dto.OperatorListResponseDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
