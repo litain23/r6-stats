@@ -51,7 +51,7 @@ public class OperatorsService {
 
         return operatorsList.stream()
                 .map(OperatorListResponseDto::new)
-                .sorted(Comparator.comparing(OperatorListResponseDto::getIndex))
+                .sorted(Comparator.comparing(OperatorListResponseDto::getOperatorIndex))
                 .collect(Collectors.toList());
     }
 
@@ -73,7 +73,7 @@ public class OperatorsService {
 
         List<OperatorIndex> operatorIndexList = operatorIndexRepository.findAll();
         for(OperatorIndex operatorIndex : operatorIndexList) {
-            String index = operatorIndex.getIndex();
+            String index = operatorIndex.getOperatorIndex();
             Map<String, Double> operatorStat = groupByIndexMap.getOrDefault(index, Collections.EMPTY_MAP);
 
             Operators op = Operators.builder()

@@ -1,4 +1,4 @@
-INSERT INTO operator_index (name, name_oasis_id, ctu_oasis_id, index, category, statistic_pvp_id, statistic_pve_id, statistic_pvp_oasis_id, statistic_pve_oasis_id)
+INSERT INTO operator_index (name, name_oasis_id, ctu_oasis_id, operator_index, category, statistic_pvp_id, statistic_pve_id, statistic_pvp_oasis_id, statistic_pve_oasis_id)
 values ('caveira', 207671, 207757, '3:8', 'def', 'operatorpvp_caveira_interrogations:1:8', 'operatorpve_caveira_interrogations:1:8', 207945, 207952),
   ('smoke', 62253, 62015, '2:1', 'def','operatorpvp_smoke_poisongaskill:2:1', 'operatorpve_smoke_poisongaskill:2:1', 194660, 194660),
   ('mute', 62252, 62015, '3:1', 'def','operatorpvp_mute_gadgetjammed:3:1', 'operatorpve_mute_gadgetjammed:3:1', 194664, 194664),
