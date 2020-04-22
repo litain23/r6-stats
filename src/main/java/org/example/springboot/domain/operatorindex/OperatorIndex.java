@@ -24,7 +24,8 @@ public class OperatorIndex {
     private int ctuOasisId; // 오퍼레이터 소속 id
 
     @Column
-    private String index;
+    private String operatorIndex;
+
 
     @Column
     private String category;
@@ -45,11 +46,11 @@ public class OperatorIndex {
     }
 
     @Builder
-    public OperatorIndex(String name, int nameOasisId, int ctuOasisId, String index, String category, String statisticPvpId, String statisticPveId, int statisticPvpOasisId, int statisticPveOasisId) {
+    public OperatorIndex(String name, int nameOasisId, int ctuOasisId, String operatorIndex, String category, String statisticPvpId, String statisticPveId, int statisticPvpOasisId, int statisticPveOasisId) {
         this.name = name;
         this.nameOasisId = nameOasisId;
         this.ctuOasisId = ctuOasisId;
-        this.index = index;
+        this.operatorIndex = operatorIndex;
         this.category = category;
         this.statisticPvpId = statisticPvpId;
         this.statisticPveId = statisticPveId;

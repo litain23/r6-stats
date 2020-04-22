@@ -85,7 +85,7 @@ public class OperatorsService {
                     .meleeKills(operatorStat.getOrDefault("meleekills", 0.0).intValue())
                     .headShot(operatorStat.getOrDefault("headshot", 0.0).intValue())
                     .kills(operatorStat.getOrDefault("kills", 0.0).intValue())
-                    .index(index)
+                    .operatorIndex(index)
                     .category(operatorIndex.getCategory())
                     .name(operatorIndex.getName())
                     .uniqueStatisticName(operatorIndex.getStatisticPvpId())

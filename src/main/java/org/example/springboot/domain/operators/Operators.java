@@ -2,7 +2,6 @@ package org.example.springboot.domain.operators;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.example.springboot.domain.user.User;
 
 import javax.persistence.*;
 
@@ -17,7 +16,7 @@ public class Operators {
 //    private User user;
 
     private String name;
-    private String index;
+    private String operatorIndex;
     private String category;
     private String uniqueStatisticName;
     private int uniqueStatisticOasisId;
@@ -33,9 +32,9 @@ public class Operators {
     public Operators() { }
 
     @Builder
-    public Operators(String name, String index, String category, String uniqueStatisticName, int uniqueStatisticOasisId, int kills, int death, int headShot, int meleeKills, int totalXp, int timePlayed, int roundWon, int roundLost) {
+    public Operators(String name, String operatorIndex, String category, String uniqueStatisticName, int uniqueStatisticOasisId, int kills, int death, int headShot, int meleeKills, int totalXp, int timePlayed, int roundWon, int roundLost) {
         this.name = name;
-        this.index = index;
+        this.operatorIndex = operatorIndex;
         this.category = category;
         this.uniqueStatisticName = uniqueStatisticName;
         this.uniqueStatisticOasisId = uniqueStatisticOasisId;
