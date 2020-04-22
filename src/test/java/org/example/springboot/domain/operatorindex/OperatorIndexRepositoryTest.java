@@ -28,7 +28,7 @@ public class OperatorIndexRepositoryTest {
                 .findFirst()
                 .orElseThrow(NullPointerException::new);
 
-        assertThat(caveira.getIndex()).isEqualTo("1:8");
+        assertThat(caveira.getIndex()).isEqualTo("3:8");
 
     }
 }
