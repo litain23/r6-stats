@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Map;
 
 @Getter
 @Entity
@@ -59,5 +58,20 @@ public class RankStat {
         this.losses = losses;
         this.abandons = abandons;
         this.updateTime = updateTime;
+    }
+
+    public void updateRankStat(RankStat stat) {
+        this.maxMmr = stat.getMaxMmr();
+        this.death = stat.getDeath();
+        this.rank = stat.getRank();
+        this.maxRank = stat.getMaxRank();
+        this.kills = stat.getKills();
+        this.updateTime = stat.getUpdateTime();
+        this.abandons = stat.getAbandons();
+        this.mmr = stat.getMmr();
+        this.wins = stat.getWins();
+        this.region = stat.getRegion();
+        this.season = stat.getSeason();
+        this.losses = stat.getLosses();
     }
 }

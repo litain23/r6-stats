@@ -80,6 +80,16 @@ public class API {
 
         JsonObject rankStat = gson.fromJson(responseRankData, JsonObject.class);
         rankStat = rankStat.get("players").getAsJsonObject().get(findIdProfile.getUserId()).getAsJsonObject();
+
+        //season 13 까지 max_mmr 만 Double 로 들어옴 (ex. 3145.312)
+        Double maxMmr = rankStat.get("max_mmr").getAsDouble();
+        int intMaxMmr = maxMmr.intValue();
+        rankStat.addProperty("max_mmr", intMaxMmr);
+
+
+        // deaths => death 로 이름 변경 (death 로 통일)
+        int death = rankStat.get("deaths").getAsInt();
+        rankStat.addProperty("death", death);
         return rankStat.toString();
     }
 

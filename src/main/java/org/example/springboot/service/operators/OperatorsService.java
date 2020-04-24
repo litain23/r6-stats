@@ -1,14 +1,14 @@
 package org.example.springboot.service.operators;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import org.example.springboot.domain.operatorindex.OperatorIndex;
 import org.example.springboot.domain.operatorindex.OperatorIndexRepository;
 import org.example.springboot.domain.operators.Operators;
 import org.example.springboot.domain.operators.OperatorsRepository;
-import org.example.springboot.domain.user.User;
-import org.example.springboot.domain.user.UserRepository;
+import org.example.springboot.domain.player.Player;
+import org.example.springboot.domain.player.PlayerRepository;
+import org.example.springboot.domain.player.PlayerRepositoryBasic;
 import org.example.springboot.r6api.API;
 import org.example.springboot.r6api.AuthToken;
 import org.example.springboot.r6api.UbiAuthApi;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class OperatorsService {
     private final OperatorIndexRepository operatorIndexRepository;
     private final OperatorsRepository operatorsRepository;
-    private final UserRepository userRepository;
+    private final PlayerRepository playerRepository;
     private AuthToken token;
 
     @Transactional
@@ -32,21 +32,13 @@ public class OperatorsService {
         token = UbiAuthApi.getAuthToken();
         API api = new API(token);
 
-        User user = userRepository.findByPlatformAndAndUserId(platform, id);
-        if(user == null) {
-            user = userRepository.save(
-                    User.builder()
-                            .platform(platform)
-                            .userId(id)
-                            .build()
-            );
-        }
+        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
 
         List<Operators> operatorsList = parseResponseStr(api.getOperatorsStat(platform, id));
 
         for(Operators op : operatorsList) {
             operatorsRepository.save(op);
-            user.getOperatorsList().add(op);
+            player.getOperatorsList().add(op);
         }
 
         return operatorsList.stream()

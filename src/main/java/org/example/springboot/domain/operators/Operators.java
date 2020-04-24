@@ -2,6 +2,7 @@ package org.example.springboot.domain.operators;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.example.springboot.domain.player.Player;
 
 import javax.persistence.*;
 
@@ -12,8 +13,9 @@ public class Operators {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name="PLAYER_ID")
+    private Player player;
 
     private String name;
     private String operatorIndex;

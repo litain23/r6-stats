@@ -1,4 +1,4 @@
-package org.example.springboot.domain.user;
+package org.example.springboot.domain.player;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -12,41 +12,37 @@ import java.util.List;
 
 @Getter
 @Entity
-public class User {
+public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false)
-    private String userId;
+    private String playerId;
 
     @Column(nullable = false)
     private String platform;
 
-    @OneToMany
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "player")
     private List<Operators> operatorsList = new ArrayList<>();
 
     @OneToMany
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "player_id")
     private List<RankStat> rankList = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "generalpvp_id")
     private GeneralPvp generalPvp;
 
-    public User() { }
+    public Player() { }
 
     @Builder
-    public User(String platform, String userId) {
+    public Player(String platform, String playerId) {
         this.platform = platform;
-        this.userId = userId;
+        this.playerId = playerId;
     }
 
-    public void setOperatorsList(List<Operators> operatorsList) {
-        this.operatorsList = operatorsList;
-    }
     public void setGeneralPvp(GeneralPvp generalPvp) {
         this.generalPvp = generalPvp;
     }

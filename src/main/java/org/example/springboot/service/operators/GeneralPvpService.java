@@ -4,8 +4,9 @@ import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.example.springboot.domain.generalpvp.GeneralPvp;
 import org.example.springboot.domain.generalpvp.GeneralPvpRepository;
-import org.example.springboot.domain.user.User;
-import org.example.springboot.domain.user.UserRepository;
+import org.example.springboot.domain.player.Player;
+import org.example.springboot.domain.player.PlayerRepository;
+import org.example.springboot.domain.player.PlayerRepositoryBasic;
 import org.example.springboot.r6api.API;
 import org.example.springboot.r6api.AuthToken;
 import org.example.springboot.r6api.UbiAuthApi;
@@ -18,25 +19,17 @@ import java.util.Map;
 @Service
 public class GeneralPvpService {
     private final GeneralPvpRepository generalPvpRepository;
-    private final UserRepository userRepository;
+    private final PlayerRepository playerRepository;
 
     public GeneralPvpResponseDto getGeneralPvp(String platform, String id) {
         AuthToken token = UbiAuthApi.getAuthToken();
 
-        User user = userRepository.findByPlatformAndAndUserId(platform, id);
-        if(user == null) {
-            user = userRepository.save(
-                    User.builder()
-                            .platform(platform)
-                            .userId(id)
-                            .build()
-            );
-        }
+        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
 
         API api = new API(token);
         GeneralPvp generalPvp = parseResponseStr(api.getGeneralPvp(platform, id));
         generalPvpRepository.save(generalPvp);
-        user.setGeneralPvp(generalPvp);
+        player.setGeneralPvp(generalPvp);
 
         return new GeneralPvpResponseDto(generalPvp);
     }
