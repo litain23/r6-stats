@@ -1,11 +1,12 @@
 package org.example.springboot.web;
 
 import lombok.RequiredArgsConstructor;
-import org.example.springboot.r6api.*;
-import org.example.springboot.service.operators.RankStatService;
+import org.example.springboot.service.RankStatService;
 import org.example.springboot.web.dto.RankStatResponseDto;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

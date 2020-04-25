@@ -1,4 +1,4 @@
-package org.example.springboot.service.operators;
+package org.example.springboot.service;
 
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -6,7 +6,6 @@ import org.example.springboot.domain.generalpvp.GeneralPvp;
 import org.example.springboot.domain.generalpvp.GeneralPvpRepository;
 import org.example.springboot.domain.player.Player;
 import org.example.springboot.domain.player.PlayerRepository;
-import org.example.springboot.domain.player.PlayerRepositoryBasic;
 import org.example.springboot.r6api.API;
 import org.example.springboot.r6api.AuthToken;
 import org.example.springboot.r6api.UbiAuthApi;

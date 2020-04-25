@@ -1,4 +1,4 @@
-package org.example.springboot.service.operators;
+package org.example.springboot.service;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;

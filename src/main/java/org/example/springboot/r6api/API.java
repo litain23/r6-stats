@@ -1,7 +1,6 @@
 package org.example.springboot.r6api;
 
 import com.google.gson.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -10,9 +9,6 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class API {
     private static final String RANK_URL_TEMPLATE = "https://public-ubiservices.ubi.com/v1/spaces/%s/sandboxes/%s/r6karma/players?board_id=pvp_ranked&profile_ids=%s&region_id=%s&season_id=%s";

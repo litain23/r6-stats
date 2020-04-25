@@ -1,7 +1,7 @@
 package org.example.springboot.web;
 
 import lombok.RequiredArgsConstructor;
-import org.example.springboot.service.operators.GeneralPvpService;
+import org.example.springboot.service.GeneralPvpService;
 import org.example.springboot.web.dto.GeneralPvpResponseDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
