@@ -53,3 +53,6 @@ values ('caveira', 207671, 207757, '3:8', 'def', 'operatorpvp_caveira_interrogat
   ('wamai', 310768, 310754, '3:17', 'def','operatorpvp_wamai_gadgetdestroybymagnet:3:17', 'operatorpve_wamai_gadgetdestroybymagnet:3:17', 312719, 312719),
   ('oryx', 317965, 318172, '2:18', 'def','operatorpvp_oryx_killsafterdash:2:18', 'operatorpve_oryx_killsafterdash:2:18', 318856, 318856),
   ('iana', 317976, 318171, '2:19', 'atk','operatorpvp_iana_killsafterreplicator:2:19', 'operatorpve_iana_killsafterreplicator:2:19', 318857, 318857);
+
+-- INSERT INTO user_profile (username, email, password, is_enable, api_using_cnt)
+-- value ('test', 'test@test.com', 'password', false, 0);
