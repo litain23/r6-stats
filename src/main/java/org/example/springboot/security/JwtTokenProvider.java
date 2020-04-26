@@ -5,7 +5,6 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -14,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
@@ -33,7 +33,7 @@ public class JwtTokenProvider {
 
     private SecretKey getSignKey() {
        byte[] keyBytes = Decoders.BASE64.decode(secret);
-       return Keys.hmacShaKeyFor(keyBytes);
+       return new SecretKeySpec(keyBytes, SignatureAlgorithm.HS256.getJcaName());
     }
 
     public String generateToken(String username) {
@@ -64,8 +64,10 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request) {
+        System.out.println("resolve token");
         String token = request.getHeader("Authorization");
         if(token != null && token.startsWith("Bearer ")) {
+            System.out.println("token : " + token.substring(7));
             return token.substring(7);
         }
         return null;

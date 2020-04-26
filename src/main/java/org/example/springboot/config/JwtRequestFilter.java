@@ -1,5 +1,6 @@
 package org.example.springboot.config;
 
+
 import lombok.RequiredArgsConstructor;
 import org.example.springboot.security.JwtTokenProvider;
 import org.springframework.security.core.Authentication;
@@ -15,7 +16,7 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @Component
-public class RequestFilter extends OncePerRequestFilter {
+public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
 
