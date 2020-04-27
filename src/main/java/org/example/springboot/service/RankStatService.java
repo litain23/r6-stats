@@ -26,34 +26,33 @@ public class RankStatService {
     private AuthToken token;
 
     @Transactional
-    public RankStatResponseDto updateCurrentSeasonRankStat(String platform, String id, int season) {
+    public RankStatResponseDto getRankStat(String platform, String id, int season) {
         token = UbiAuthApi.getAuthToken();
         API api = new API(token);
         Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
 
+        RankStat currentRankStat = parseResponseStr(api.getRankStat(platform, id, season));
+        int currentSeason = currentRankStat.getSeason();
+
         List<RankStat> playerRankList = player.getRankList();
-
-        RankStat rankStat = parseResponseStr(api.getRankStat(platform, id, season));
-        int currentSeason = rankStat.getSeason();
-
-        RankStat savedPlayerRankStat = playerRankList.stream()
-                .filter(stat -> stat.getSeason() == currentSeason)
-                .findFirst()
-                .orElseGet(null);
-
-
-        if(savedPlayerRankStat == null) {
-            if(rankStat.getMaxMmr() == 0) {
-                return null;
-            } else {
-                rankRepository.save(rankStat);
-                player.getRankList().add(rankStat);
+        if(playerRankList.isEmpty()) {
+            for(int ss = 1; ss <= currentSeason; ss++) {
+                RankStat rankstat = parseResponseStr(api.getRankStat(platform, id, ss));
+                rankRepository.save(rankstat);
+                playerRankList.add(rankstat);
             }
         } else {
-            savedPlayerRankStat.updateRankStat(rankStat);
+            RankStat lastRankStat = playerRankList.get(playerRankList.size() - 1);
+            // 플레이어의 마지막 랭크 시즌이 현재 시즌과 같으면 업데이트, 아니면 Add
+            if(lastRankStat.getSeason() == currentSeason) {
+                lastRankStat.updateRankStat(currentRankStat);
+            } else {
+                rankRepository.save(currentRankStat);
+                playerRankList.add(currentRankStat);
+            }
         }
 
-        return new RankStatResponseDto(rankStat);
+        return new RankStatResponseDto(currentRankStat);
     }
 
     @Transactional
@@ -66,16 +65,22 @@ public class RankStatService {
         int currentSeason = currentRankStat.getSeason();
 
         List<RankStat> playerRankList = player.getRankList();
-        for(int season = 1; season < currentSeason; season++) {
-            RankStat rankstat = parseResponseStr(api.getRankStat(platform, id, season));
-            if(rankstat.getMaxMmr() == 0) {
-                continue;
+        if(playerRankList.isEmpty()) {
+            for(int season = 1; season <= currentSeason; season++) {
+                RankStat rankstat = parseResponseStr(api.getRankStat(platform, id, season));
+                rankRepository.save(rankstat);
+                playerRankList.add(rankstat);
             }
-            rankRepository.save(rankstat);
-            playerRankList.add(rankstat);
+        } else {
+            RankStat lastRankStat = playerRankList.get(playerRankList.size() - 1);
+            // 플레이어의 마지막 랭크 시즌이 현재 시즌과 같으면 업데이트, 아니면 Add
+            if(lastRankStat.getSeason() == currentSeason) {
+                lastRankStat.updateRankStat(currentRankStat);
+            } else {
+                rankRepository.save(currentRankStat);
+                playerRankList.add(currentRankStat);
+            }
         }
-        rankRepository.save(currentRankStat);
-        playerRankList.add(currentRankStat);
 
         return playerRankList.stream()
                     .map(RankStatResponseDto::new)
@@ -89,5 +94,4 @@ public class RankStatService {
 
         return gson.fromJson(strJson, RankStat.class);
     }
-
 }

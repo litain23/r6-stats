@@ -4,4 +4,5 @@ build/
 
 .idea
 
-ubi-login.json
+ubi-login.properties
+jwt-secret.properties

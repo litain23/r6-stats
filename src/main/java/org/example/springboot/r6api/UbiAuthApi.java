@@ -1,5 +1,12 @@
 package org.example.springboot.r6api;
 
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -9,19 +16,29 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
-import java.util.Map;
 
-import com.google.gson.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
-
-import javax.swing.plaf.IconUIResource;
-
+@PropertySource("classpath:ubi-login.properties")
+@Component
 public class UbiAuthApi {
     private final static String LOGIN_API_URL = "https://public-ubiservices.ubi.com/v3/profiles/sessions";
     private static UbiAuthApi ubiAuthApi = new UbiAuthApi();
     public final static String UPP_APP_ID = "39baebad-39e5-4552-8c25-2c9b919064e2";
     private static AuthToken token = null;
+
+    private static String email;
+
+    private static String pw;
+
+
+    @Value("${ubi.email}")
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Value("${ubi.pw}")
+    public void setPw(String pw) {
+        this.pw = pw;
+    }
 
 
     private static String encodeBase64(String email, String pw) throws UnsupportedEncodingException {
@@ -34,7 +51,7 @@ public class UbiAuthApi {
         }
 
         try {
-            String encodedIdPw = getEncodedIdPw();
+            String encodedIdPw = encodeBase64(email, pw);
 
             URL url = new URL(LOGIN_API_URL);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -74,20 +91,6 @@ public class UbiAuthApi {
         }
         return null;
     }
-
-    private static String getEncodedIdPw() throws FileNotFoundException, UnsupportedEncodingException{
-        try {
-            Map<String, String> loginIdPwMap = new Gson().fromJson(new FileReader("ubi-login.json"), Map.class);
-            String email = loginIdPwMap.get("email");
-            String passwd = loginIdPwMap.get("pw");
-            return encodeBase64(email, passwd);
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("ubi-login.json don't exist");
-        } catch (UnsupportedEncodingException e) {
-            throw new UnsupportedEncodingException("Unsupported encoding");
-        }
-    }
-
 
     private static boolean checkTokenSessionTime() {
         String expirationTimeStr = token.getExpiration().split("\\.")[0];
