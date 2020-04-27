@@ -21,31 +21,20 @@ import java.util.Base64;
 @Component
 public class UbiAuthApi {
     private final static String LOGIN_API_URL = "https://public-ubiservices.ubi.com/v3/profiles/sessions";
-    private static UbiAuthApi ubiAuthApi = new UbiAuthApi();
     public final static String UPP_APP_ID = "39baebad-39e5-4552-8c25-2c9b919064e2";
-    private static AuthToken token = null;
-
-    private static String email;
-
-    private static String pw;
-
+    private AuthToken token = null;
 
     @Value("${ubi.email}")
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    private String email;
 
     @Value("${ubi.pw}")
-    public void setPw(String pw) {
-        this.pw = pw;
-    }
+    private String pw;
 
-
-    private static String encodeBase64(String email, String pw) throws UnsupportedEncodingException {
+    private String encodeBase64(String email, String pw) throws UnsupportedEncodingException {
         return Base64.getEncoder().encodeToString((email+":"+pw).getBytes("UTF-8"));
     }
 
-    public static AuthToken getAuthToken() {
+    public AuthToken getAuthToken() {
         if(token != null && checkTokenSessionTime()) {
             return token;
         }
@@ -92,7 +81,7 @@ public class UbiAuthApi {
         return null;
     }
 
-    private static boolean checkTokenSessionTime() {
+    private boolean checkTokenSessionTime() {
         String expirationTimeStr = token.getExpiration().split("\\.")[0];
         ZoneId UTC_1 = ZoneId.of("UTC+1");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");

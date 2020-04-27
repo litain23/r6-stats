@@ -8,9 +8,7 @@ import org.example.springboot.domain.operators.Operators;
 import org.example.springboot.domain.operators.OperatorsRepository;
 import org.example.springboot.domain.player.Player;
 import org.example.springboot.domain.player.PlayerRepository;
-import org.example.springboot.r6api.API;
-import org.example.springboot.r6api.AuthToken;
-import org.example.springboot.r6api.UbiAuthApi;
+import org.example.springboot.r6api.UbiApi;
 import org.example.springboot.web.dto.OperatorListResponseDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,16 +22,13 @@ public class OperatorsService {
     private final OperatorIndexRepository operatorIndexRepository;
     private final OperatorsRepository operatorsRepository;
     private final PlayerRepository playerRepository;
-    private AuthToken token;
+    private final UbiApi ubiApi;
 
     @Transactional
     public List<OperatorListResponseDto> getRankStat(String platform, String id) {
-        token = UbiAuthApi.getAuthToken();
-        API api = new API(token);
-
         Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
 
-        List<Operators> operatorsList = parseResponseStr(api.getOperatorsStat(platform, id));
+        List<Operators> operatorsList = parseResponseStr(ubiApi.getOperatorsStat(platform, id));
 
         for(Operators op : operatorsList) {
             operatorsRepository.save(op);

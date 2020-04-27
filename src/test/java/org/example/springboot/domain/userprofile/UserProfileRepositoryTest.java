@@ -1,12 +1,11 @@
 package org.example.springboot.domain.userprofile;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,21 +16,27 @@ public class UserProfileRepositoryTest {
     @Autowired
     UserProfileRepository userProfileRepository;
 
+    @After
+    public void cleanup() {
+        UserProfile userProfile = userProfileRepository.findByUsername("mytest123!@#").get();
+        userProfileRepository.delete(userProfile);
+    }
+
     @Test
-    public void 유저_레파지토리_저장_테스트() {
+    public void 유저_레파지토리_저장_검색_테스트() {
         UserProfile userProfile =
                 UserProfile.builder()
                 .email("aaa@naver.com")
                 .password("password")
-                .username("hello")
+                .username("mytest123!@#")
                 .isEnabled(true)
                 .build();
+
         userProfileRepository.save(userProfile);
 
-        List<UserProfile> userProfileList = userProfileRepository.findAll();
+        UserProfile findProfile = userProfileRepository.findByUsername("mytest123!@#").get();
 
-        assertThat(userProfileList.get(0).getEmail()).isEqualTo("aaa@naver.com");
-
+        assertThat(findProfile.getUsername()).isEqualTo(userProfile.getUsername());
     }
 
 }
