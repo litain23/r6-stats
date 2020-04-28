@@ -30,10 +30,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").access("hasIpAddress('127.0.0.1')")
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/signin").permitAll()
+                .antMatchers("/**").access("hasIpAddress('127.0.0.1')")
                 .anyRequest().authenticated()
                 .and().headers().frameOptions().sameOrigin();
 

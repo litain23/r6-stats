@@ -6,7 +6,6 @@ import org.example.springboot.service.UserProfileService;
 import org.example.springboot.web.dto.JwtRequestDto;
 import org.example.springboot.web.dto.JwtResponseDto;
 import org.example.springboot.web.dto.SignUpRequestDto;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -28,7 +27,7 @@ public class JwtAuthenticationController {
     private final UserProfileService userProfileService;
 
     @PostMapping("/signin")
-    public ResponseEntity signin(@RequestBody JwtRequestDto authenticationRequest) throws Exception {
+    public ResponseEntity signin(@RequestBody JwtRequestDto authenticationRequest) throws BadCredentialsException {
         try {
             String username = authenticationRequest.getUsername();
             String password = authenticationRequest.getPassword();
@@ -42,14 +41,9 @@ public class JwtAuthenticationController {
     }
 
     @PostMapping
-    public ResponseEntity signup(@RequestBody SignUpRequestDto signUpRequestDto) {
-        try {
-            userProfileService.saveUser(signUpRequestDto);
-            return new ResponseEntity<>("hello", HttpStatus.ACCEPTED);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
-        }
-
+    public ResponseEntity signup(@RequestBody SignUpRequestDto signUpRequestDto) throws IllegalArgumentException{
+        userProfileService.saveUser(signUpRequestDto);
+        return ResponseEntity.ok("good");
     }
 
 }
