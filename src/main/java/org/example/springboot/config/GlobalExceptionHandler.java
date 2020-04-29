@@ -1,5 +1,8 @@
 package org.example.springboot.config;
 
+import org.example.springboot.exception.r6api.R6BadAuthenticationException;
+import org.example.springboot.exception.r6api.R6ErrorException;
+import org.example.springboot.exception.r6api.R6NotFoundPlayerProfileException;
 import org.example.springboot.web.dto.ErrorResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +28,23 @@ public class GlobalExceptionHandler {
         errorResponseDto.setStatus(400);
 
         return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
+    }
 
+    @ExceptionHandler(R6ErrorException.class)
+    protected ResponseEntity<ErrorResponseDto> handleR6ErrorException(R6ErrorException e) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(e.getMessage(), 500);
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(R6NotFoundPlayerProfileException.class)
+    protected ResponseEntity<ErrorResponseDto> handleR6NotFoundPlayerProfileException(R6NotFoundPlayerProfileException e) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(e.getMessage(), 400);
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(R6BadAuthenticationException.class)
+    protected ResponseEntity<ErrorResponseDto> handleR6BadAuthenticationException(R6BadAuthenticationException e) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(e.getMessage(), 500);
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

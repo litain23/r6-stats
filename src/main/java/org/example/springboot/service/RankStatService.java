@@ -23,14 +23,12 @@ public class RankStatService {
     private final PlayerRepository playerRepository;
     private final UbiApi ubiApi;
 
-
-
     @Transactional
     public RankStatResponseDto getRankStat(String platform, String id, int season) {
-        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
-
         RankStat currentRankStat = parseResponseStr(ubiApi.getRankStat(platform, id, season));
         int currentSeason = currentRankStat.getSeason();
+
+        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
 
         List<RankStat> playerRankList = player.getRankList();
         if(playerRankList.isEmpty()) {

@@ -2,6 +2,7 @@ package org.example.springboot.r6api;
 
 import com.google.gson.*;
 import lombok.RequiredArgsConstructor;
+import org.example.springboot.exception.r6api.R6NotFoundPlayerProfileException;
 import org.springframework.stereotype.Component;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -88,12 +89,17 @@ public class UbiApi {
     }
 
     public Profile getProfile(String platform, String id) {
-        String profileUrl = String.format(PROFILE_URL_TEMPLATE, platform, id);
-        String responseProfile = getDataUsingApi(profileUrl);
-        Gson gson = new Gson();
-        JsonObject jsonObject = gson.fromJson(responseProfile, JsonObject.class);
-        JsonArray jsonArray =jsonObject.get("profiles").getAsJsonArray();
-        return gson.fromJson(jsonArray.get(0), Profile.class);
+        try {
+            String profileUrl = String.format(PROFILE_URL_TEMPLATE, platform, id);
+            String responseProfile = getDataUsingApi(profileUrl);
+            Gson gson = new Gson();
+            JsonObject jsonObject = gson.fromJson(responseProfile, JsonObject.class);
+            JsonArray jsonArray =jsonObject.get("profiles").getAsJsonArray();
+            return gson.fromJson(jsonArray.get(0), Profile.class);
+        } catch (IndexOutOfBoundsException e) {
+            throw new R6NotFoundPlayerProfileException("Not found player id or platform");
+        }
+
     }
 
     private String getDataUsingApi(String requestUrl) {

@@ -1,16 +1,14 @@
 package org.example.springboot.r6api;
 
 import com.google.gson.Gson;
+import org.example.springboot.exception.r6api.R6BadAuthenticationException;
+import org.example.springboot.exception.r6api.R6ErrorException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -62,23 +60,15 @@ public class UbiAuthApi {
                 token = new Gson().fromJson(br.readLine(), AuthToken.class);
                 return token;
             } else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED || responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
-                throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "ubi-soft login failed");
+                throw new R6BadAuthenticationException("fail to login ubi-soft");
+            } else {
+                throw new R6ErrorException("fail to get Authentication Token");
             }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }  catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+            throw new R6ErrorException("encode fail");
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (HttpClientErrorException e) {
-            e.printStackTrace();
+            throw new R6ErrorException("fail to get Authentication Token");
         }
-        return null;
     }
 
     private boolean checkTokenSessionTime() {
