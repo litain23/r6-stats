@@ -19,7 +19,6 @@ public class UserProfileService {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         isSamePassword(requestDto);
-        hasSameUsername(requestDto);
 
         UserProfile newUser = UserProfile.builder()
                 .username(requestDto.getUsername())
@@ -37,16 +36,6 @@ public class UserProfileService {
 
         if(!password.equals(password2)) {
             throw new IllegalArgumentException("two password is different");
-        } else {
-            return;
-        }
-    }
-
-    private void hasSameUsername(SignUpRequestDto signUpRequestDto) {
-        String username = signUpRequestDto.getUsername();
-        UserProfile userProfile = userProfileRepository.findByUsername(username).orElse(null);
-        if(userProfile != null) {
-            throw  new IllegalArgumentException("already exists same username");
         } else {
             return;
         }
