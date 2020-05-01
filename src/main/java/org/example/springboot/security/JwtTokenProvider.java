@@ -6,10 +6,12 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import lombok.RequiredArgsConstructor;
+import org.example.springboot.exception.user.UserAuthenticationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -71,7 +73,6 @@ public class JwtTokenProvider {
         return null;
     }
 
-
     public Authentication getAuthentication(String token) {
         Claims claims = getClaimsFromToken(token);
         UserProfileDetails userProfileDetails = userProfileDetailsService.loadUserByUsername(getUsername(claims));
@@ -86,9 +87,7 @@ public class JwtTokenProvider {
                 .getBody();
     }
 
-
-
-    public boolean validateToken(String token) throws JwtException {
+    public boolean validateToken(String token) {
         try {
             Claims claims = getClaimsFromToken(token);
 

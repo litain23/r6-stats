@@ -3,6 +3,7 @@ package org.example.springboot.config;
 import org.example.springboot.exception.r6api.R6BadAuthenticationException;
 import org.example.springboot.exception.r6api.R6ErrorException;
 import org.example.springboot.exception.r6api.R6NotFoundPlayerProfileException;
+import org.example.springboot.exception.user.UserAuthenticationException;
 import org.example.springboot.exception.user.UserValidateException;
 import org.example.springboot.web.dto.ErrorResponseDto;
 import org.springframework.http.HttpStatus;
@@ -56,5 +57,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
     }
 
-
+    @ExceptionHandler(UserAuthenticationException.class)
+    protected ResponseEntity<ErrorResponseDto> handlerUserAuthenticationException(UserAuthenticationException e) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(e.getMessage(), 400);
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
+    }
 }

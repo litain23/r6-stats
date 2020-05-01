@@ -2,6 +2,7 @@ package org.example.springboot.config;
 
 
 import lombok.RequiredArgsConstructor;
+import org.example.springboot.security.JwtAuthenticationEntryPoint;
 import org.example.springboot.security.UserProfileDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,7 +36,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/signin").permitAll()
                 .antMatchers("/**").access("hasIpAddress('127.0.0.1')")
                 .anyRequest().authenticated()
+                .and().exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint())
                 .and().headers().frameOptions().sameOrigin();
+
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
