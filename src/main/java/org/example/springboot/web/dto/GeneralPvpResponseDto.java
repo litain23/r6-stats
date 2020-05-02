@@ -1,9 +1,7 @@
 package org.example.springboot.web.dto;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import org.example.springboot.domain.generalpvp.GeneralPvp;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Getter
 public class GeneralPvpResponseDto {
@@ -32,6 +30,6 @@ public class GeneralPvpResponseDto {
         this.totalHeadShot = pvp.getTotalHeadShot();
         this.totalRevive = pvp.getTotalRevive();
         this.totalBulletHit = pvp.getTotalBulletHit();
-        this.totalTimePlayed = pvp.getTotalMatchPlayed();
+        this.totalTimePlayed = pvp.getTotalTimePlayed();
     }
 }

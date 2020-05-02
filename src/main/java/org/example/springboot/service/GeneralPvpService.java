@@ -32,7 +32,7 @@ public class GeneralPvpService {
     private GeneralPvp parseResponseStr(String generalPvpStr) {
         Map<String, Double> generalPvpMap = new Gson().fromJson(generalPvpStr, Map.class);
 
-        int totalMatchLost = generalPvpMap.getOrDefault("generalpvp_timeplayed:infinite", 0.0).intValue();
+        int totalMatchLost = generalPvpMap.getOrDefault("generalpvp_matchlost:infinite", 0.0).intValue();
         int totalMatchWon = generalPvpMap.getOrDefault("generalpvp_matchwon:infinite", 0.0).intValue();;
         int totalMatchPlayed = generalPvpMap.getOrDefault("generalpvp_matchplayed:infinite", 0.0).intValue();;
         int totalKills = generalPvpMap.getOrDefault("generalpvp_kills:infinite", 0.0).intValue();
