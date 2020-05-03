@@ -74,8 +74,6 @@ public class OperatorsService {
                     .operatorIndex(index)
                     .category(operatorIndex.getCategory())
                     .name(operatorIndex.getName())
-                    .uniqueStatisticName(operatorIndex.getStatisticPvpId())
-                    .uniqueStatisticOasisId(operatorIndex.getStatisticPvpOasisId())
                     .build();
 
             operatorsList.add(op);

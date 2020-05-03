@@ -18,7 +18,7 @@ public class UserProfileService {
     public Long saveUser(SignUpRequestDto requestDto) throws IllegalArgumentException {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        isSamePassword(requestDto);
+//        isSamePassword(requestDto);
 
         UserProfile newUser = UserProfile.builder()
                 .username(requestDto.getUsername())

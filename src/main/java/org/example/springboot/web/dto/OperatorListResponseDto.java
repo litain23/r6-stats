@@ -7,8 +7,6 @@ import org.example.springboot.domain.operators.Operators;
 public class OperatorListResponseDto {
     private String name;
     private String operatorIndex;
-    private String uniqueStatisticName;
-    private int uniqueStatisticOasisId;
     private int kills;
     private int death;
     private int headShot;
@@ -21,8 +19,6 @@ public class OperatorListResponseDto {
     public OperatorListResponseDto(Operators operator) {
         this.name = operator.getName();
         this.operatorIndex = operator.getOperatorIndex();
-        this.uniqueStatisticOasisId = operator.getUniqueStatisticOasisId();
-        this.uniqueStatisticName = operator.getUniqueStatisticName();
         this.kills = operator.getKills();
         this.death = operator.getDeath();
         this.headShot = operator.getHeadShot();

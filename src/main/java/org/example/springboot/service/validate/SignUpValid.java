@@ -5,11 +5,11 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Target({ElementType.METHOD, ElementType.FIELD})
-@Constraint(validatedBy = PasswordValidator.class)
+@Target({ElementType.TYPE})
+@Constraint(validatedBy = SignUpValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PasswordValid {
-    String message() default "two password is different";
+public @interface SignUpValid {
+    String message() default "sign up request is wrong";
 
     Class<?>[] groups() default {};
 
