@@ -31,4 +31,9 @@ public class UbiApiTest {
         String id = "nxjklc91230-xczsad";
         String operatorStat = ubiApi.getOperatorsStat("uplay", id);
     }
+
+    @Test
+    public void test() {
+        System.out.println(ubiApi.getGeneralPvp("uplay", "piliot"));
+    }
 }

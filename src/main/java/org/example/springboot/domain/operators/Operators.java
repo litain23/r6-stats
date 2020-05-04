@@ -3,8 +3,10 @@ package org.example.springboot.domain.operators;
 import lombok.Builder;
 import lombok.Getter;
 import org.example.springboot.domain.player.Player;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -29,7 +31,14 @@ public class Operators {
     private int roundWon;
     private int roundLost;
 
+    @CreationTimestamp
+    private LocalDateTime createTime;
+
     public Operators() { }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
     @Builder
     public Operators(String name, String operatorIndex, String category, int kills, int death, int headShot, int meleeKills, int totalXp, int timePlayed, int roundWon, int roundLost) {

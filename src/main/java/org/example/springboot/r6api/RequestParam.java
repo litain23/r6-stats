@@ -14,7 +14,25 @@ public class RequestParam {
             "generalpvp_kills",
             "generalpvp_death",
             "generalpvp_bullethit",
-            "generalpvp_bulletfired"
+            "generalpvp_bulletfired",
+    };
+
+    public static final String[] CASUAL_PVP = {
+            "casualpvp_death:infinite",
+            "casualpvp_kills:infinite",
+            "casualpvp_matchlost:infinite",
+            "casualpvp_matchplayed:infinite",
+            "casualpvp_matchwon:infinite",
+            "casualpvp_timeplayed:infinite"
+    };
+
+    public static final String[] RANK_PVP = {
+            "rankedpvp_death:infinite",
+            "rankedpvp_kills:infinite",
+            "rankedpvp_matchlost:infinite",
+            "rankedpvp_matchplayed:infinite",
+            "rankedpvp_matchwon:infinite",
+            "rankedpvp_timeplayed:infinite"
     };
 
     public static final String[] OPERATORS = {

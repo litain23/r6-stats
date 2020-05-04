@@ -30,10 +30,15 @@ public class OperatorsService {
 
         List<Operators> operatorsList = parseResponseStr(ubiApi.getOperatorsStat(platform, id));
 
+        List<Operators> playerOperatorList = player.getOperatorsList();
         for(Operators op : operatorsList) {
+            op.setPlayer(player);
             operatorsRepository.save(op);
-            player.getOperatorsList().add(op);
+
+            playerOperatorList.add(op);
         }
+
+
 
         return operatorsList.stream()
                 .map(OperatorListResponseDto::new)

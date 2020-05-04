@@ -5,6 +5,7 @@ import org.example.springboot.service.RankStatService;
 import org.example.springboot.web.dto.RankStatResponseDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -23,9 +24,10 @@ public class RankApiController {
 
     @GetMapping("/api/v1/rank/{platform}/{id}")
     public RankStatResponseDto getRankStat(@PathVariable String platform,
-                                        @PathVariable String id) {
+                                           @PathVariable String id,
+                                           @RequestParam(defaultValue = "-1", required = false) int season) {
 
-        return rankStatService.getRankStat(platform, id, -1);
+        return rankStatService.getRankStat(platform, id, season);
     }
 
 }

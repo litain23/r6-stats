@@ -23,37 +23,55 @@ public class UbiApi {
     private final UbiAuthApi ubiAuthApi;
 
     public String getOperatorsStat(String platform, String id) {
-        Profile profile = getProfile(platform, id);
+        Profile findProfile = getProfile(platform, id);
         String operatorsUrl = String.format(GENERAL_URL_TEMPLATE,
                 Platform.platformToSpaceId(platform),
                 Platform.platformToPlatformId(platform),
-                profile.getUserId(),
+                findProfile.getUserId(),
                 String.join(",", RequestParam.OPERATORS)
         );
 
         String responseOperator = getDataUsingApi(operatorsUrl);
-        Gson gson = new Gson();
-        JsonObject jsonObject = gson.fromJson(responseOperator, JsonObject.class);
-        jsonObject = jsonObject.getAsJsonObject("results");
-        String operatorStr = jsonObject.get(profile.getUserId()).toString();
-        return operatorStr;
+        return parseGeneralTemplateUrlResponse(responseOperator, findProfile.getUserId());
     }
 
     public String getGeneralPvp(String platform, String id) {
-        Profile findIdProfile = getProfile(platform, id);
+        Profile findProfile = getProfile(platform, id);
         String generalPvpUrl = String.format(GENERAL_URL_TEMPLATE,
                 Platform.platformToSpaceId(platform),
                 Platform.platformToPlatformId(platform),
-                findIdProfile.getUserId(),
+                findProfile.getUserId(),
                 String.join(",", RequestParam.GENERAL_PVP)
         );
 
         String responseGeneralPvp = getDataUsingApi(generalPvpUrl);
-        Gson gson = new Gson();
-        JsonObject jsonObject = gson.fromJson(responseGeneralPvp, JsonObject.class);
-        jsonObject = jsonObject.getAsJsonObject("results");
-        String generalPvpStr = jsonObject.get(findIdProfile.getUserId()).toString();
-        return generalPvpStr;
+        return parseGeneralTemplateUrlResponse(responseGeneralPvp, findProfile.getUserId());
+    }
+
+    public String getCasualPvp(String platform, String id) {
+        Profile findProfile = getProfile(platform, id);
+        String casualPvpUrl = String.format(GENERAL_URL_TEMPLATE,
+                Platform.platformToSpaceId(platform),
+                Platform.platformToPlatformId(platform),
+                findProfile.getUserId(),
+                String.join(",", RequestParam.CASUAL_PVP)
+        );
+
+        String responseCasualPvp = getDataUsingApi(casualPvpUrl);
+        return parseGeneralTemplateUrlResponse(responseCasualPvp, findProfile.getUserId());
+    }
+
+    public String getRankPvp(String platform, String id) {
+        Profile findProfile = getProfile(platform, id);
+        String rankPvpUrl = String.format(GENERAL_URL_TEMPLATE,
+                Platform.platformToSpaceId(platform),
+                Platform.platformToPlatformId(platform),
+                findProfile.getUserId(),
+                String.join(",", RequestParam.CASUAL_PVP)
+        );
+
+        String responseRankPvp = getDataUsingApi(rankPvpUrl);
+        return parseGeneralTemplateUrlResponse(responseRankPvp, findProfile.getUserId());
     }
 
     public String getRankStat(String platform, String id, int season) {
@@ -88,6 +106,17 @@ public class UbiApi {
         return rankStat.toString();
     }
 
+
+
+    private String parseGeneralTemplateUrlResponse(String response, String userId) {
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
+        jsonObject = jsonObject.getAsJsonObject("results");
+        String parsedStr = jsonObject.get(userId).toString();
+        return parsedStr;
+    }
+
+
     public Profile getProfile(String platform, String id) {
         try {
             String profileUrl = String.format(PROFILE_URL_TEMPLATE, platform, id);
@@ -99,7 +128,6 @@ public class UbiApi {
         } catch (IndexOutOfBoundsException e) {
             throw new R6NotFoundPlayerProfileException("Not found player id or platform");
         }
-
     }
 
     private String getDataUsingApi(String requestUrl) {

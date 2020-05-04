@@ -27,8 +27,7 @@ public class Player {
     @OneToMany(mappedBy = "player")
     private List<Operators> operatorsList = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "player_id")
+    @OneToMany(mappedBy = "player")
     private List<RankStat> rankList = new ArrayList<>();
 
     @OneToOne
