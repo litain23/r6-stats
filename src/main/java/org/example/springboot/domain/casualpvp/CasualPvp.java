@@ -2,20 +2,26 @@ package org.example.springboot.domain.casualpvp;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
+import org.example.springboot.domain.player.Player;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@ToString
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class CasualPvp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    @ManyToOne
+    @JoinColumn(name="PLAYER_ID")
+    private Player player;
 
     int death;
     int kills;
@@ -25,7 +31,7 @@ public class CasualPvp {
     int timePlayed;
 
     @CreatedDate
-    private LocalDateTime localDateTime;
+    private LocalDateTime createdTime;
 
     public CasualPvp() { }
 
@@ -37,5 +43,9 @@ public class CasualPvp {
         this.matchPlayed = matchPlayed;
         this.matchWon = matchWon;
         this.timePlayed = timePlayed;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

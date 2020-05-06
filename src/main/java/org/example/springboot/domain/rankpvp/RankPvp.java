@@ -2,20 +2,24 @@ package org.example.springboot.domain.rankpvp;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.example.springboot.domain.player.Player;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class RankPvp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    @ManyToOne
+    @JoinColumn(name="PLAYER_ID")
+    private Player player;
 
     int death;
     int kills;
@@ -25,7 +29,7 @@ public class RankPvp {
     int timePlayed;
 
     @CreatedDate
-    private LocalDateTime localDateTime;
+    private LocalDateTime createdTime;
 
     public RankPvp() { }
 
@@ -37,5 +41,9 @@ public class RankPvp {
         this.matchPlayed = matchPlayed;
         this.matchWon = matchWon;
         this.timePlayed = timePlayed;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

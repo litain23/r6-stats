@@ -4,12 +4,14 @@ import lombok.Builder;
 import lombok.Getter;
 import org.example.springboot.domain.player.Player;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Operators {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +34,7 @@ public class Operators {
     private int roundLost;
 
     @CreationTimestamp
-    private LocalDateTime createTime;
+    private LocalDateTime createdTime;
 
     public Operators() { }
 

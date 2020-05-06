@@ -5,11 +5,13 @@ import lombok.Getter;
 import org.example.springboot.domain.player.Player;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class RankStat {
     @Id
@@ -35,9 +37,7 @@ public class RankStat {
     private int abandons;
 
     @CreationTimestamp
-    private LocalDateTime createTime;
-    @UpdateTimestamp
-    private LocalDateTime modifyTime;
+    private LocalDateTime createdTime;
 
 //  UBI API에서는 제공하지만 사용자에게는 제공할 필요가 없다고 판단
 //    private double skillMean;

@@ -23,8 +23,9 @@ public class CasualPvpService {
         Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
 
         CasualPvp casualPvp = parseResponseStr(ubiApi.getCasualPvp(platform, id));
+        casualPvp.setPlayer(player);
         casualPvpRepository.save(casualPvp);
-//        player.setS(casualPvp);
+        player.getCasualPvpList().add(casualPvp);
 
         return new CasualPvpResponseDto(casualPvp);
     }
@@ -48,7 +49,6 @@ public class CasualPvpService {
                 .matchPlayed(matchPlayed)
                 .build();
         return casualPvp;
-
     }
 
 }
