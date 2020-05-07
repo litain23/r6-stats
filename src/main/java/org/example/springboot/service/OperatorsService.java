@@ -25,20 +25,23 @@ public class OperatorsService {
     private final UbiApi ubiApi;
 
     @Transactional
-    public List<OperatorListResponseDto> getRankStat(String platform, String id) {
+    public List<OperatorListResponseDto> getOperatorStatList(String platform, String id) {
+        return getOperatorStatList(platform, id, false);
+    }
+
+    public List<OperatorListResponseDto> getOperatorStatList(String platform, String id, boolean isSave) {
         Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
 
         List<Operators> operatorsList = parseResponseStr(ubiApi.getOperatorsStat(platform, id));
 
-        List<Operators> playerOperatorList = player.getOperatorsList();
-        for(Operators op : operatorsList) {
-            op.setPlayer(player);
-            operatorsRepository.save(op);
-
-            playerOperatorList.add(op);
+        if(isSave) {
+            List<Operators> playerOperatorList = player.getOperatorsList();
+            for(Operators op : operatorsList) {
+                op.setPlayer(player);
+                operatorsRepository.save(op);
+                playerOperatorList.add(op);
+            }
         }
-
-
 
         return operatorsList.stream()
                 .map(OperatorListResponseDto::new)

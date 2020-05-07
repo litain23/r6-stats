@@ -20,12 +20,18 @@ public class RankPvpService {
     private final UbiApi ubiApi;
 
     public RankPvpResponseDto getRankPvp(String platform, String id) {
-        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
+        return getRankPvp(platform, id, false);
+    }
 
+    public RankPvpResponseDto getRankPvp(String platform, String id, boolean isSave) {
+        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
         RankPvp rankPvp = parseResponseStr(ubiApi.getRankPvp(platform, id));
-        rankPvp.setPlayer(player);
-        rankPvpRepository.save(rankPvp);
-        player.getRankPvpList().add(rankPvp);
+
+        if(isSave) {
+            rankPvp.setPlayer(player);
+            rankPvpRepository.save(rankPvp);
+            player.getRankPvpList().add(rankPvp);
+        }
 
         return new RankPvpResponseDto(rankPvp);
     }
