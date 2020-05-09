@@ -3,14 +3,15 @@ package org.example.springboot.domain.userprofile;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class UserProfile {
     @Id
@@ -22,6 +23,9 @@ public class UserProfile {
     private String password;
     private boolean isEnabled;
     private int apiUsingCnt;
+
+    @CreatedDate
+    private LocalDateTime createTime;
 
     public UserProfile() { }
 

@@ -1,40 +1,44 @@
 package org.example.springboot.r6api;
 
+import com.google.gson.Gson;
+import org.example.springboot.exception.r6api.R6BadAuthenticationException;
+import org.example.springboot.exception.r6api.R6ErrorException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
-import java.util.Map;
 
-import com.google.gson.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
-
-import javax.swing.plaf.IconUIResource;
-
+@PropertySource("classpath:ubi-login.properties")
+@Component
 public class UbiAuthApi {
     private final static String LOGIN_API_URL = "https://public-ubiservices.ubi.com/v3/profiles/sessions";
-    private static UbiAuthApi ubiAuthApi = new UbiAuthApi();
     public final static String UPP_APP_ID = "39baebad-39e5-4552-8c25-2c9b919064e2";
-    private static AuthToken token = null;
+    private AuthToken token = null;
 
+    @Value("${ubi.email}")
+    private String email;
 
-    private static String encodeBase64(String email, String pw) throws UnsupportedEncodingException {
+    @Value("${ubi.pw}")
+    private String pw;
+
+    private String encodeBase64(String email, String pw) throws UnsupportedEncodingException {
         return Base64.getEncoder().encodeToString((email+":"+pw).getBytes("UTF-8"));
     }
 
-    public static AuthToken getAuthToken() {
+    public AuthToken getAuthToken() {
         if(token != null && checkTokenSessionTime()) {
             return token;
         }
 
         try {
-            String encodedIdPw = getEncodedIdPw();
+            String encodedIdPw = encodeBase64(email, pw);
 
             URL url = new URL(LOGIN_API_URL);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -56,40 +60,18 @@ public class UbiAuthApi {
                 token = new Gson().fromJson(br.readLine(), AuthToken.class);
                 return token;
             } else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED || responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
-                throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "ubi-soft login failed");
+                throw new R6BadAuthenticationException("fail to login ubi-soft");
+            } else {
+                throw new R6ErrorException("fail to get Authentication Token");
             }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }  catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+            throw new R6ErrorException("encode fail");
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (HttpClientErrorException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private static String getEncodedIdPw() throws FileNotFoundException, UnsupportedEncodingException{
-        try {
-            Map<String, String> loginIdPwMap = new Gson().fromJson(new FileReader("ubi-login.json"), Map.class);
-            String email = loginIdPwMap.get("email");
-            String passwd = loginIdPwMap.get("pw");
-            return encodeBase64(email, passwd);
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("ubi-login.json don't exist");
-        } catch (UnsupportedEncodingException e) {
-            throw new UnsupportedEncodingException("Unsupported encoding");
+            throw new R6ErrorException("fail to get Authentication Token");
         }
     }
 
-
-    private static boolean checkTokenSessionTime() {
+    private boolean checkTokenSessionTime() {
         String expirationTimeStr = token.getExpiration().split("\\.")[0];
         ZoneId UTC_1 = ZoneId.of("UTC+1");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");

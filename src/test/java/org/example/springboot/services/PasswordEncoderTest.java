@@ -14,7 +14,6 @@ public class PasswordEncoderTest {
 
         String password = "password";
         String encPassword = "{noop}password";
-        System.out.println(encPassword);
 
         assertThat(passwordEncoder.matches(password, encPassword)).isTrue();
     }

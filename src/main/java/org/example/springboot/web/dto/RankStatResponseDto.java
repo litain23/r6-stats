@@ -10,7 +10,6 @@ public class RankStatResponseDto {
     private int rank;
     private int maxRank;
     private int kills;
-    private String updateTime;
     private int abandons;
     private int mmr;
     private int wins;
@@ -24,7 +23,6 @@ public class RankStatResponseDto {
         this.rank = stat.getRank();
         this.maxRank = stat.getMaxRank();
         this.kills = stat.getKills();
-        this.updateTime = stat.getUpdateTime();
         this.abandons = stat.getAbandons();
         this.mmr = stat.getMmr();
         this.wins = stat.getWins();

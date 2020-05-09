@@ -3,11 +3,15 @@ package org.example.springboot.domain.operators;
 import lombok.Builder;
 import lombok.Getter;
 import org.example.springboot.domain.player.Player;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Operators {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +24,6 @@ public class Operators {
     private String name;
     private String operatorIndex;
     private String category;
-    private String uniqueStatisticName;
-    private int uniqueStatisticOasisId;
     private int kills;
     private int death;
     private int headShot;
@@ -31,15 +33,20 @@ public class Operators {
     private int roundWon;
     private int roundLost;
 
+    @CreationTimestamp
+    private LocalDateTime createdTime;
+
     public Operators() { }
 
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
     @Builder
-    public Operators(String name, String operatorIndex, String category, String uniqueStatisticName, int uniqueStatisticOasisId, int kills, int death, int headShot, int meleeKills, int totalXp, int timePlayed, int roundWon, int roundLost) {
+    public Operators(String name, String operatorIndex, String category, int kills, int death, int headShot, int meleeKills, int totalXp, int timePlayed, int roundWon, int roundLost) {
         this.name = name;
         this.operatorIndex = operatorIndex;
         this.category = category;
-        this.uniqueStatisticName = uniqueStatisticName;
-        this.uniqueStatisticOasisId = uniqueStatisticOasisId;
         this.kills = kills;
         this.death = death;
         this.headShot = headShot;

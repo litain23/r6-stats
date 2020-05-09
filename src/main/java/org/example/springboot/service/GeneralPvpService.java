@@ -6,9 +6,7 @@ import org.example.springboot.domain.generalpvp.GeneralPvp;
 import org.example.springboot.domain.generalpvp.GeneralPvpRepository;
 import org.example.springboot.domain.player.Player;
 import org.example.springboot.domain.player.PlayerRepository;
-import org.example.springboot.r6api.API;
-import org.example.springboot.r6api.AuthToken;
-import org.example.springboot.r6api.UbiAuthApi;
+import org.example.springboot.r6api.UbiApi;
 import org.example.springboot.web.dto.GeneralPvpResponseDto;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +17,12 @@ import java.util.Map;
 public class GeneralPvpService {
     private final GeneralPvpRepository generalPvpRepository;
     private final PlayerRepository playerRepository;
+    private final UbiApi ubiApi;
 
     public GeneralPvpResponseDto getGeneralPvp(String platform, String id) {
-        AuthToken token = UbiAuthApi.getAuthToken();
-
         Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
 
-        API api = new API(token);
-        GeneralPvp generalPvp = parseResponseStr(api.getGeneralPvp(platform, id));
+        GeneralPvp generalPvp = parseResponseStr(ubiApi.getGeneralPvp(platform, id));
         generalPvpRepository.save(generalPvp);
         player.setGeneralPvp(generalPvp);
 
@@ -36,7 +32,7 @@ public class GeneralPvpService {
     private GeneralPvp parseResponseStr(String generalPvpStr) {
         Map<String, Double> generalPvpMap = new Gson().fromJson(generalPvpStr, Map.class);
 
-        int totalMatchLost = generalPvpMap.getOrDefault("generalpvp_timeplayed:infinite", 0.0).intValue();
+        int totalMatchLost = generalPvpMap.getOrDefault("generalpvp_matchlost:infinite", 0.0).intValue();
         int totalMatchWon = generalPvpMap.getOrDefault("generalpvp_matchwon:infinite", 0.0).intValue();;
         int totalMatchPlayed = generalPvpMap.getOrDefault("generalpvp_matchplayed:infinite", 0.0).intValue();;
         int totalKills = generalPvpMap.getOrDefault("generalpvp_kills:infinite", 0.0).intValue();
