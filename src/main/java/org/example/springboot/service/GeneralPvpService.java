@@ -9,6 +9,7 @@ import org.example.springboot.domain.player.PlayerRepository;
 import org.example.springboot.r6api.UbiApi;
 import org.example.springboot.web.dto.GeneralPvpResponseDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -19,6 +20,8 @@ public class GeneralPvpService {
     private final PlayerRepository playerRepository;
     private final UbiApi ubiApi;
 
+
+    @Transactional
     public GeneralPvpResponseDto getGeneralPvp(String platform, String id) {
         Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
 

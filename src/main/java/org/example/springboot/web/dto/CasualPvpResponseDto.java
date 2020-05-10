@@ -3,6 +3,8 @@ package org.example.springboot.web.dto;
 import lombok.Data;
 import org.example.springboot.domain.casualpvp.CasualPvp;
 
+import java.time.LocalDateTime;
+
 @Data
 public class CasualPvpResponseDto {
     int death;
@@ -11,6 +13,7 @@ public class CasualPvpResponseDto {
     int matchWon;
     int matchPlayed;
     int timePlayed;
+    LocalDateTime createdTime;
 
     public CasualPvpResponseDto(CasualPvp casualPvp) {
         this.death = casualPvp.getDeath();
@@ -19,5 +22,6 @@ public class CasualPvpResponseDto {
         this.matchWon = casualPvp.getMatchWon();
         this.matchPlayed = casualPvp.getMatchPlayed();
         this.timePlayed = casualPvp.getTimePlayed();
+        this.createdTime = casualPvp.getCreatedTime();
     }
 }

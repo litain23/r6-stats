@@ -29,6 +29,8 @@ public class OperatorsService {
         return getOperatorStatList(platform, id, false);
     }
 
+
+    @Transactional
     public List<OperatorListResponseDto> getOperatorStatList(String platform, String id, boolean isSave) {
         Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
 

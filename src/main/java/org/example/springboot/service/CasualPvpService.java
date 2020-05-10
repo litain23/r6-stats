@@ -9,8 +9,12 @@ import org.example.springboot.domain.player.PlayerRepository;
 import org.example.springboot.r6api.UbiApi;
 import org.example.springboot.web.dto.CasualPvpResponseDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -23,6 +27,7 @@ public class CasualPvpService {
         return getCasualPvp(platform, id, false);
     }
 
+    @Transactional
     public CasualPvpResponseDto getCasualPvp(String platform, String id, boolean isSave) {
         Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
         CasualPvp casualPvp = parseResponseStr(ubiApi.getCasualPvp(platform, id));
@@ -33,6 +38,15 @@ public class CasualPvpService {
             player.getCasualPvpList().add(casualPvp);
         }
         return new CasualPvpResponseDto(casualPvp);
+    }
+
+    @Transactional
+    public List<CasualPvpResponseDto> getCasualPvpAll(String platform, String id) {
+        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
+        return player.getCasualPvpList().stream()
+                .map(CasualPvpResponseDto::new)
+                .sorted(Comparator.comparing(CasualPvpResponseDto::getCreatedTime))
+                .collect(Collectors.toList());
     }
 
     private CasualPvp parseResponseStr(String generalPvpStr) {

@@ -2,15 +2,19 @@ package org.example.springboot.service;
 
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
-import org.example.springboot.domain.rankpvp.RankPvp;
-import org.example.springboot.domain.rankpvp.RankPvpRepository;
 import org.example.springboot.domain.player.Player;
 import org.example.springboot.domain.player.PlayerRepository;
+import org.example.springboot.domain.rankpvp.RankPvp;
+import org.example.springboot.domain.rankpvp.RankPvpRepository;
 import org.example.springboot.r6api.UbiApi;
 import org.example.springboot.web.dto.RankPvpResponseDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -19,10 +23,12 @@ public class RankPvpService {
     private final PlayerRepository playerRepository;
     private final UbiApi ubiApi;
 
+    @Transactional
     public RankPvpResponseDto getRankPvp(String platform, String id) {
         return getRankPvp(platform, id, false);
     }
 
+    @Transactional
     public RankPvpResponseDto getRankPvp(String platform, String id, boolean isSave) {
         Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
         RankPvp rankPvp = parseResponseStr(ubiApi.getRankPvp(platform, id));
@@ -34,6 +40,15 @@ public class RankPvpService {
         }
 
         return new RankPvpResponseDto(rankPvp);
+    }
+
+    @Transactional
+    public List<RankPvpResponseDto> getRankPvpAll(String platform, String id) {
+        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
+        return player.getRankPvpList().stream()
+                .map(RankPvpResponseDto::new)
+                .sorted(Comparator.comparing(RankPvpResponseDto::getCreatedTime))
+                .collect(Collectors.toList());
     }
 
     private RankPvp parseResponseStr(String generalPvpStr) {
