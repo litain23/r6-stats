@@ -2,10 +2,6 @@ package org.example.springboot.service;
 
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
-import org.example.springboot.domain.generalpvp.GeneralPvp;
-import org.example.springboot.domain.generalpvp.GeneralPvpRepository;
-import org.example.springboot.domain.player.Player;
-import org.example.springboot.domain.player.PlayerRepository;
 import org.example.springboot.r6api.UbiApi;
 import org.example.springboot.web.dto.GeneralPvpResponseDto;
 import org.springframework.stereotype.Service;
@@ -16,23 +12,14 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Service
 public class GeneralPvpService {
-    private final GeneralPvpRepository generalPvpRepository;
-    private final PlayerRepository playerRepository;
     private final UbiApi ubiApi;
-
 
     @Transactional
     public GeneralPvpResponseDto getGeneralPvp(String platform, String id) {
-        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
-
-        GeneralPvp generalPvp = parseResponseStr(ubiApi.getGeneralPvp(platform, id));
-        generalPvpRepository.save(generalPvp);
-        player.setGeneralPvp(generalPvp);
-
-        return new GeneralPvpResponseDto(generalPvp);
+        return parseResponseStr(ubiApi.getGeneralPvp(platform, id));
     }
 
-    private GeneralPvp parseResponseStr(String generalPvpStr) {
+    private GeneralPvpResponseDto parseResponseStr(String generalPvpStr) {
         Map<String, Double> generalPvpMap = new Gson().fromJson(generalPvpStr, Map.class);
 
         int totalMatchLost = generalPvpMap.getOrDefault("generalpvp_matchlost:infinite", 0.0).intValue();
@@ -48,7 +35,7 @@ public class GeneralPvpService {
         int totalBulletHit = generalPvpMap.getOrDefault("generalpvp_bullethit:infinite", 0.0).intValue();
         int totalTimePlayed = generalPvpMap.getOrDefault("generalpvp_timeplayed:infinite", 0.0).intValue();;
 
-        GeneralPvp generalPvp = GeneralPvp.builder()
+        GeneralPvpResponseDto generalPvp = GeneralPvpResponseDto.builder()
                 .totalMatchLost(totalMatchLost)
                 .totalMatchWon(totalMatchWon)
                 .totalMatchPlayed(totalMatchPlayed)

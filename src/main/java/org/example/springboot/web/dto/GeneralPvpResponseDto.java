@@ -1,7 +1,7 @@
 package org.example.springboot.web.dto;
 
+import lombok.Builder;
 import lombok.Getter;
-import org.example.springboot.domain.generalpvp.GeneralPvp;
 
 @Getter
 public class GeneralPvpResponseDto {
@@ -18,18 +18,19 @@ public class GeneralPvpResponseDto {
     private int totalBulletHit;
     private int totalTimePlayed;
 
-    public GeneralPvpResponseDto(GeneralPvp pvp) {
-        this.totalMatchLost = pvp.getTotalMatchLost();
-        this.totalMatchWon = pvp.getTotalMatchWon();
-        this.totalMatchPlayed = pvp.getTotalMatchPlayed();
-        this.totalKills = pvp.getTotalKills();
-        this.totalDeath = pvp.getTotalDeath();
-        this.totalPenetrationKills = pvp.getTotalPenetrationKills();
-        this.totalMeleeKills = pvp.getTotalMeleeKills();
-        this.totalKillAssists = pvp.getTotalKillAssists();
-        this.totalHeadShot = pvp.getTotalHeadShot();
-        this.totalRevive = pvp.getTotalRevive();
-        this.totalBulletHit = pvp.getTotalBulletHit();
-        this.totalTimePlayed = pvp.getTotalTimePlayed();
+    @Builder
+    public GeneralPvpResponseDto(int totalMatchLost, int totalMatchWon, int totalMatchPlayed, int totalKills, int totalDeath, int totalPenetrationKills, int totalMeleeKills, int totalKillAssists, int totalHeadShot, int totalRevive, int totalBulletHit, int totalTimePlayed) {
+        this.totalMatchLost = totalMatchLost;
+        this.totalMatchWon = totalMatchWon;
+        this.totalMatchPlayed = totalMatchPlayed;
+        this.totalKills = totalKills;
+        this.totalDeath = totalDeath;
+        this.totalPenetrationKills = totalPenetrationKills;
+        this.totalMeleeKills = totalMeleeKills;
+        this.totalKillAssists = totalKillAssists;
+        this.totalHeadShot = totalHeadShot;
+        this.totalRevive = totalRevive;
+        this.totalBulletHit = totalBulletHit;
+        this.totalTimePlayed = totalTimePlayed;
     }
 }

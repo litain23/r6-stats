@@ -47,7 +47,7 @@ public class OperatorsService {
 
         return operatorsList.stream()
                 .map(OperatorListResponseDto::new)
-                .sorted(Comparator.comparing(OperatorListResponseDto::getOperatorIndex))
+                .sorted(Comparator.comparing(OperatorListResponseDto::getCreatedTime).reversed())
                 .collect(Collectors.toList());
     }
 

@@ -25,13 +25,22 @@ public class CasualPvpServiceTest {
     @Autowired
     CasualPvpService casualPvpService;
     @Test
-    public void test() {
+    public void test() throws InterruptedException {
 //        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity("uplay", "hello");
 //        casualPvpRepository
         casualPvpService.getCasualPvp("uplay", "piliot", true);
+        int i = 0;
+        int sum = 0;
+        while(i < 10000000) {
+            i+=2;
+            sum += i;
+        }
         casualPvpService.getCasualPvp("uplay", "piliot", true);
         casualPvpService.getCasualPvp("uplay", "piliot", true);
 
         List<CasualPvpResponseDto> x = casualPvpService.getCasualPvpAll("uplay", "piliot");
+        for(CasualPvpResponseDto xx : x) {
+            System.out.println(xx);
+        }
     }
 }

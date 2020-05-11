@@ -67,7 +67,7 @@ public class UbiApi {
                 Platform.platformToSpaceId(platform),
                 Platform.platformToPlatformId(platform),
                 findProfile.getUserId(),
-                String.join(",", RequestParam.CASUAL_PVP)
+                String.join(",", RequestParam.RANK_PVP)
         );
 
         String responseRankPvp = getDataUsingApi(rankPvpUrl);
@@ -99,7 +99,6 @@ public class UbiApi {
         int intMaxMmr = maxMmr.intValue();
         rankStat.addProperty("max_mmr", intMaxMmr);
 
-
         // deaths => death 로 이름 변경 (death 로 통일)
         int death = rankStat.get("deaths").getAsInt();
         rankStat.addProperty("death", death);
@@ -111,7 +110,10 @@ public class UbiApi {
     private String parseGeneralTemplateUrlResponse(String response, String userId) {
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
-        jsonObject = jsonObject.getAsJsonObject("results");
+        jsonObject = jsonObject.getAsJsonObject("results").getAsJsonObject(userId);
+        if(jsonObject == null) {
+            throw new R6NotFoundPlayerProfileException("Not found player id or platform");
+        }
         String parsedStr = jsonObject.get(userId).toString();
         return parsedStr;
     }

@@ -11,6 +11,7 @@ import org.example.springboot.web.dto.RankPvpResponseDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,9 @@ public class RankPvpService {
         Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
         RankPvp rankPvp = parseResponseStr(ubiApi.getRankPvp(platform, id));
 
+        System.out.println(rankPvp);
+
+
         if(isSave) {
             rankPvp.setPlayer(player);
             rankPvpRepository.save(rankPvp);
@@ -45,21 +49,27 @@ public class RankPvpService {
     @Transactional
     public List<RankPvpResponseDto> getRankPvpAll(String platform, String id) {
         Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
-        return player.getRankPvpList().stream()
+        List<RankPvpResponseDto> ret = player.getRankPvpList().stream()
                 .map(RankPvpResponseDto::new)
-                .sorted(Comparator.comparing(RankPvpResponseDto::getCreatedTime))
+                .sorted(Comparator.comparing(RankPvpResponseDto::getCreatedTime).reversed())
                 .collect(Collectors.toList());
+
+        RankPvpResponseDto recentPvp = getRankPvp(platform, id);
+        System.out.println(recentPvp);
+        recentPvp.setCreatedTime(LocalDateTime.now());
+        ret.add(0, recentPvp);
+        return ret;
     }
 
     private RankPvp parseResponseStr(String generalPvpStr) {
         Map<String, Double> generalPvpMap = new Gson().fromJson(generalPvpStr, Map.class);
 
-        int matchLost = generalPvpMap.getOrDefault("rankpvp_matchlost:infinite", 0.0).intValue();
-        int matchWon = generalPvpMap.getOrDefault("rankpvp_matchwon:infinite", 0.0).intValue();
-        int matchPlayed = generalPvpMap.getOrDefault("rankpvp_matchplayed:infinite", 0.0).intValue();
-        int kills = generalPvpMap.getOrDefault("rankpvp_kills:infinite", 0.0).intValue();
-        int death = generalPvpMap.getOrDefault("rankpvp_death:infinite", 0.0).intValue();
-        int timePlayed = generalPvpMap.getOrDefault("rankpvp_timeplayed:infinite", 0.0).intValue();
+        int matchLost = generalPvpMap.getOrDefault("rankedpvp_matchlost:infinite", 0.0).intValue();
+        int matchWon = generalPvpMap.getOrDefault("rankedpvp_matchwon:infinite", 0.0).intValue();
+        int matchPlayed = generalPvpMap.getOrDefault("rankedpvp_matchplayed:infinite", 0.0).intValue();
+        int kills = generalPvpMap.getOrDefault("rankedpvp_kills:infinite", 0.0).intValue();
+        int death = generalPvpMap.getOrDefault("rankedpvp_death:infinite", 0.0).intValue();
+        int timePlayed = generalPvpMap.getOrDefault("rankedpvp_timeplayed:infinite", 0.0).intValue();
 
         RankPvp rankPvp = RankPvp.builder()
                 .death(death)
