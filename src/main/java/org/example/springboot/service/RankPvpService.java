@@ -55,7 +55,6 @@ public class RankPvpService {
                 .collect(Collectors.toList());
 
         RankPvpResponseDto recentPvp = getRankPvp(platform, id);
-        System.out.println(recentPvp);
         recentPvp.setCreatedTime(LocalDateTime.now());
         ret.add(0, recentPvp);
         return ret;

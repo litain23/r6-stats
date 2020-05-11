@@ -15,7 +15,7 @@ public class CasualPvpUpdateScheduler {
     private final PlayerRepository playerRepository;
     private final CasualPvpService casualPvpService;
 
-    @Scheduled(cron = "* * 0 * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void autoUpdateCasualPvp() {
         List<Player> playerList = playerRepository.findAll();
         for(Player player : playerList) {

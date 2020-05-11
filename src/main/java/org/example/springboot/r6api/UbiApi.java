@@ -114,7 +114,7 @@ public class UbiApi {
         if(jsonObject == null) {
             throw new R6NotFoundPlayerProfileException("Not found player id or platform");
         }
-        String parsedStr = jsonObject.get(userId).toString();
+        String parsedStr = jsonObject.toString();
         return parsedStr;
     }
 
