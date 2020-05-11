@@ -3,7 +3,6 @@ package org.example.springboot.domain.player;
 import lombok.Builder;
 import lombok.Getter;
 import org.example.springboot.domain.casualpvp.CasualPvp;
-import org.example.springboot.domain.generalpvp.GeneralPvp;
 import org.example.springboot.domain.operators.Operators;
 import org.example.springboot.domain.rankpvp.RankPvp;
 import org.example.springboot.domain.rankstat.RankStat;
@@ -43,10 +42,6 @@ public class Player {
     @OneToMany(mappedBy ="player")
     private List<CasualPvp> casualPvpList = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "generalpvp_id")
-    private GeneralPvp generalPvp;
-
     @CreatedDate
     private LocalDateTime createdTime;
 
@@ -59,9 +54,5 @@ public class Player {
     public Player(String platform, String playerId) {
         this.platform = platform;
         this.playerId = playerId;
-    }
-
-    public void setGeneralPvp(GeneralPvp generalPvp) {
-        this.generalPvp = generalPvp;
     }
 }

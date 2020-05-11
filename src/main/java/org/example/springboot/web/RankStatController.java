@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-public class RankApiController {
+public class RankStatController {
     private final RankStatService rankStatService;
 
     @GetMapping("/api/v1/rank/{platform}/{id}/all")

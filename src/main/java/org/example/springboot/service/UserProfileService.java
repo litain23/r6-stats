@@ -18,8 +18,6 @@ public class UserProfileService {
     public Long saveUser(SignUpRequestDto requestDto) throws IllegalArgumentException {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-//        isSamePassword(requestDto);
-
         UserProfile newUser = UserProfile.builder()
                 .username(requestDto.getUsername())
                 .password(passwordEncoder.encode(requestDto.getPassword()))
@@ -28,16 +26,5 @@ public class UserProfileService {
                 .build();
 
         return userProfileRepository.save(newUser).getId();
-    }
-
-    private void isSamePassword(SignUpRequestDto signUpRequestDto) {
-        String password = signUpRequestDto.getPassword();
-        String password2 = signUpRequestDto.getPassword2();
-
-        if(!password.equals(password2)) {
-            throw new IllegalArgumentException("two password is different");
-        } else {
-            return;
-        }
     }
 }

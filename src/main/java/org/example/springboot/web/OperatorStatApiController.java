@@ -17,6 +17,6 @@ public class OperatorStatApiController {
     @GetMapping("/api/v1/operator/{platform}/{id}")
     public List<OperatorListResponseDto> findById(@PathVariable String platform,
                                        @PathVariable String id) {
-        return operatorsService.getRankStat(platform, id);
+        return operatorsService.getOperatorStatList(platform, id);
     }
 }

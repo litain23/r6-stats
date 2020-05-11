@@ -2,6 +2,7 @@ package org.example.springboot.domain.rankpvp;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import org.example.springboot.domain.player.Player;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@ToString
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity

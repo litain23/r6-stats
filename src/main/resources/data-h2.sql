@@ -54,5 +54,23 @@ values ('caveira', 207671, 207757, '3:8', 'def', 'operatorpvp_caveira_interrogat
   ('oryx', 317965, 318172, '2:18', 'def','operatorpvp_oryx_killsafterdash:2:18', 'operatorpve_oryx_killsafterdash:2:18', 318856, 318856),
   ('iana', 317976, 318171, '2:19', 'atk','operatorpvp_iana_killsafterreplicator:2:19', 'operatorpve_iana_killsafterreplicator:2:19', 318857, 318857);
 
--- INSERT INTO user_profile (username, email, password, is_enable, api_using_cnt)
--- value ('test', 'test@test.com', 'password', false, 0);
+INSERT INTO user_profile (username, email, password, is_enabled, api_using_cnt)
+values ('test', 'test@test.com', 'password', 1, 0);
+
+INSERT INTO player (platform, player_id)
+values ('uplay', 'piliot');
+
+INSERT INTO casual_pvp (player_id, death, kills, match_lost, match_won, match_played, time_played, created_time )
+values (1, 523, 510, 82, 100, 182, 160000, '2020-05-10 00:00:00'),
+(1, 513, 497, 81, 97, 178, 159000, '2020-05-09 00:00:00'),
+(1, 500, 490, 79, 86, 175, 158000, '2020-05-08 00:00:00');
+
+
+INSERT INTO rank_pvp (player_id, kills, death, match_won, match_lost, match_played, time_played, created_time)
+values
+(1, 4733, 4714, 577, 543, 1120, 13432000, '2020-05-11 00:00:00'),
+(1, 4729, 4709, 577, 542, 1119, 13431000, '2020-05-10 00:00:00'),
+(1, 4715, 4700, 575, 541, 1116, 13430000, '2020-05-09 00:00:00'),
+(1, 4710, 4695, 574, 541, 1115, 13429000, '2020-05-08 00:00:00');
+
+
