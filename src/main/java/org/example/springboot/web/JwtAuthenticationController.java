@@ -7,6 +7,7 @@ import org.example.springboot.service.UserProfileService;
 import org.example.springboot.web.dto.JwtRequestDto;
 import org.example.springboot.web.dto.JwtResponseDto;
 import org.example.springboot.web.dto.SignUpRequestDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -45,7 +46,7 @@ public class JwtAuthenticationController {
     @PostMapping
     public ResponseEntity signup(@RequestBody @Valid SignUpRequestDto signUpRequestDto) {
         userProfileService.saveUser(signUpRequestDto);
-        return ResponseEntity.ok("good");
+        return new ResponseEntity<>("{\"status\": \"good\"}", HttpStatus.OK);
     }
 
 }

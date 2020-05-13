@@ -3,6 +3,7 @@ package org.example.springboot.web;
 import lombok.RequiredArgsConstructor;
 import org.example.springboot.service.OperatorsService;
 import org.example.springboot.web.dto.OperatorListResponseDto;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,8 +16,8 @@ public class OperatorStatApiController {
     private final OperatorsService operatorsService;
 
     @GetMapping("/api/v1/operator/{platform}/{id}")
-    public List<OperatorListResponseDto> findById(@PathVariable String platform,
-                                       @PathVariable String id) {
-        return operatorsService.getOperatorStatList(platform, id);
+    public ResponseEntity<List<OperatorListResponseDto>> findById(@PathVariable String platform,
+                                                                 @PathVariable String id) {
+        return ResponseEntity.ok(operatorsService.getOperatorStatList(platform, id));
     }
 }

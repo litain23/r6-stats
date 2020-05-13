@@ -55,5 +55,6 @@ public class Operators {
         this.timePlayed = timePlayed;
         this.roundWon = roundWon;
         this.roundLost = roundLost;
+        this.createdTime = LocalDateTime.now();
     }
 }
