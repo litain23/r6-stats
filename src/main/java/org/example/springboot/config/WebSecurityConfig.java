@@ -28,20 +28,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().disable()
                 .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
                 .authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/signin").permitAll()
-                .antMatchers("/**").access("hasIpAddress('127.0.0.1')")
-                .anyRequest().authenticated()
+                .anyRequest().access("hasIpAddress('127.0.0.1') or isAuthenticated()")
                 .and().exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint())
-                .and().headers().frameOptions().sameOrigin();
-
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
     }
 
     @Override
