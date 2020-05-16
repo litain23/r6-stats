@@ -1,7 +1,6 @@
 package org.example.springboot.service.scheduler;
 
 import lombok.RequiredArgsConstructor;
-import org.example.springboot.domain.operators.OperatorsRepository;
 import org.example.springboot.domain.player.Player;
 import org.example.springboot.domain.player.PlayerRepository;
 import org.example.springboot.service.OperatorsService;

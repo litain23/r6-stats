@@ -3,7 +3,7 @@ package org.example.springboot.domain.player;
 import lombok.Builder;
 import lombok.Getter;
 import org.example.springboot.domain.casualpvp.CasualPvp;
-import org.example.springboot.domain.operators.Operators;
+import org.example.springboot.domain.operator.Operator;
 import org.example.springboot.domain.rankpvp.RankPvp;
 import org.example.springboot.domain.rankstat.RankStat;
 import org.springframework.data.annotation.CreatedDate;
@@ -31,7 +31,7 @@ public class Player {
     private String platform;
 
     @OneToMany(mappedBy = "player")
-    private List<Operators> operatorsList = new ArrayList<>();
+    private List<Operator> operatorList = new ArrayList<>();
 
     @OneToMany(mappedBy = "player")
     private List<RankStat> rankList = new ArrayList<>();

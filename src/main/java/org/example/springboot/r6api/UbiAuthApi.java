@@ -62,6 +62,8 @@ public class UbiAuthApi {
             } else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED || responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
                 throw new R6BadAuthenticationException("fail to login ubi-soft");
             } else {
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                System.out.println(br);
                 throw new R6ErrorException("fail to get Authentication Token");
             }
         } catch (UnsupportedEncodingException e) {

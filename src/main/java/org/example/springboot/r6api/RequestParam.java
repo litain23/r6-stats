@@ -1,7 +1,9 @@
 package org.example.springboot.r6api;
 
+import java.util.Map;
+
 public class RequestParam {
-    public static final String[] GENERAL_PVP = {
+    public static final String[] GENERAL_PVP_PARAM = {
             "generalpvp_timeplayed",
             "generalpvp_matchplayed",
             "generalpvp_killassists",
@@ -17,7 +19,7 @@ public class RequestParam {
             "generalpvp_bulletfired",
     };
 
-    public static final String[] CASUAL_PVP = {
+    public static final String[] CASUAL_PVP_PARAM = {
             "casualpvp_death:infinite",
             "casualpvp_kills:infinite",
             "casualpvp_matchlost:infinite",
@@ -26,7 +28,7 @@ public class RequestParam {
             "casualpvp_timeplayed:infinite"
     };
 
-    public static final String[] RANK_PVP = {
+    public static final String[] RANK_PVP_PARAM = {
             "rankedpvp_death:infinite",
             "rankedpvp_kills:infinite",
             "rankedpvp_matchlost:infinite",
@@ -35,7 +37,7 @@ public class RequestParam {
             "rankedpvp_timeplayed:infinite"
     };
 
-    public static final String[] OPERATORS = {
+    public static final String[] OPERATORS_PARAM = {
             "operatorpvp_timeplayed",
             "operatorpvp_roundwon",
             "operatorpvp_roundlost",
@@ -43,62 +45,19 @@ public class RequestParam {
             "operatorpvp_death",
             "operatorpvp_headshot",
             "operatorpvp_meleekills",
-            "operatorpvp_totalxp",
-            "operatorpvp_smoke_poisongaskill",
-            "operatorpvp_mute_gadgetjammed",
-            "operatorpvp_sledge_hammerhole",
-            "operatorpvp_thatcher_gadgetdestroywithemp",
-            "operatorpvp_castle_kevlarbarricadedeployed",
-            "operatorpvp_ash_bonfirewallbreached",
-            "operatorpvp_pulse_heartbeatspot",
-            "operatorpvp_thermite_reinforcementbreached",
-            "operatorpvp_doc_teammaterevive",
-            "operatorpvp_rook_armortakenteammate",
-            "operatorpvp_twitch_gadgetdestroybyshockdrone",
-            "operatorpvp_montagne_shieldblockdamage",
-            "operatorpvp_glaz_sniperkill",
-            "operatorpvp_fuze_clusterchargekill",
-            "operatorpvp_kapkan_boobytrapkill",
-            "operatorpvp_tachanka_turretkill",
-            "operatorpvp_blitz_flashedenemy",
-            "operatorpvp_iq_gadgetspotbyef",
-            "operatorpvp_jager_gadgetdestroybycatcher",
-            "operatorpvp_bandit_batterykill",
-            "operatorpvp_buck_kill",
-            "operatorpvp_frost_dbno",
-            "operatorpvp_blackbeard_gunshieldblockdamage",
-            "operatorpvp_valkyrie_camdeployed",
-            "operatorpvp_capitao_lethaldartkills",
-            "operatorpvp_hibana_detonate_projectile",
-            "operatorpvp_echo_enemy_sonicburst_affected",
-            "operatorpvp_cazador_assist_kill",
-            "operatorpvp_black_mirror_gadget_deployed",
-            "operatorpvp_dazzler_gadget_detonate",
-            "operatorpvp_caltrop_enemy_affected",
-            "operatorpvp_concussionmine_detonate",
-            "operatorpvp_concussiongrenade_detonate",
-            "operatorpvp_phoneshacked",
-            "operatorpvp_attackerdrone_diminishedrealitymode",
-            "operatorpvp_tagger_tagdevice_spot",
-            "operatorpvp_rush_adrenalinerush",
-            "operatorpvp_barrage_killswithturret",
-            "operatorpvp_deceiver_revealedattackers",
-            "operatorpvp_maverick_wallbreached",
-            "operatorpvp_clash_sloweddown",
-            "operatorpvp_nomad_airjabdetonate",
-            "operatorpvp_kaid_electroclawelectrify",
-            "operatorpvp_mozzie_droneshacked",
-            "operatorpvp_gridlock_traxdeployed",
-            "operatorpvp_nokk_observationtooldeceived",
-            "operatorpvp_warden_killswithglasses",
-            "operatorpvp_goyo_volcandetonate",
-            "operatorpvp_amaru_distancereeled",
-            "operatorpvp_kali_gadgetdestroywithexplosivelance",
-            "operatorpvp_wamai_gadgetdestroybymagnet",
-            "operatorpvp_oryx_killsafterdash",
-            "operatorpvp_iana_killsafterreplicator",
-            "operatorpvp_caveira_interrogations",
+            "operatorpvp_totalxp"
     };
+
+    public enum RequestType {
+        OPERATOR, RANK_PVP, CASUAL_PVP, GENERAL_PVP
+    }
+
+    public static Map<RequestType, String[]> map = Map.of(
+            RequestType.OPERATOR, OPERATORS_PARAM,
+            RequestType.CASUAL_PVP, CASUAL_PVP_PARAM,
+            RequestType.RANK_PVP, RANK_PVP_PARAM,
+            RequestType.GENERAL_PVP, GENERAL_PVP_PARAM
+    );
 
 }
 

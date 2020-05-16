@@ -1,7 +1,8 @@
 package org.example.springboot.web.dto;
 
 import lombok.Getter;
-import org.example.springboot.domain.operators.Operators;
+import org.example.springboot.domain.operator.Operator;
+import org.example.springboot.r6api.dto.OperatorDto;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +20,7 @@ public class OperatorListResponseDto {
     private int roundLost;
     private LocalDateTime createdTime;
 
-    public OperatorListResponseDto(Operators operator) {
+    public OperatorListResponseDto(Operator operator) {
         this.name = operator.getName();
         this.operatorIndex = operator.getOperatorIndex();
         this.kills = operator.getKills();
@@ -31,6 +32,20 @@ public class OperatorListResponseDto {
         this.roundLost = operator.getRoundLost();
         this.roundWon = operator.getRoundWon();
         this.createdTime = operator.getCreatedTime();
+    }
+
+    public OperatorListResponseDto(OperatorDto operatorDto) {
+        this.name = operatorDto.getName();
+        this.operatorIndex = operatorDto.getOperatorIndex();
+        this.kills = operatorDto.getKills();
+        this.death = operatorDto.getDeath();
+        this.headShot = operatorDto.getHeadShot();
+        this.meleeKills = operatorDto.getMeleeKills();
+        this.totalXp = operatorDto.getTotalXp();
+        this.timePlayed = operatorDto.getTimePlayed();
+        this.roundLost = operatorDto.getRoundLost();
+        this.roundWon = operatorDto.getRoundWon();
+        this.createdTime = operatorDto.getCreatedTime();
     }
 
 }

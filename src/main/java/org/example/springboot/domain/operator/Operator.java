@@ -1,24 +1,27 @@
-package org.example.springboot.domain.operators;
+package org.example.springboot.domain.operator;
 
 import lombok.Builder;
 import lombok.Getter;
 import org.example.springboot.domain.player.Player;
+import org.example.springboot.r6api.dto.OperatorDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Operators {
+public class Operator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
     @JoinColumn(name="PLAYER_ID")
+    @NotNull
     private Player player;
 
     private String name;
@@ -36,14 +39,10 @@ public class Operators {
     @CreationTimestamp
     private LocalDateTime createdTime;
 
-    public Operators() { }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
+    public Operator() { }
 
     @Builder
-    public Operators(String name, String operatorIndex, String category, int kills, int death, int headShot, int meleeKills, int totalXp, int timePlayed, int roundWon, int roundLost) {
+    public Operator(String name, String operatorIndex, String category, int kills, int death, int headShot, int meleeKills, int totalXp, int timePlayed, int roundWon, int roundLost, Player player) {
         this.name = name;
         this.operatorIndex = operatorIndex;
         this.category = category;
@@ -55,5 +54,20 @@ public class Operators {
         this.timePlayed = timePlayed;
         this.roundWon = roundWon;
         this.roundLost = roundLost;
+        this.player = player;
+    }
+
+    public Operator(OperatorDto operatorDto, Player player) {
+        this.name = operatorDto.getName();
+        this.operatorIndex = operatorDto.getOperatorIndex();
+        this.kills = operatorDto.getKills();
+        this.death = operatorDto.getDeath();
+        this.headShot = operatorDto.getHeadShot();
+        this.meleeKills = operatorDto.getMeleeKills();
+        this.totalXp = operatorDto.getTotalXp();
+        this.timePlayed = operatorDto.getTimePlayed();
+        this.roundLost = operatorDto.getRoundLost();
+        this.roundWon = operatorDto.getRoundWon();
+        this.player = player;
     }
 }
