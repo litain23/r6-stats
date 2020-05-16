@@ -1,35 +1,53 @@
 package org.example.springboot.r6api;
 
+import org.example.springboot.exception.r6api.R6BadAuthenticationException;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import java.io.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class UbiAuthApiTest {
-    @Autowired
-    UbiAuthApi ubiAuthApi;
+    private static UbiAuthApi ubiAuthApi = new UbiAuthApi();
 
-    @Test
-    public void When_Get_Ubi_Token_Expect_Authorized_Token() {
-        // 정상작동하는가
-        AuthToken token = ubiAuthApi.getAuthToken();
+    @BeforeClass
+    public static UbiAuthApi setUpAuthApi() throws IOException {
+        File file = new File("src/main/resources/ubi-login.properties");
+        FileReader fileReader = new FileReader(file);
+
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String email = bufferedReader.readLine();
+        email = email.split("=")[1];
+        String pw= bufferedReader.readLine();
+        pw = pw.split("=")[1];
+
+        ubiAuthApi.setEmail(email);
+        ubiAuthApi.setPw(pw);
+
+        bufferedReader.close();;
+        fileReader.close();;
+
+        return ubiAuthApi;
     }
 
     @Test
-    public void When_Get_Ubi_Token_Not_Expiration_State_Expect_Return_Origin_Token() {
-        //given
-        AuthToken originToken = ubiAuthApi.getAuthToken();
+    public void When_GetAuthToken_Expect_Good() {
+        ubiAuthApi.getAuthToken();
+    }
 
-        //when
-        AuthToken newToken = ubiAuthApi.getAuthToken();
+    @Test
+    public void When_GetAuthTokenInExpirationTime_Expect_SameToken() {
+        AuthToken token = ubiAuthApi.getAuthToken();
+        AuthToken afterToken = ubiAuthApi.getAuthToken();
 
-        //then
-        assertThat(originToken).isEqualTo(newToken);
+        assertThat(token).isEqualTo(afterToken);
+    }
+
+    @Test(expected = R6BadAuthenticationException.class)
+    public void When_WrongPw_Expect_R6AuthException() {
+        ubiAuthApi.setPw("somethingwrong");
+        ubiAuthApi.getAuthToken();
     }
 }
 
