@@ -87,4 +87,12 @@ public class UbiAuthApi {
             return false;
         }
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPw(String pw) {
+        this.pw = pw;
+    }
 }

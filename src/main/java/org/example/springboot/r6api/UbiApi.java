@@ -3,10 +3,7 @@ package org.example.springboot.r6api;
 import com.google.gson.*;
 import lombok.RequiredArgsConstructor;
 import org.example.springboot.exception.r6api.R6NotFoundPlayerProfileException;
-import org.example.springboot.r6api.dto.CasualPvpDto;
-import org.example.springboot.r6api.dto.GeneralPvpDto;
-import org.example.springboot.r6api.dto.OperatorDto;
-import org.example.springboot.r6api.dto.RankPvpDto;
+import org.example.springboot.r6api.dto.*;
 import org.springframework.stereotype.Component;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -16,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -66,35 +64,33 @@ public class UbiApi {
         return parseResponseToRankPvpDto(response, findProfile.getUserId());
     }
 
-    public String getRankStat(String platform, String id, int season) {
-        Profile findIdProfile = getProfile(platform, id);
+    public RankStatDto getRankStat(String platform, String id, int season) {
+        Profile findProfile = getProfile(platform, id);
 
         String region = "apac";
         String rankUrl = String.format(RANK_URL_TEMPLATE,
                 Platform.platformToSpaceId(platform),
                 Platform.platformToPlatformId(platform),
-                findIdProfile.getUserId(),
+                findProfile.getUserId(),
                 region,
                 season
         );
 
-        String responseRankData = getDataUsingApi(rankUrl);
-        Gson gson = new GsonBuilder()
-                .setFieldNamingStrategy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
+        String response = getDataUsingApi(rankUrl);
+        return parseResponseToRankStatDto(response, findProfile.getUserId());
+    }
 
-        JsonObject rankStat = gson.fromJson(responseRankData, JsonObject.class);
-        rankStat = rankStat.get("players").getAsJsonObject().get(findIdProfile.getUserId()).getAsJsonObject();
-
-        //season 13 까지 max_mmr 만 Double 로 들어옴 (ex. 3145.312)
-        Double maxMmr = rankStat.get("max_mmr").getAsDouble();
-        int intMaxMmr = maxMmr.intValue();
-        rankStat.addProperty("max_mmr", intMaxMmr);
-
-        // deaths => death 로 이름 변경 (death 로 통일)
-        int death = rankStat.get("deaths").getAsInt();
-        rankStat.addProperty("death", death);
-        return rankStat.toString();
+    public Profile getProfile(String platform, String id) {
+        try {
+            String profileUrl = String.format(PROFILE_URL_TEMPLATE, platform, id);
+            String responseProfile = getDataUsingApi(profileUrl);
+            Gson gson = new Gson();
+            JsonObject jsonObject = gson.fromJson(responseProfile, JsonObject.class);
+            JsonArray jsonArray =jsonObject.get("profiles").getAsJsonArray();
+            return gson.fromJson(jsonArray.get(0), Profile.class);
+        } catch (IndexOutOfBoundsException e) {
+            throw new R6NotFoundPlayerProfileException("Not found player id or platform");
+        }
     }
 
     private String makeGeneralUrl(RequestType requestType, String platform, String userId) {
@@ -114,21 +110,7 @@ public class UbiApi {
         if(jsonObject == null) {
             throw new R6NotFoundPlayerProfileException("Not found player id or platform");
         }
-        String parsedStr = jsonObject.get(userId).toString();
-        return parsedStr;
-    }
-
-    private Profile getProfile(String platform, String id) {
-        try {
-            String profileUrl = String.format(PROFILE_URL_TEMPLATE, platform, id);
-            String responseProfile = getDataUsingApi(profileUrl);
-            Gson gson = new Gson();
-            JsonObject jsonObject = gson.fromJson(responseProfile, JsonObject.class);
-            JsonArray jsonArray =jsonObject.get("profiles").getAsJsonArray();
-            return gson.fromJson(jsonArray.get(0), Profile.class);
-        } catch (IndexOutOfBoundsException e) {
-            throw new R6NotFoundPlayerProfileException("Not found player id or platform");
-        }
+        return jsonObject.toString();
     }
 
     private String getDataUsingApi(String requestUrl) {
@@ -160,7 +142,6 @@ public class UbiApi {
 
         return null;
     }
-
 
     // TODO : PVP 에 관한 get()Pvp 함수가 전반적으로 중복됨, 파서 또한 중복되어 존재
     private GeneralPvpDto parseResponseToGeneralPvpDto(String response, String userId) {
@@ -283,5 +264,27 @@ public class UbiApi {
         }
 
         return operatorDtoList;
+    }
+
+    private RankStatDto parseResponseToRankStatDto(String response, String userId) {
+        Gson gson = new GsonBuilder()
+                .setFieldNamingStrategy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        JsonObject rankStat = gson.fromJson(response, JsonObject.class);
+        rankStat = rankStat.getAsJsonObject("players").getAsJsonObject(userId);
+
+        //season 13 까지 max_mmr 만 Double 로 들어옴 (ex. 3145.312)
+        Double maxMmr = rankStat.get("max_mmr").getAsDouble();
+        int intMaxMmr = maxMmr.intValue();
+        rankStat.addProperty("max_mmr", intMaxMmr);
+
+        // deaths => death 로 이름 변경 (death 로 통일)
+        int death = rankStat.get("deaths").getAsInt();
+        rankStat.addProperty("death", death);
+
+        RankStatDto dto = gson.fromJson(rankStat, RankStatDto.class);
+        dto.setCreatedTime(LocalDateTime.now());
+        return dto;
     }
 }
