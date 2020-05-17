@@ -7,12 +7,12 @@ public class PlayerRepositoryCustomImpl implements PlayerRepositoryCustom {
     private final PlayerRepositoryBasic playerRepositoryBasic;
 
     @Override
-    public Player getPlayerIfNotExistReturnNewEntity(String platform, String playerId) {
-        Player player = playerRepositoryBasic.findByPlatformAndAndPlayerId(platform, playerId);
+    public Player getPlayerIfNotExistReturnNewEntity(String platform, String userId) {
+        Player player = playerRepositoryBasic.findByPlatformAndAndUserId(platform, userId);
         if(player == null) {
             player = Player.builder()
                     .platform(platform)
-                    .playerId(playerId)
+                    .userId(userId)
                     .build();
             playerRepositoryBasic.save(player);
         }

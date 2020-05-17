@@ -11,6 +11,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +19,17 @@ import java.util.List;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"userId", "platform"})})
 public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
-    private String playerId;
+    @NotBlank
+    private String userId;
 
-    @Column(nullable = false)
+    @NotBlank
     private String platform;
 
     @OneToMany(mappedBy = "player")
@@ -51,8 +53,8 @@ public class Player {
     public Player() { }
 
     @Builder
-    public Player(String platform, String playerId) {
+    public Player(String platform, String userId) {
         this.platform = platform;
-        this.playerId = playerId;
+        this.userId = userId;
     }
 }

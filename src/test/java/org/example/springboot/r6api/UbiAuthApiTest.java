@@ -1,18 +1,21 @@
 package org.example.springboot.r6api;
 
 import org.example.springboot.exception.r6api.R6BadAuthenticationException;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UbiAuthApiTest {
-    private static UbiAuthApi ubiAuthApi = new UbiAuthApi();
+    private UbiAuthApi ubiAuthApi;
 
-    @BeforeClass
-    public static UbiAuthApi setUpAuthApi() throws IOException {
+    public static UbiAuthApi getUbiAuthApi() throws IOException {
+        UbiAuthApi ubiAuthApi = new UbiAuthApi();
         File file = new File("src/main/resources/ubi-login.properties");
         FileReader fileReader = new FileReader(file);
 
@@ -29,6 +32,11 @@ public class UbiAuthApiTest {
         fileReader.close();;
 
         return ubiAuthApi;
+    }
+
+    @Before
+    public void setUpAuthApi() throws IOException {
+        ubiAuthApi = getUbiAuthApi();
     }
 
     @Test

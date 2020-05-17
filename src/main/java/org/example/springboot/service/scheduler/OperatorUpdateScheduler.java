@@ -19,7 +19,7 @@ public class OperatorUpdateScheduler {
     private void autoUpdateOperator() {
         List<Player> playerList = playerRepository.findAll();
         for(Player player : playerList) {
-            operatorsService.getOperatorStatList(player.getPlatform(), player.getPlayerId(), true);
+            operatorsService.getOperatorStatList(player.getPlatform(), player.getUserId(), true);
         }
     }
 }

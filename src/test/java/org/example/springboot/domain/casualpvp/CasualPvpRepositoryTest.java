@@ -31,7 +31,7 @@ public class CasualPvpRepositoryTest {
     public void setUp() {
         player = entityManager.persist(
                 Player.builder()
-                    .playerId("testId")
+                    .userId("testId")
                     .platform("uplay")
                     .build()
         );

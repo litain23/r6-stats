@@ -23,7 +23,7 @@ public class UbiApiTest {
 
     @BeforeClass
     public static void setUpApi() throws IOException {
-        UbiAuthApi ubiAuthApi = UbiAuthApiTest.setUpAuthApi();
+        UbiAuthApi ubiAuthApi = UbiAuthApiTest.getUbiAuthApi();
         ubiApi = new UbiApi(ubiAuthApi);
     }
 
