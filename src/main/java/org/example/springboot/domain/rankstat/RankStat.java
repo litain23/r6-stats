@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -20,6 +21,7 @@ public class RankStat {
 
     @ManyToOne
     @JoinColumn(name="PLAYER_ID")
+    @NotNull
     private Player player;
 
     private int rank;
@@ -39,22 +41,10 @@ public class RankStat {
     @CreationTimestamp
     private LocalDateTime createdTime;
 
-//  UBI API에서는 제공하지만 사용자에게는 제공할 필요가 없다고 판단
-//    private double skillMean;
-//    private int nextRankMmr;
-//    private String boardId;
-//    private double skillStdev;
-//    private double lastMatchSkillStdevChange;
-//    private int lastMatchMmrChange;
-//    private int topRankPosition;
-//    private double lastMatchSkillMeanChange;
-//    private int previousRankMmr;
-//    private int lastMatchResult;
-
     public RankStat() {}
 
     @Builder
-    public RankStat(int rank, int maxRank, int mmr, int maxMmr, int kills, int death, int season, String region, int wins, int losses, int abandons) {
+    public RankStat(int rank, int maxRank, int mmr, int maxMmr, int kills, int death, int season, String region, int wins, int losses, int abandons, Player player) {
         this.rank = rank;
         this.maxRank = maxRank;
         this.mmr = mmr;
@@ -66,9 +56,10 @@ public class RankStat {
         this.wins = wins;
         this.losses = losses;
         this.abandons = abandons;
+        this.player = player;
     }
 
-    public void updateRankStat(RankStat stat) {
+    public void updateRankStat(RankStat stat, Player player) {
         this.maxMmr = stat.getMaxMmr();
         this.death = stat.getDeath();
         this.rank = stat.getRank();
@@ -80,9 +71,18 @@ public class RankStat {
         this.region = stat.getRegion();
         this.season = stat.getSeason();
         this.losses = stat.getLosses();
-    }
-
-    public void setPlayer(Player player) {
         this.player = player;
     }
+
+//  UBI API에서는 제공하지만 사용자에게는 제공할 필요가 없다고 판단
+//    private double skillMean;
+//    private int nextRankMmr;
+//    private String boardId;
+//    private double skillStdev;
+//    private double lastMatchSkillStdevChange;
+//    private int lastMatchMmrChange;
+//    private int topRankPosition;
+//    private double lastMatchSkillMeanChange;
+//    private int previousRankMmr;
+//    private int lastMatchResult;
 }

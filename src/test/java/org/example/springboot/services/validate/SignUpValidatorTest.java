@@ -5,76 +5,88 @@ import org.example.springboot.domain.userprofile.UserProfileRepository;
 import org.example.springboot.exception.user.UserSignUpValidateException;
 import org.example.springboot.service.validate.SignUpValidator;
 import org.example.springboot.web.dto.SignUpRequestDto;
+import org.graalvm.compiler.lir.LIRInstruction;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Optional;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
 public class SignUpValidatorTest {
 
-    private UserProfile userProfile;
-
-    @Autowired
+    @InjectMocks
     SignUpValidator signUpValidator;
 
-    @Autowired
+    @Mock
     UserProfileRepository userProfileRepository;
 
-    @After
-    public void cleanUp() {
-        if(userProfile != null) {
-            userProfileRepository.delete(userProfile);
-        }
-    }
+    String testEmail = "test@test.com";
+    String testPassword = "1234";
+    String username = "test";
 
-    @Test
-    public void 패스워드_비교_같은지_확인() {
-        SignUpRequestDto dto = new SignUpRequestDto();
-        dto.setUsername("hello");
-        dto.setPassword2("password");
-        dto.setPassword("password");
-        dto.setEmail("test@test.com");
+    UserProfile userProfile;
+    String notDuplicatedName = "new_username";
 
-        boolean isValid = signUpValidator.isValid(dto, null);
-        assertThat(isValid).isTrue();
-    }
-
-    @Test(expected = UserSignUpValidateException.class)
-    public void 패스워드_다른것_Exception_확인() {
-        SignUpRequestDto dto = new SignUpRequestDto();
-        dto.setUsername("hello");
-        dto.setPassword2("password");
-        dto.setPassword("password1");
-        dto.setEmail("test@test.com");
-
-        boolean isValid = signUpValidator.isValid(dto, null);
-        assertThat(isValid).isFalse();
-    }
-
-    @Test(expected = UserSignUpValidateException.class)
-    public void 유저_이름_중복_확인() {
+    @Before
+    public void setUp() {
         userProfile = UserProfile.builder()
-                .username("hello")
+                .email(testEmail)
+                .password(testPassword)
                 .isEnabled(true)
-                .email("test@test.com")
-                .password("1234")
+                .username(username)
                 .build();
 
-        userProfileRepository.save(userProfile);
+        when(userProfileRepository.findByUsername(userProfile.getUsername())).thenReturn(
+                Optional.of(userProfile)
+        );
 
+        when(userProfileRepository.findByUsername(notDuplicatedName)).thenReturn(
+                Optional.ofNullable(null)
+        );
+    }
+
+   @Test
+   public void When_SignUpParamIsGood_Expect_True() {
+       SignUpRequestDto dto = new SignUpRequestDto();
+       dto.setEmail("something@test.com");
+       dto.setPassword("1234");
+       dto.setPassword2("1234");
+       dto.setUsername(notDuplicatedName);
+
+       Boolean isValid = signUpValidator.isValid(dto, null);
+       assertThat(isValid).isEqualTo(true);
+   }
+
+    @Test(expected = UserSignUpValidateException.class)
+    public void When_SignUpUsernameIsDuplicate_Expect_UserSignUpValidateException() {
         SignUpRequestDto dto = new SignUpRequestDto();
-        dto.setUsername("hello");
-        dto.setPassword2("password");
-        dto.setPassword("password1");
-        dto.setEmail("test@test.com");
+        dto.setEmail("something@test.com");
+        dto.setPassword("1234");
+        dto.setPassword2("1234");
+        dto.setUsername(userProfile.getUsername());
 
-        boolean isValid = signUpValidator.isValid(dto, null);
-        assertThat(isValid).isFalse();
+        signUpValidator.isValid(dto, null);
+    }
+
+    @Test(expected = UserSignUpValidateException.class)
+    public void When_SignUpPasswordIsDiffEachOther_Expect_UserSignUpValidateException() {
+        SignUpRequestDto dto = new SignUpRequestDto();
+        dto.setEmail("something@test.com");
+        dto.setPassword("1234");
+        dto.setPassword2("12341");
+        dto.setUsername(notDuplicatedName);
+
+        signUpValidator.isValid(dto, null);
     }
 }
