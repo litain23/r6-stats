@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GeneralPvpApiController {
     private final GeneralPvpService generalPvpService;
 
-    @GetMapping("/api/v1/general/{platform}/{id}")
+    @GetMapping("/api/v1/generalpvp/{platform}/{id}")
     public GeneralPvpResponseDto findById(@PathVariable String platform,
                                           @PathVariable String id) {
 

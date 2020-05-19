@@ -64,10 +64,9 @@ public class UbiApi {
         return parseResponseToRankPvpDto(response, findProfile.getUserId());
     }
 
-    public RankStatDto getRankStat(String platform, String id, int season) {
+    public RankStatDto getRankStat(String platform, String id, String region, int season) {
         Profile findProfile = getProfile(platform, id);
 
-        String region = "apac";
         String rankUrl = String.format(RANK_URL_TEMPLATE,
                 Platform.platformToSpaceId(platform),
                 Platform.platformToPlatformId(platform),

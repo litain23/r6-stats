@@ -83,7 +83,7 @@ public class UbiApiTest {
 
     @Test
     public void When_GetRankStatNormalUser_Expect_Good() {
-        RankStatDto dto = ubiApi.getRankStat(platform, username, -1);
+        RankStatDto dto = ubiApi.getRankStat(platform, username, "apac",-1);
         LocalDateTime afterTestTime = LocalDateTime.now();
 
         assertThat(dto.getRank()).isGreaterThan(0);
@@ -100,9 +100,10 @@ public class UbiApiTest {
         assertThat(dto.getCreatedTime()).isBetween(beforeTestTime, afterTestTime);
     }
 
+
     @Test
     public void When_GetRankStatNormalUserBefore13Season_Expect_Good() {
-        RankStatDto dto = ubiApi.getRankStat(platform, username, 12);
+        RankStatDto dto = ubiApi.getRankStat(platform, username, "apac", 12);
         LocalDateTime afterTestTime = LocalDateTime.now();
 
         assertThat(dto.getRank()).isGreaterThan(0);

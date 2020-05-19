@@ -3,6 +3,7 @@ package org.example.springboot.domain.rankstat;
 import lombok.Builder;
 import lombok.Getter;
 import org.example.springboot.domain.player.Player;
+import org.example.springboot.r6api.dto.RankStatDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -59,19 +60,35 @@ public class RankStat {
         this.player = player;
     }
 
-    public void updateRankStat(RankStat stat, Player player) {
-        this.maxMmr = stat.getMaxMmr();
-        this.death = stat.getDeath();
-        this.rank = stat.getRank();
-        this.maxRank = stat.getMaxRank();
-        this.kills = stat.getKills();
-        this.abandons = stat.getAbandons();
-        this.mmr = stat.getMmr();
-        this.wins = stat.getWins();
-        this.region = stat.getRegion();
-        this.season = stat.getSeason();
-        this.losses = stat.getLosses();
+    @Builder
+    public RankStat(RankStatDto dto, Player player) {
+        this.rank = dto.getRank();
+        this.maxRank = dto.getMaxRank();
+        this.mmr = dto.getMmr();
+        this.maxMmr = dto.getMaxMmr();
+        this.kills = dto.getKills();
+        this.death = dto.getDeath();
+        this.season = dto.getSeason();
+        this.region = dto.getRegion();
+        this.wins = dto.getWins();
+        this.losses = dto.getLosses();
+        this.abandons = dto.getAbandons();
         this.player = player;
+
+    }
+
+    public void updateRankStat(RankStatDto rankStatDto) {
+        this.maxMmr = rankStatDto.getMaxMmr();
+        this.death = rankStatDto.getDeath();
+        this.rank = rankStatDto.getRank();
+        this.maxRank = rankStatDto.getMaxRank();
+        this.kills = rankStatDto.getKills();
+        this.abandons = rankStatDto.getAbandons();
+        this.mmr = rankStatDto.getMmr();
+        this.wins = rankStatDto.getWins();
+        this.region = rankStatDto.getRegion();
+        this.season = rankStatDto.getSeason();
+        this.losses = rankStatDto.getLosses();
     }
 
 //  UBI API에서는 제공하지만 사용자에게는 제공할 필요가 없다고 판단
