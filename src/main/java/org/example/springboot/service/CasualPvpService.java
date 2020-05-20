@@ -23,21 +23,17 @@ public class CasualPvpService {
     private final UbiApi ubiApi;
 
     public CasualPvpResponseDto getCasualPvp(String platform, String id) {
-        return getCasualPvp(platform, id, false);
+        CasualPvpDto casualPvpDto = ubiApi.getCasualPvp(platform, id);
+        return new CasualPvpResponseDto(casualPvpDto);
     }
 
     @Transactional
-    public CasualPvpResponseDto getCasualPvp(String platform, String id, boolean isSave) {
+    public void saveCasualPvp(String platform, String id) {
         CasualPvpDto casualPvpDto = ubiApi.getCasualPvp(platform, id);
-
-        if(isSave) {
-            Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
-            CasualPvp casualPvp = new CasualPvp(casualPvpDto, player);
-            casualPvpRepository.save(casualPvp);
-            player.getCasualPvpList().add(casualPvp);
-        }
-
-        return new CasualPvpResponseDto(casualPvpDto);
+        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
+        CasualPvp casualPvp = new CasualPvp(casualPvpDto, player);
+        casualPvpRepository.save(casualPvp);
+        player.getCasualPvpList().add(casualPvp);
     }
 
     @Transactional

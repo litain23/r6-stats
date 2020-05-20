@@ -22,23 +22,18 @@ public class RankPvpService {
     private final PlayerRepository playerRepository;
     private final UbiApi ubiApi;
 
-    @Transactional
     public RankPvpResponseDto getRankPvp(String platform, String id) {
-        return getRankPvp(platform, id, false);
+        RankPvpDto rankPvpDto = ubiApi.getRankPvp(platform, id);
+        return new RankPvpResponseDto(rankPvpDto);
     }
 
     @Transactional
-    public RankPvpResponseDto getRankPvp(String platform, String id, boolean isSave) {
+    public void saveRankPvp(String platform, String id) {
         RankPvpDto rankPvpDto = ubiApi.getRankPvp(platform, id);
-
-        if(isSave) {
-            Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
-            RankPvp rankPvp = new RankPvp(rankPvpDto, player);
-            rankPvpRepository.save(rankPvp);
-            player.getRankPvpList().add(rankPvp);
-        }
-
-        return new RankPvpResponseDto(rankPvpDto);
+        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
+        RankPvp rankPvp = new RankPvp(rankPvpDto, player);
+        rankPvpRepository.save(rankPvp);
+        player.getRankPvpList().add(rankPvp);
     }
 
     @Transactional

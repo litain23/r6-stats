@@ -18,35 +18,31 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class OperatorsService {
+public class OperatorService {
     private final OperatorRepository operatorRepository;
     private final PlayerRepository playerRepository;
     private final UbiApi ubiApi;
 
     @Transactional
     public List<OperatorListResponseDto> getOperatorStatList(String platform, String id) {
-        return getOperatorStatList(platform, id, false);
-    }
-
-
-    @Transactional
-    public List<OperatorListResponseDto> getOperatorStatList(String platform, String id, boolean isSave) {
         List<OperatorDto> operatorDtoList = ubiApi.getOperatorsStat(platform, id);
-
-        if(isSave) {
-            Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
-            List<Operator> playerOperatorList = player.getOperatorList();
-            for(OperatorDto op : operatorDtoList) {
-                Operator operator = new Operator(op, player);
-                operatorRepository.save(operator);
-                playerOperatorList.add(operator);
-            }
-        }
-
         return operatorDtoList.stream()
                 .map(OperatorListResponseDto::new)
                 .sorted(Comparator.comparing(OperatorListResponseDto::getCreatedTime).reversed())
                 .limit(OperatorIndex.indexList.size())
                 .collect(Collectors.toList());
+    }
+
+
+    @Transactional
+    public void saveOperatorStat(String platform, String id){
+        List<OperatorDto> operatorDtoList = ubiApi.getOperatorsStat(platform, id);
+        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
+        List<Operator> playerOperatorList = player.getOperatorList();
+        for(OperatorDto op : operatorDtoList) {
+            Operator operator = new Operator(op, player);
+            operatorRepository.save(operator);
+            playerOperatorList.add(operator);
+        }
     }
 }
