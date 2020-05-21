@@ -82,7 +82,6 @@ public class RankStatService {
     }
 
     private void savePreviousSeasons(String platform, String id, String region, int currentSeason, Player player) {
-        List<RankStat> playerRankList = player.getRankList();
         for(int season = 1; season <= currentSeason; season++) {
             RankStatDto rankstatDto = ubiApi.getRankStat(platform, id, region, season);
             if(rankstatDto.getMaxMmr() == 0 && season != currentSeason) {

@@ -55,10 +55,8 @@ public class CasualPvpServiceTest {
     String platform = "uplay";
     String userId = "piliot";
 
-    List<CasualPvp> casualPvpList;
-
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
         player = Player.builder()
                 .platform("uplay")
                 .userId("piliot")

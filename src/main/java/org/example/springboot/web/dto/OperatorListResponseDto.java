@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 public class OperatorListResponseDto {
     private String name;
     private String operatorIndex;
+    private String category;
     private int kills;
     private int death;
     private int headShot;
@@ -22,6 +23,7 @@ public class OperatorListResponseDto {
 
     public OperatorListResponseDto(Operator operator) {
         this.name = operator.getName();
+        this.category = operator.getCategory();
         this.operatorIndex = operator.getOperatorIndex();
         this.kills = operator.getKills();
         this.death = operator.getDeath();
@@ -36,6 +38,7 @@ public class OperatorListResponseDto {
 
     public OperatorListResponseDto(OperatorDto operatorDto) {
         this.name = operatorDto.getName();
+        this.category = operatorDto.getCategory();
         this.operatorIndex = operatorDto.getOperatorIndex();
         this.kills = operatorDto.getKills();
         this.death = operatorDto.getDeath();
