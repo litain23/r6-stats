@@ -4,4 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PlayerRepositoryBasic extends JpaRepository<Player, Long> {
     Player findByPlatformAndAndUserId(String platform, String userId);
+    Player findByPlatformAndProfileId(String platform, String profileId);
 }

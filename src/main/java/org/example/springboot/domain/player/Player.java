@@ -6,6 +6,7 @@ import org.example.springboot.domain.casualpvp.CasualPvp;
 import org.example.springboot.domain.operator.Operator;
 import org.example.springboot.domain.rankpvp.RankPvp;
 import org.example.springboot.domain.rankstat.RankStat;
+import org.example.springboot.domain.weeklyoperator.WeeklyOperator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -30,10 +31,13 @@ public class Player {
     private String userId;
 
     @NotBlank
+    private String profileId;
+
+    @NotBlank
     private String platform;
 
     @OneToMany(mappedBy = "player")
-    private List<Operator> operatorList = new ArrayList<>();
+    private List<WeeklyOperator> weeklyOperatorList = new ArrayList<>();
 
     @OneToMany(mappedBy = "player")
     private List<RankStat> rankList = new ArrayList<>();
@@ -53,8 +57,9 @@ public class Player {
     public Player() { }
 
     @Builder
-    public Player(String platform, String userId) {
+    public Player(String platform, String userId, String profileId) {
         this.platform = platform;
         this.userId = userId;
+        this.profileId = profileId;
     }
 }

@@ -3,6 +3,7 @@ package org.example.springboot.domain.operator;
 import lombok.Builder;
 import lombok.Getter;
 import org.example.springboot.domain.player.Player;
+import org.example.springboot.domain.weeklyoperator.WeeklyOperator;
 import org.example.springboot.r6api.dto.OperatorDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -20,9 +21,9 @@ public class Operator {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name="PLAYER_ID")
+    @JoinColumn(name="weekly_operator_id")
     @NotNull
-    private Player player;
+    private WeeklyOperator weeklyOperator;
 
     private String name;
     private String operatorIndex;
@@ -42,7 +43,7 @@ public class Operator {
     public Operator() { }
 
     @Builder
-    public Operator(String name, String operatorIndex, String category, int kills, int death, int headShot, int meleeKills, int totalXp, int timePlayed, int roundWon, int roundLost, Player player) {
+    public Operator(String name, String operatorIndex, String category, int kills, int death, int headShot, int meleeKills, int totalXp, int timePlayed, int roundWon, int roundLost, WeeklyOperator weeklyOperator) {
         this.name = name;
         this.operatorIndex = operatorIndex;
         this.category = category;
@@ -54,10 +55,10 @@ public class Operator {
         this.timePlayed = timePlayed;
         this.roundWon = roundWon;
         this.roundLost = roundLost;
-        this.player = player;
+        this.weeklyOperator = weeklyOperator;
     }
 
-    public Operator(OperatorDto operatorDto, Player player) {
+    public Operator(OperatorDto operatorDto, WeeklyOperator weeklyOperator) {
         this.name = operatorDto.getName();
         this.operatorIndex = operatorDto.getOperatorIndex();
         this.kills = operatorDto.getKills();
@@ -68,6 +69,6 @@ public class Operator {
         this.timePlayed = operatorDto.getTimePlayed();
         this.roundLost = operatorDto.getRoundLost();
         this.roundWon = operatorDto.getRoundWon();
-        this.player = player;
+        this.weeklyOperator= weeklyOperator;
     }
 }
