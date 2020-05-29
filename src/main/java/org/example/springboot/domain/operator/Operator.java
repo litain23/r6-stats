@@ -61,6 +61,7 @@ public class Operator {
     public Operator(OperatorDto operatorDto, WeeklyOperator weeklyOperator) {
         this.name = operatorDto.getName();
         this.operatorIndex = operatorDto.getOperatorIndex();
+        this.category = operatorDto.getCategory();
         this.kills = operatorDto.getKills();
         this.death = operatorDto.getDeath();
         this.headShot = operatorDto.getHeadShot();

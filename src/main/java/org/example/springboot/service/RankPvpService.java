@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 public class RankPvpService {
     private final RankPvpRepository rankPvpRepository;
-    private final PlayerRepository playerRepository;
+    private final PlayerService playerService;
     private final UbiApi ubiApi;
 
     public RankPvpResponseDto getRankPvp(String platform, String id) {
@@ -30,7 +30,7 @@ public class RankPvpService {
     @Transactional
     public void saveRankPvp(String platform, String id) {
         RankPvpDto rankPvpDto = ubiApi.getRankPvp(platform, id);
-        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
+        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
         RankPvp rankPvp = new RankPvp(rankPvpDto, player);
         rankPvpRepository.save(rankPvp);
         player.getRankPvpList().add(rankPvp);
@@ -38,7 +38,7 @@ public class RankPvpService {
 
     @Transactional
     public List<RankPvpResponseDto> getRankPvpAll(String platform, String id) {
-        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
+        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
         List<RankPvpResponseDto> ret = player.getRankPvpList().stream()
                 .map(RankPvpResponseDto::new)
                 .sorted(Comparator.comparing(RankPvpResponseDto::getCreatedTime).reversed())

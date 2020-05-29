@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import org.example.springboot.domain.operator.Operator;
 import org.example.springboot.domain.player.Player;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -29,12 +30,11 @@ public class WeeklyOperator {
     @OneToMany(mappedBy = "weeklyOperator")
     private List<Operator> operatorList = new ArrayList<>();
 
-    @NotBlank
     private int season;
 
-    @NotBlank
     private int week;
 
+    @CreationTimestamp
     LocalDateTime createdTime;
 
     public WeeklyOperator() {}

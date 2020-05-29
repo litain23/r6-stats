@@ -24,7 +24,7 @@ public class RankStatService {
     private static final String[] REGIONS = {"apac", "emea", "ncsa"};
 
     private final RankStatRepository rankRepository;
-    private final PlayerRepository playerRepository;
+    private final PlayerService playerService;
     private final UbiApi ubiApi;
 
 
@@ -40,7 +40,7 @@ public class RankStatService {
 
     @Transactional
     public List<RankStatRegionResponseDto> getRankStatAllSeason(String platform, String id) {
-        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
+        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
         int currentSeason = ubiApi.getRankStat(platform, id, REGIONS[0], CURRENT_SEASON).getSeason();
 
         for(String region : REGIONS) {

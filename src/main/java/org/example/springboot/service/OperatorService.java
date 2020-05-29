@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class OperatorService {
     private final OperatorRepository operatorRepository;
-    private final PlayerRepository playerRepository;
+    private final PlayerService playerService;
     private final WeeklyOperatorRepository weeklyOperatorRepository;
     private final UbiApi ubiApi;
 
@@ -38,7 +38,7 @@ public class OperatorService {
     @Transactional
     public void saveOperatorStat(String platform, String id){
         List<OperatorDto> operatorDtoList = ubiApi.getOperatorsStat(platform, id);
-        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
+        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
 
         WeeklyOperator weeklyOperator = WeeklyOperator.builder()
                 .player(player)

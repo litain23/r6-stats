@@ -62,4 +62,8 @@ public class Player {
         this.userId = userId;
         this.profileId = profileId;
     }
+
+    public void updateUserId(String userId) {
+        this.userId = userId;
+    }
 }

@@ -7,6 +7,7 @@ import org.example.springboot.domain.player.Player;
 import org.example.springboot.domain.player.PlayerRepository;
 import org.example.springboot.r6api.UbiApi;
 import org.example.springboot.r6api.dto.CasualPvpDto;
+import org.example.springboot.r6api.dto.ProfileDto;
 import org.example.springboot.web.dto.CasualPvpResponseDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class CasualPvpService {
     private final CasualPvpRepository casualPvpRepository;
-    private final PlayerRepository playerRepository;
+    private final PlayerService playerService;
     private final UbiApi ubiApi;
 
     public CasualPvpResponseDto getCasualPvp(String platform, String id) {
@@ -30,7 +31,8 @@ public class CasualPvpService {
     @Transactional
     public void saveCasualPvp(String platform, String id) {
         CasualPvpDto casualPvpDto = ubiApi.getCasualPvp(platform, id);
-        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
+        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
+
         CasualPvp casualPvp = new CasualPvp(casualPvpDto, player);
         casualPvpRepository.save(casualPvp);
         player.getCasualPvpList().add(casualPvp);
@@ -38,7 +40,7 @@ public class CasualPvpService {
 
     @Transactional
     public List<CasualPvpResponseDto> getCasualPvpAll(String platform, String id) {
-        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
+        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
 
         List<CasualPvpResponseDto> ret =  player.getCasualPvpList().stream()
                 .map(CasualPvpResponseDto::new)
