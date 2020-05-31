@@ -53,7 +53,6 @@ public class OperatorRepositoryTest {
                 .roundWon(10)
                 .timePlayed(10)
                 .totalXp(10)
-                .player(player)
                 .build();
 
         operatorRepository.save(operator);

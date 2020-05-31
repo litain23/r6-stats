@@ -67,6 +67,7 @@ public class RankStatService {
                 }
             }
         }
+
         return convertStatDtoToRegionDto(player.getRankList().stream().map(RankStatResponseDto::new).collect(Collectors.toList()));
     }
 

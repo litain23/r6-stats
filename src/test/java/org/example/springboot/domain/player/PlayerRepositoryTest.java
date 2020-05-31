@@ -1,5 +1,6 @@
 package org.example.springboot.domain.player;
 
+import org.example.springboot.service.PlayerService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +23,9 @@ public class PlayerRepositoryTest {
 
     @Autowired
     private PlayerRepository playerRepository;
+
+    @Autowired
+    private PlayerService playerService;
 
     String username = "piliot";
     String platform = "uplay";
@@ -55,27 +59,6 @@ public class PlayerRepositoryTest {
         Player foundPlayer = playerRepository.findByPlatformAndAndUserId(platform, username);
 
         assertThat(player).isEqualTo(foundPlayer);
-    }
-
-    @Test
-    public void When_GetPlayerCustomMethod_Expect_Good() {
-        Player player = Player.builder()
-                .platform(platform)
-                .userId(username)
-                .build();
-
-        playerRepository.save(player);
-
-        Player foundPlayer = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, username);
-        assertThat(player).isEqualTo(foundPlayer);
-    }
-
-    @Test
-    public void When_SavePlayerCustomMethod_Expect_Good() {
-        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, username);
-
-        assertThat(player.getUserId()).isEqualTo(username);
-        assertThat(player.getPlatform()).isEqualTo(platform);
     }
 
     @Test(expected = ConstraintViolationException.class)

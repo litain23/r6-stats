@@ -8,6 +8,7 @@ import org.example.springboot.r6api.UbiApi;
 import org.example.springboot.r6api.UbiAuthApiTest;
 import org.example.springboot.r6api.dto.CasualPvpDto;
 import org.example.springboot.service.CasualPvpService;
+import org.example.springboot.service.PlayerService;
 import org.example.springboot.web.dto.CasualPvpResponseDto;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +34,7 @@ public class CasualPvpServiceTest {
     CasualPvpService casualPvpService;
 
     @Mock
-    PlayerRepository playerRepository;
+    PlayerService playerService;
 
     @Mock
     CasualPvpRepository casualPvpRepository;
@@ -54,15 +55,17 @@ public class CasualPvpServiceTest {
 
     String platform = "uplay";
     String userId = "piliot";
+    String profileId = "test_profile_id";
 
     @Before
     public void setUp() {
         player = Player.builder()
-                .platform("uplay")
-                .userId("piliot")
+                .platform(platform)
+                .userId(userId)
+                .profileId(profileId)
                 .build();
 
-        when(playerRepository.getPlayerIfNotExistReturnNewEntity(platform, userId)).thenReturn(
+        when(playerService.findPlayerIfNotExistReturnNewEntity(platform, userId)).thenReturn(
                 player
         );
 

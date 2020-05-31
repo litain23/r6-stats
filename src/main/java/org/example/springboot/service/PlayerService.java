@@ -5,7 +5,6 @@ import org.example.springboot.domain.player.Player;
 import org.example.springboot.domain.player.PlayerRepository;
 import org.example.springboot.r6api.UbiApi;
 import org.example.springboot.r6api.dto.ProfileDto;
-import org.springframework.beans.factory.config.CustomEditorConfigurer;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -23,14 +22,13 @@ public class PlayerService {
                     .platform(platform)
                     .userId(id)
                     .build();
-        }
 
-        if(player.getUserId() != id) {
-            // user 가 id 를 바꾼 경우, id 업데이트
+            playerRepository.save(player);
+        } else if(player.getUserId() != id) {
+            // ProfileId로 찾았으나, 아이디를 변경하여 DB 저장된 id 랑 다른 경우 업데이트
             player.updateUserId(id);
         }
 
-        playerRepository.save(player);
         return player;
     }
 }
