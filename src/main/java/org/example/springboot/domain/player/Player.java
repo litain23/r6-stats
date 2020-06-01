@@ -3,14 +3,16 @@ package org.example.springboot.domain.player;
 import lombok.Builder;
 import lombok.Getter;
 import org.example.springboot.domain.casualpvp.CasualPvp;
-import org.example.springboot.domain.operators.Operators;
+import org.example.springboot.domain.operator.Operator;
 import org.example.springboot.domain.rankpvp.RankPvp;
 import org.example.springboot.domain.rankstat.RankStat;
+import org.example.springboot.domain.weeklyoperator.WeeklyOperator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,20 +20,24 @@ import java.util.List;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"userId", "platform"})})
 public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
-    private String playerId;
+    @NotBlank
+    private String userId;
 
-    @Column(nullable = false)
+    @NotBlank
+    private String profileId;
+
+    @NotBlank
     private String platform;
 
     @OneToMany(mappedBy = "player")
-    private List<Operators> operatorsList = new ArrayList<>();
+    private List<WeeklyOperator> weeklyOperatorList = new ArrayList<>();
 
     @OneToMany(mappedBy = "player")
     private List<RankStat> rankList = new ArrayList<>();
@@ -51,8 +57,13 @@ public class Player {
     public Player() { }
 
     @Builder
-    public Player(String platform, String playerId) {
+    public Player(String platform, String userId, String profileId) {
         this.platform = platform;
-        this.playerId = playerId;
+        this.userId = userId;
+        this.profileId = profileId;
+    }
+
+    public void updateUserId(String userId) {
+        this.userId = userId;
     }
 }

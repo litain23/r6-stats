@@ -1,36 +1,39 @@
 package org.example.springboot.web.dto;
 
-import lombok.Builder;
 import lombok.Getter;
+import org.example.springboot.r6api.dto.GeneralPvpDto;
+
+import java.time.LocalDateTime;
 
 @Getter
 public class GeneralPvpResponseDto {
-    private int totalMatchLost;
-    private int totalMatchWon;
-    private int totalMatchPlayed;
-    private int totalKills;
-    private int totalDeath;
-    private int totalPenetrationKills;
-    private int totalMeleeKills;
-    private int totalKillAssists;
-    private int totalHeadShot;
-    private int totalRevive;
-    private int totalBulletHit;
-    private int totalTimePlayed;
+    int matchLost;
+    int matchWon;
+    int matchPlayed;
+    int kills;
+    int death;
+    int penetrationKills;
+    int meleeKills;
+    int killAssists;
+    int headShot;
+    int revive;
+    int bulletHit;
+    int timePlayed;
+    LocalDateTime createdTime;
 
-    @Builder
-    public GeneralPvpResponseDto(int totalMatchLost, int totalMatchWon, int totalMatchPlayed, int totalKills, int totalDeath, int totalPenetrationKills, int totalMeleeKills, int totalKillAssists, int totalHeadShot, int totalRevive, int totalBulletHit, int totalTimePlayed) {
-        this.totalMatchLost = totalMatchLost;
-        this.totalMatchWon = totalMatchWon;
-        this.totalMatchPlayed = totalMatchPlayed;
-        this.totalKills = totalKills;
-        this.totalDeath = totalDeath;
-        this.totalPenetrationKills = totalPenetrationKills;
-        this.totalMeleeKills = totalMeleeKills;
-        this.totalKillAssists = totalKillAssists;
-        this.totalHeadShot = totalHeadShot;
-        this.totalRevive = totalRevive;
-        this.totalBulletHit = totalBulletHit;
-        this.totalTimePlayed = totalTimePlayed;
+    public GeneralPvpResponseDto(GeneralPvpDto generalPvpDto) {
+        this.matchLost = generalPvpDto.getMatchLost();
+        this.matchWon = generalPvpDto.getMatchWon();
+        this.matchPlayed = generalPvpDto.getMatchPlayed();
+        this.kills = generalPvpDto.getKills();
+        this.death = generalPvpDto.getDeath();
+        this.penetrationKills = generalPvpDto.getPenetrationKills();
+        this.meleeKills = generalPvpDto.getMeleeKills();
+        this.killAssists = generalPvpDto.getKillAssists();
+        this.headShot = generalPvpDto.getHeadShot();
+        this.revive = generalPvpDto.getRevive();
+        this.bulletHit = generalPvpDto.getBulletHit();
+        this.timePlayed = generalPvpDto.getTimePlayed();
+        this.createdTime = generalPvpDto.getCreatedTime();
     }
 }

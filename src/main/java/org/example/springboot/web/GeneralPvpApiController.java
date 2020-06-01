@@ -14,9 +14,8 @@ public class GeneralPvpApiController {
     private final GeneralPvpService generalPvpService;
 
     @GetMapping("/api/v1/general/{platform}/{id}")
-    public ResponseEntity<GeneralPvpResponseDto> findById(@PathVariable String platform,
+    public GeneralPvpResponseDto findById(@PathVariable String platform,
                                                          @PathVariable String id) {
-
-        return ResponseEntity.ok(generalPvpService.getGeneralPvp(platform, id));
+        return generalPvpService.getGeneralPvp(platform, id);
     }
 }

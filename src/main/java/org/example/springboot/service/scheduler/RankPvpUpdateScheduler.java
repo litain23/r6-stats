@@ -19,7 +19,7 @@ public class RankPvpUpdateScheduler {
     public void autoUpdateRankPvp() {
         List<Player> playerList = playerRepository.findAll();
         for(Player player : playerList) {
-            rankPvpService.getRankPvp(player.getPlatform(), player.getPlayerId(), true);
+            rankPvpService.saveRankPvp(player.getPlatform(), player.getUserId());
         }
     }
 }

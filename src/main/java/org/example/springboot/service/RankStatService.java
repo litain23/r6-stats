@@ -1,84 +1,97 @@
 package org.example.springboot.service;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
 import org.example.springboot.domain.player.Player;
 import org.example.springboot.domain.player.PlayerRepository;
 import org.example.springboot.domain.rankstat.RankStat;
 import org.example.springboot.domain.rankstat.RankStatRepository;
+import org.example.springboot.exception.r6api.R6ErrorException;
 import org.example.springboot.r6api.UbiApi;
+import org.example.springboot.r6api.dto.RankStatDto;
+import org.example.springboot.web.dto.RankStatRegionResponseDto;
+import org.example.springboot.web.dto.RankStatRequestDto;
 import org.example.springboot.web.dto.RankStatResponseDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class RankStatService {
     private static final int CURRENT_SEASON = -1;
+    private static final String[] REGIONS = {"apac", "emea", "ncsa"};
 
     private final RankStatRepository rankRepository;
-    private final PlayerRepository playerRepository;
+    private final PlayerService playerService;
     private final UbiApi ubiApi;
 
+
     @Transactional
-    public RankStatResponseDto getRankStat(String platform, String id, int season) {
-        RankStat currentRankStat = parseResponseStr(ubiApi.getRankStat(platform, id, season));
-        return new RankStatResponseDto(currentRankStat);
+    public List<RankStatRegionResponseDto> getRankStat(String platform, String id, int season) {
+
+        List<RankStatDto> rankDtoList = new ArrayList<>();
+        for(String region : REGIONS) {
+            rankDtoList.add(ubiApi.getRankStat(platform, id, region, season));
+        }
+        return convertStatDtoToRegionDto(rankDtoList.stream().map(RankStatResponseDto::new).collect(Collectors.toList()));
     }
 
     @Transactional
-    public List<RankStatResponseDto> getRankStatAllSeason(String platform, String id) {
-        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, id);
+    public List<RankStatRegionResponseDto> getRankStatAllSeason(String platform, String id) {
+        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
+        int currentSeason = ubiApi.getRankStat(platform, id, REGIONS[0], CURRENT_SEASON).getSeason();
 
-        RankStat currentRankStat = parseResponseStr(ubiApi.getRankStat(platform, id, CURRENT_SEASON));
-        int currentSeason = currentRankStat.getSeason();
+        for(String region : REGIONS) {
+            Optional<List<RankStat>> rankStatList = rankRepository.findByRegionAndPlayer(region, player);
 
-        List<RankStat> playerRankList = player.getRankList();
-        if(playerRankList.isEmpty()) {
-            for(int season = 1; season <= currentSeason; season++) {
-                RankStat rankstat = parseResponseStr(ubiApi.getRankStat(platform, id, season));
-                if(rankstat.getMaxMmr() == 0 && season != currentSeason) {
-                    continue;
+            if(!rankStatList.isPresent()) {
+                savePreviousSeasons(platform, id, region, currentSeason, player);
+            } else {
+                RankStat lastRankStat = rankStatList.get()
+                            .stream()
+                            .max(Comparator.comparing(RankStat::getSeason))
+                            .orElseThrow(RuntimeException::new);
+                RankStatDto currentRankStatDto = ubiApi.getRankStat(platform, id, region, currentSeason);
+
+                if(lastRankStat.getSeason() == currentRankStatDto.getSeason()) {
+                    lastRankStat.updateRankStat(currentRankStatDto);
+                } else {
+                    if(lastRankStat.getMaxMmr() == 0) {
+                        rankRepository.delete(lastRankStat);
+                    }
+                    RankStat currentRankStat = new RankStat(currentRankStatDto, player);
+                    rankRepository.save(currentRankStat);
+                    player.getRankList().add(currentRankStat);
                 }
-
-                rankstat.setPlayer(player);
-                rankRepository.save(rankstat);
-                playerRankList.add(rankstat);
             }
         }
 
-        RankStat lastRankStat = playerRankList.get(playerRankList.size() - 1);
-        // 플레이어의 마지막 랭크 시즌이 현재 시즌과 같으면 업데이트, 아니면 Add
-        if(lastRankStat.getSeason() == currentSeason) {
-            lastRankStat.updateRankStat(currentRankStat);
-        } else if(lastRankStat.getSeason() < currentSeason){
-            if(lastRankStat.getMaxMmr() == 0) {
-                // add 할때 이전시즌 또한 언랭크이면 삭제
-                int lastRankStatIndex = playerRankList.indexOf(lastRankStat);
-                playerRankList.remove(lastRankStatIndex);
-                rankRepository.delete(lastRankStat);
-            }
-
-            lastRankStat.setPlayer(player);
-            rankRepository.save(currentRankStat);
-            playerRankList.add(currentRankStat);
-        }
-
-        return playerRankList.stream()
-                    .map(RankStatResponseDto::new)
-                    .collect(Collectors.toList());
+        return convertStatDtoToRegionDto(player.getRankList().stream().map(RankStatResponseDto::new).collect(Collectors.toList()));
     }
 
-    private RankStat parseResponseStr(String strJson) {
-        Gson gson = new GsonBuilder()
-                .setFieldNamingStrategy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
+    private List<RankStatRegionResponseDto> convertStatDtoToRegionDto(List<RankStatResponseDto> dto) {
+        List<RankStatRegionResponseDto> ret = new ArrayList<>();
+        Map<String, List<RankStatResponseDto>> map = dto.stream().collect(Collectors.groupingBy(RankStatResponseDto::getRegion));
 
-        return gson.fromJson(strJson, RankStat.class);
+        for(String region : map.keySet()) {
+            ret.add(new RankStatRegionResponseDto(region, map.get(region)));
+        }
+
+        return ret;
+    }
+
+    private void savePreviousSeasons(String platform, String id, String region, int currentSeason, Player player) {
+        for(int season = 1; season <= currentSeason; season++) {
+            RankStatDto rankstatDto = ubiApi.getRankStat(platform, id, region, season);
+            if(rankstatDto.getMaxMmr() == 0 && season != currentSeason) {
+                continue; // 현재 시즌은 저장하지만, 이전 시즌이 플레이를 안한 경우는 무시
+            }
+
+            RankStat rankStat = new RankStat(rankstatDto, player);
+            rankRepository.save(rankStat);
+            player.getRankList().add(rankStat);
+        }
     }
 }
