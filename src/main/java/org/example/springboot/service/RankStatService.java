@@ -30,7 +30,7 @@ public class RankStatService {
 
     @Transactional
     public List<RankStatRegionResponseDto> getRankStat(String platform, String id, int season) {
-
+        playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
         List<RankStatDto> rankDtoList = new ArrayList<>();
         for(String region : REGIONS) {
             rankDtoList.add(ubiApi.getRankStat(platform, id, region, season));

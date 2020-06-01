@@ -100,7 +100,6 @@ public class RankStatServiceTest {
                 null
         );
 
-        doNothing().when(rankStatRepository).delete(any(RankStat.class));
     }
 
     @Test

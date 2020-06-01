@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GeneralPvpService {
     private final UbiApi ubiApi;
+    private final PlayerService playerService;
 
     @Transactional
     public GeneralPvpResponseDto getGeneralPvp(String platform, String id) {
+        playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
         return new GeneralPvpResponseDto(ubiApi.getGeneralPvp(platform, id));
     }
 }

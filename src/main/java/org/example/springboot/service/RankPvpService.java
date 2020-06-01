@@ -24,6 +24,7 @@ public class RankPvpService {
     private final UbiApi ubiApi;
 
     public RankPvpResponseDto getRankPvp(String platform, String id) {
+        playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
         RankPvpDto rankPvpDto = ubiApi.getRankPvp(platform, id);
         return new RankPvpResponseDto(rankPvpDto);
     }

@@ -1,6 +1,7 @@
 package org.example.springboot.domain.rankpvp;
 
 import org.example.springboot.domain.player.Player;
+import org.example.springboot.domain.rankstat.RankStat;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +35,7 @@ public class RankPvpRepositoryTest {
                 Player.builder()
                         .userId("testId")
                         .platform("uplay")
+                        .profileId("test_profile_id")
                         .build()
         );
     }

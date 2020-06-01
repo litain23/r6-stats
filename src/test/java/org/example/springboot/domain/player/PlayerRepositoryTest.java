@@ -24,11 +24,9 @@ public class PlayerRepositoryTest {
     @Autowired
     private PlayerRepository playerRepository;
 
-    @Autowired
-    private PlayerService playerService;
-
     String username = "piliot";
     String platform = "uplay";
+    String profileId = "test_profile_id";
 
     @Before
     public void setUp() {
@@ -40,6 +38,7 @@ public class PlayerRepositoryTest {
         Player player = Player.builder()
                 .platform(platform)
                 .userId(username)
+                .profileId(profileId)
                 .build();
 
         playerRepository.save(player);
@@ -53,6 +52,7 @@ public class PlayerRepositoryTest {
         Player player = Player.builder()
                 .platform(platform)
                 .userId(username)
+                .profileId(profileId)
                 .build();
 
         playerRepository.save(player);
@@ -66,6 +66,7 @@ public class PlayerRepositoryTest {
         Player player = Player.builder()
                 .platform(platform)
                 .userId("")
+                .profileId(profileId)
                 .build();
 
         playerRepository.save(player);
@@ -76,6 +77,7 @@ public class PlayerRepositoryTest {
         Player player = Player.builder()
                 .platform("")
                 .userId(username)
+                .profileId(profileId)
                 .build();
 
         playerRepository.save(player);
@@ -86,6 +88,7 @@ public class PlayerRepositoryTest {
         Player player = Player.builder()
                 .platform(null)
                 .userId(username)
+                .profileId(profileId)
                 .build();
 
         playerRepository.save(player);
@@ -96,6 +99,7 @@ public class PlayerRepositoryTest {
         Player player = Player.builder()
                 .platform(platform)
                 .userId(null)
+                .profileId(profileId)
                 .build();
 
         playerRepository.save(player);
@@ -106,10 +110,12 @@ public class PlayerRepositoryTest {
         Player player1 = Player.builder()
                 .platform(platform)
                 .userId(username)
+                .profileId(profileId)
                 .build();
         Player player2 = Player.builder()
                 .platform(platform)
                 .userId(username)
+                .profileId(profileId)
                 .build();
 
         playerRepository.save(player1);

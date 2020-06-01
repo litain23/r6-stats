@@ -27,6 +27,7 @@ public class OperatorService {
 
     @Transactional
     public List<OperatorListResponseDto> getOperatorStatList(String platform, String id) {
+        playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
         List<OperatorDto> operatorDtoList = ubiApi.getOperatorsStat(platform, id);
         return operatorDtoList.stream()
                 .map(OperatorListResponseDto::new)
