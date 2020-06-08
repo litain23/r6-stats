@@ -4,6 +4,7 @@ import lombok.Data;
 import org.example.springboot.domain.player.Player;
 import org.example.springboot.domain.rankstat.RankStat;
 import org.example.springboot.domain.rankstat.RankStatRepository;
+import org.example.springboot.domain.weeklyoperator.WeeklyOperator;
 import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +29,7 @@ public class OperatorRepositoryTest {
     private OperatorRepository operatorRepository;
 
     private Player player;
+    private WeeklyOperator weeklyOperator;
 
     @Before
     public void setUp() {
@@ -35,7 +37,16 @@ public class OperatorRepositoryTest {
                 Player.builder()
                         .userId("testId")
                         .platform("uplay")
+                        .profileId("test_profile_id")
                         .build()
+        );
+
+        weeklyOperator = entityManager.persist(
+                WeeklyOperator.builder()
+                    .player(player)
+                    .season(17)
+                    .week(0)
+                    .build()
         );
     }
 
@@ -53,7 +64,7 @@ public class OperatorRepositoryTest {
                 .roundWon(10)
                 .timePlayed(10)
                 .totalXp(10)
-                .player(player)
+                .weeklyOperator(weeklyOperator)
                 .build();
 
         operatorRepository.save(operator);
@@ -62,7 +73,7 @@ public class OperatorRepositoryTest {
     }
 
 
-    @Test(expected = ConstraintViolationException.class)
+    @Test
     public void When_SaveOperatorPlayerIsNull_Expect_ConstraintViolation() {
         Operator operator = Operator.builder()
                 .operatorIndex("3:8")
@@ -76,6 +87,7 @@ public class OperatorRepositoryTest {
                 .roundWon(10)
                 .timePlayed(10)
                 .totalXp(10)
+                .weeklyOperator(weeklyOperator)
                 .build();
         operatorRepository.save(operator);
     }

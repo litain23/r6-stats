@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -82,13 +84,22 @@ public class RankStatService {
     }
 
     private void savePreviousSeasons(String platform, String id, String region, int currentSeason, Player player) {
+        List<CompletableFuture<RankStatDto>> completableFutureList = new ArrayList<>();
         for(int season = 1; season <= currentSeason; season++) {
-            RankStatDto rankstatDto = ubiApi.getRankStat(platform, id, region, season);
-            if(rankstatDto.getMaxMmr() == 0 && season != currentSeason) {
-                continue; // 현재 시즌은 저장하지만, 이전 시즌이 플레이를 안한 경우는 무시
-            }
+            int finalSeason = season;
+            completableFutureList.add(CompletableFuture.supplyAsync(() -> {
+                return ubiApi.getRankStat(platform, id, region, finalSeason);
+            }));
+        }
+        CompletableFuture.allOf(completableFutureList.toArray(new CompletableFuture[completableFutureList.size()])).join();
+        List<RankStatDto> dtoList = completableFutureList.stream().map(CompletableFuture::join).collect(Collectors.toList());
 
-            RankStat rankStat = new RankStat(rankstatDto, player);
+        for(RankStatDto dto : dtoList) {
+            if(dto.getMaxMmr() == 0 && dto.getSeason() != currentSeason) {
+                // 현재 시즌에 플레이 하지 않더라도 DB 에 저장해놔서, 이 메소드가 검색할 때 마다 호출되는 것을 막음
+                continue;
+            }
+            RankStat rankStat = new RankStat(dto, player);
             rankRepository.save(rankStat);
             player.getRankList().add(rankStat);
         }

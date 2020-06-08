@@ -1,5 +1,6 @@
 package org.example.springboot.domain.player;
 
+import org.example.springboot.service.PlayerService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +26,7 @@ public class PlayerRepositoryTest {
 
     String username = "piliot";
     String platform = "uplay";
+    String profileId = "test_profile_id";
 
     @Before
     public void setUp() {
@@ -36,6 +38,7 @@ public class PlayerRepositoryTest {
         Player player = Player.builder()
                 .platform(platform)
                 .userId(username)
+                .profileId(profileId)
                 .build();
 
         playerRepository.save(player);
@@ -49,6 +52,7 @@ public class PlayerRepositoryTest {
         Player player = Player.builder()
                 .platform(platform)
                 .userId(username)
+                .profileId(profileId)
                 .build();
 
         playerRepository.save(player);
@@ -57,32 +61,12 @@ public class PlayerRepositoryTest {
         assertThat(player).isEqualTo(foundPlayer);
     }
 
-    @Test
-    public void When_GetPlayerCustomMethod_Expect_Good() {
-        Player player = Player.builder()
-                .platform(platform)
-                .userId(username)
-                .build();
-
-        playerRepository.save(player);
-
-        Player foundPlayer = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, username);
-        assertThat(player).isEqualTo(foundPlayer);
-    }
-
-    @Test
-    public void When_SavePlayerCustomMethod_Expect_Good() {
-        Player player = playerRepository.getPlayerIfNotExistReturnNewEntity(platform, username);
-
-        assertThat(player.getUserId()).isEqualTo(username);
-        assertThat(player.getPlatform()).isEqualTo(platform);
-    }
-
     @Test(expected = ConstraintViolationException.class)
     public void When_SaveBlankUsername_Expect_ConstraintException() {
         Player player = Player.builder()
                 .platform(platform)
                 .userId("")
+                .profileId(profileId)
                 .build();
 
         playerRepository.save(player);
@@ -93,6 +77,7 @@ public class PlayerRepositoryTest {
         Player player = Player.builder()
                 .platform("")
                 .userId(username)
+                .profileId(profileId)
                 .build();
 
         playerRepository.save(player);
@@ -103,6 +88,7 @@ public class PlayerRepositoryTest {
         Player player = Player.builder()
                 .platform(null)
                 .userId(username)
+                .profileId(profileId)
                 .build();
 
         playerRepository.save(player);
@@ -113,6 +99,7 @@ public class PlayerRepositoryTest {
         Player player = Player.builder()
                 .platform(platform)
                 .userId(null)
+                .profileId(profileId)
                 .build();
 
         playerRepository.save(player);
@@ -123,10 +110,12 @@ public class PlayerRepositoryTest {
         Player player1 = Player.builder()
                 .platform(platform)
                 .userId(username)
+                .profileId(profileId)
                 .build();
         Player player2 = Player.builder()
                 .platform(platform)
                 .userId(username)
+                .profileId(profileId)
                 .build();
 
         playerRepository.save(player1);

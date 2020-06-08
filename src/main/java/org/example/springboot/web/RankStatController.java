@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -24,7 +25,6 @@ public class RankStatController {
     @GetMapping("/api/v1/rank/{platform}/{id}/all")
     public List<RankStatRegionResponseDto> getRankStatAllSeason(@PathVariable String platform,
                                               @PathVariable String id) {
-
         return rankStatService.getRankStatAllSeason(platform, id);
     }
 

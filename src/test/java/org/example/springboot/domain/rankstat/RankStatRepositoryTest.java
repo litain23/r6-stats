@@ -33,6 +33,7 @@ public class RankStatRepositoryTest {
                 Player.builder()
                         .userId("testId")
                         .platform("uplay")
+                        .profileId("test_profile_id")
                         .build()
         );
     }

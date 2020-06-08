@@ -1,16 +1,14 @@
 package org.example.springboot.r6api;
 
 import org.example.springboot.exception.r6api.R6NotFoundPlayerProfileException;
-import org.example.springboot.r6api.dto.CasualPvpDto;
-import org.example.springboot.r6api.dto.GeneralPvpDto;
-import org.example.springboot.r6api.dto.RankPvpDto;
-import org.example.springboot.r6api.dto.RankStatDto;
+import org.example.springboot.r6api.dto.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,7 +22,8 @@ public class UbiApiTest {
     @BeforeClass
     public static void setUpApi() throws IOException {
         UbiAuthApi ubiAuthApi = UbiAuthApiTest.getUbiAuthApi();
-        ubiApi = new UbiApi(ubiAuthApi);
+        UbiApiParser ubiApiParser = new UbiApiParser();
+        ubiApi = new UbiApi(ubiAuthApi, ubiApiParser);
     }
 
     @Before
@@ -120,7 +119,6 @@ public class UbiApiTest {
         assertThat(dto.getCreatedTime()).isBetween(beforeTestTime, afterTestTime);
     }
 
-
     @Test
     public void When_GetNormalUserProfile_Expect_Good() {
         ubiApi.getProfile(platform, username);
@@ -130,5 +128,11 @@ public class UbiApiTest {
     public void When_GetAbnormalUserProfile_Expect_R6NotFoundPlayerProfile() {
         String wrongUsername = "sjkdlujv89123";
         ubiApi.getProfile(platform, wrongUsername);
+    }
+
+    @Test
+    public void When_GetOperatorList_Expect_Good() {
+        List<OperatorDto> operatorDtoList = ubiApi.getOperatorsStat(platform, username);
+        assertThat(operatorDtoList.size()).isEqualTo(54);
     }
 }
