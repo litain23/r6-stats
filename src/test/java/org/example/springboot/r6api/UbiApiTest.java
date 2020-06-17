@@ -22,7 +22,8 @@ public class UbiApiTest {
     @BeforeClass
     public static void setUpApi() throws IOException {
         UbiAuthApi ubiAuthApi = UbiAuthApiTest.getUbiAuthApi();
-        ubiApi = new UbiApi(ubiAuthApi);
+        UbiApiParser ubiApiParser = new UbiApiParser();
+        ubiApi = new UbiApi(ubiAuthApi, ubiApiParser);
     }
 
     @Before
@@ -84,16 +85,16 @@ public class UbiApiTest {
         RankStatDto dto = ubiApi.getRankStat(platform, username, "apac",-1);
         LocalDateTime afterTestTime = LocalDateTime.now();
 
-        assertThat(dto.getRank()).isGreaterThan(0);
-        assertThat(dto.getMaxMmr()).isGreaterThan(0);
-        assertThat(dto.getMaxMmr()).isGreaterThan(0);
-        assertThat(dto.getMmr()).isGreaterThan(0);
-        assertThat(dto.getKills()).isGreaterThan(0);
-        assertThat(dto.getDeath()).isGreaterThan(0);
-        assertThat(dto.getSeason()).isGreaterThan(0);
+        assertThat(dto.getRank()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMaxMmr()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMaxMmr()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMmr()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getKills()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getDeath()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getSeason()).isGreaterThanOrEqualTo(0);
         assertThat(dto.getRegion()).isEqualTo("apac");
-        assertThat(dto.getWins()).isGreaterThan(0);
-        assertThat(dto.getLosses()).isGreaterThan(0);
+        assertThat(dto.getWins()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getLosses()).isGreaterThanOrEqualTo(0);
         assertThat(dto.getAbandons()).isGreaterThanOrEqualTo(0);
         assertThat(dto.getCreatedTime()).isBetween(beforeTestTime, afterTestTime);
     }

@@ -32,7 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/signin").permitAll()
-                .anyRequest().access("hasIpAddress('127.0.0.1') or isAuthenticated()")
+                // For test
+                .anyRequest().permitAll()
+//                .anyRequest().access("hasIpAddress('127.0.0.1') or isAuthenticated()")
                 .and().exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint())
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().headers().frameOptions().sameOrigin();

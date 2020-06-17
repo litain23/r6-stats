@@ -1,6 +1,8 @@
 package org.example.springboot.r6api.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @ToString
