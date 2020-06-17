@@ -69,7 +69,13 @@ public class RankStatService {
                 }
             }
         }
-        return convertStatDtoToRegionDto(player.getRankList().stream().map(RankStatResponseDto::new).collect(Collectors.toList()));
+
+        return convertStatDtoToRegionDto(
+                player.getRankList().stream()
+                        .map(RankStatResponseDto::new)
+                        .filter(dto -> dto.getMaxMmr() > 0)
+                        .collect(Collectors.toList())
+        );
     }
 
     private List<RankStatRegionResponseDto> convertStatDtoToRegionDto(List<RankStatResponseDto> dto) {

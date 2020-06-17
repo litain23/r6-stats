@@ -75,8 +75,6 @@ public class RankStatServiceTest {
                 when(ubiApi.getRankStat(platform, userId, region, season)).thenReturn(
                         rankstatDto
                 );
-
-
             }
 
             regionStatMap.put(region, dtoList);
