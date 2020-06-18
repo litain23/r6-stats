@@ -6,6 +6,7 @@ import org.example.springboot.domain.casualpvp.CasualPvp;
 import org.example.springboot.domain.operator.Operator;
 import org.example.springboot.domain.rankpvp.RankPvp;
 import org.example.springboot.domain.rankstat.RankStat;
+import org.example.springboot.domain.seasonoperator.SeasonOperator;
 import org.example.springboot.domain.weeklyoperator.WeeklyOperator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -38,6 +39,9 @@ public class Player {
 
     @OneToMany(mappedBy = "player")
     private List<WeeklyOperator> weeklyOperatorList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "player")
+    private List<SeasonOperator> seasonOperatorList = new ArrayList<>();
 
     @OneToMany(mappedBy = "player")
     private List<RankStat> rankList = new ArrayList<>();

@@ -30,8 +30,7 @@ public class WeeklyOperator {
     @OneToMany(mappedBy = "weeklyOperator")
     private List<Operator> operatorList = new ArrayList<>();
 
-    private int season;
-
+    @NotBlank
     private int week;
 
     @CreationTimestamp
@@ -40,9 +39,8 @@ public class WeeklyOperator {
     public WeeklyOperator() {}
 
     @Builder
-    public WeeklyOperator(Player player, int season, int week) {
+    public WeeklyOperator(Player player, int week) {
         this.player = player;
-        this.season = season;
         this.week = week;
     }
 }

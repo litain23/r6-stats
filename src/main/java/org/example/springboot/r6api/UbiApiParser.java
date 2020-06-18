@@ -125,6 +125,7 @@ public class UbiApiParser {
                     return changeKey.split(":")[0];
                 }, key -> operatorMap.get(key))));
 
+
         List<OperatorDto> operatorDtoList = new ArrayList<>();
 
         List<OperatorIndex.OperatorInfo> operatorIndexList = OperatorIndex.indexList;
@@ -147,6 +148,9 @@ public class UbiApiParser {
                     .build();
 
             operatorDtoList.add(op);
+        }
+        for(OperatorDto dto : operatorDtoList) {
+            System.out.println(dto);
         }
 
         return operatorDtoList;
