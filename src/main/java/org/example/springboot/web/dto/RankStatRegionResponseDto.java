@@ -7,9 +7,9 @@ import java.util.List;
 @Data
 public class RankStatRegionResponseDto {
     String region;
-    List<RankStatResponseDto> rankStat;
+    RankStatResponseDto rankStat;
 
-    public RankStatRegionResponseDto(String region, List<RankStatResponseDto> rankStat) {
+    public RankStatRegionResponseDto(String region, RankStatResponseDto rankStat) {
         this.region = region;
         this.rankStat = rankStat;
     }

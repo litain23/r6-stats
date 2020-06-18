@@ -11,6 +11,7 @@ import org.example.springboot.r6api.dto.RankStatDto;
 import org.example.springboot.web.dto.RankStatRegionResponseDto;
 import org.example.springboot.web.dto.RankStatRequestDto;
 import org.example.springboot.web.dto.RankStatResponseDto;
+import org.example.springboot.web.dto.RankStatSeasonResponseDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +42,7 @@ public class RankStatService {
     }
 
     @Transactional
-    public List<RankStatRegionResponseDto> getRankStatAllSeason(String platform, String id) {
+    public List<RankStatSeasonResponseDto> getRankStatAllSeason(String platform, String id) {
         Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
         int currentSeason = ubiApi.getRankStat(platform, id, REGIONS[0], CURRENT_SEASON).getSeason();
 
@@ -70,7 +71,7 @@ public class RankStatService {
             }
         }
 
-        return convertStatDtoToRegionDto(
+        return convertStatDtoToSeasonDto(
                 player.getRankList().stream()
                         .map(RankStatResponseDto::new)
                         .filter(dto -> dto.getMaxMmr() > 0)
@@ -78,16 +79,27 @@ public class RankStatService {
         );
     }
 
+    private List<RankStatSeasonResponseDto> convertStatDtoToSeasonDto(List<RankStatResponseDto> dto) {
+        List<RankStatSeasonResponseDto> ret = new ArrayList<>();
+        Map<Integer, List<RankStatResponseDto>> map = dto.stream().collect(Collectors.groupingBy(RankStatResponseDto::getSeason));
+
+        for(int season : map.keySet()) {
+            ret.add(new RankStatSeasonResponseDto(season, convertStatDtoToRegionDto(map.get(season))));
+        }
+        ret.sort(Comparator.comparing(t -> t.getSeason(), Comparator.reverseOrder()));
+        return ret;
+    }
+
     private List<RankStatRegionResponseDto> convertStatDtoToRegionDto(List<RankStatResponseDto> dto) {
         List<RankStatRegionResponseDto> ret = new ArrayList<>();
         Map<String, List<RankStatResponseDto>> map = dto.stream().collect(Collectors.groupingBy(RankStatResponseDto::getRegion));
 
         for(String region : map.keySet()) {
-            ret.add(new RankStatRegionResponseDto(region, map.get(region)));
+            ret.add(new RankStatRegionResponseDto(region, map.get(region).get(0)));
         }
-
         return ret;
     }
+
 
     private void savePreviousSeasons(String platform, String id, String region, int currentSeason, Player player) {
         List<CompletableFuture<RankStatDto>> completableFutureList = new ArrayList<>();
