@@ -4,6 +4,7 @@ import com.google.gson.*;
 import lombok.RequiredArgsConstructor;
 import org.example.springboot.exception.r6api.R6NotFoundPlayerProfileException;
 import org.example.springboot.r6api.dto.*;
+import org.example.springboot.service.aspect.ConvertIdToProfileId;
 import org.springframework.stereotype.Component;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -13,12 +14,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.example.springboot.r6api.RequestParam.RequestType;
 import static org.example.springboot.r6api.RequestParam.RequestType.*;
@@ -29,57 +25,56 @@ public class UbiApi {
     private static final String RANK_URL_TEMPLATE = "https://public-ubiservices.ubi.com/v1/spaces/%s/sandboxes/%s/r6karma/players?board_id=pvp_ranked&profile_ids=%s&region_id=%s&season_id=%s";
     private static final String PROFILE_URL_TEMPLATE = "https://public-ubiservices.ubi.com/v2/profiles?platformType=%s&nameOnPlatform=%s";
     private static final String GENERAL_URL_TEMPLATE = "https://public-ubiservices.ubi.com/v1/spaces/%s/sandboxes/%s/playerstats2/statistics?populations=%s&statistics=%s";
-    public static int currentSeason = 17;
+    public static int currentSeason = 18;
     public static int week = 0;
 
     private final UbiAuthApi ubiAuthApi;
     private final UbiApiParser parser;
 
-    public List<OperatorDto> getOperatorsStat(String platform, String id) {
-        ProfileDto findProfile = getProfile(platform, id);
-        String operatorsUrl = makeGeneralUrl(OPERATOR, platform, findProfile.getUserId());
+    @ConvertIdToProfileId
+    public List<OperatorDto> getOperatorsStat(String platform, String profileId) {
+        String operatorsUrl = makeGeneralUrl(OPERATOR, platform, profileId);
 
         String response= getDataUsingApi(operatorsUrl);
-        return parser.parseResponseToOperatorList(response, findProfile.getUserId());
+        return parser.parseResponseToOperatorList(response, profileId);
     }
 
-    public GeneralPvpDto getGeneralPvp(String platform, String id) {
-        ProfileDto findProfile = getProfile(platform, id);
-        String generalPvpUrl = makeGeneralUrl(GENERAL_PVP, platform, findProfile.getUserId());
+    @ConvertIdToProfileId
+    public GeneralPvpDto getGeneralPvp(String platform, String profileId) {
+        String generalPvpUrl = makeGeneralUrl(GENERAL_PVP, platform, profileId);
 
         String response = getDataUsingApi(generalPvpUrl);
-        return parser.parseResponseToGeneralPvpDto(response, findProfile.getUserId());
+        return parser.parseResponseToGeneralPvpDto(response, profileId);
     }
 
-    public CasualPvpDto getCasualPvp(String platform, String id) {
-        ProfileDto findProfile = getProfile(platform, id);
-        String casualPvpUrl = makeGeneralUrl(CASUAL_PVP, platform, findProfile.getUserId());
+    @ConvertIdToProfileId
+    public CasualPvpDto getCasualPvp(String platform, String profileId) {
+        String casualPvpUrl = makeGeneralUrl(CASUAL_PVP, platform, profileId);
 
         String response = getDataUsingApi(casualPvpUrl);
-        return parser.parseResponseToCasualPvpDto(response, findProfile.getUserId());
+        return parser.parseResponseToCasualPvpDto(response, profileId);
     }
 
-    public RankPvpDto getRankPvp(String platform, String id) {
-        ProfileDto findProfile = getProfile(platform, id);
-        String rankPvpUrl = makeGeneralUrl(RANK_PVP, platform, findProfile.getUserId());
+    @ConvertIdToProfileId
+    public RankPvpDto getRankPvp(String platform, String profileId) {
+        String rankPvpUrl = makeGeneralUrl(RANK_PVP, platform, profileId);
 
         String response = getDataUsingApi(rankPvpUrl);
-        return parser.parseResponseToRankPvpDto(response, findProfile.getUserId());
+        return parser.parseResponseToRankPvpDto(response, profileId);
     }
 
-    public RankStatDto getRankStat(String platform, String id, String region, int season) {
-        ProfileDto findProfile = getProfile(platform, id);
-
+    @ConvertIdToProfileId
+    public RankStatDto getRankStat(String platform, String profileId, String region, int season) {
         String rankUrl = String.format(RANK_URL_TEMPLATE,
                 Platform.platformToSpaceId(platform),
                 Platform.platformToPlatformId(platform),
-                findProfile.getUserId(),
+                profileId,
                 region,
                 season
         );
 
         String response = getDataUsingApi(rankUrl);
-        return parser.parseResponseToRankStatDto(response, findProfile.getUserId());
+        return parser.parseResponseToRankStatDto(response, profileId);
     }
 
     public ProfileDto getProfile(String platform, String id) {
