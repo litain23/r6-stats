@@ -55,6 +55,8 @@ public class UbiAuthApi {
             os.close();
 
             int responseCode = conn.getResponseCode();
+
+
             if(responseCode == HttpURLConnection.HTTP_ACCEPTED || responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 token = new Gson().fromJson(br.readLine(), AuthToken.class);

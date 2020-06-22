@@ -52,7 +52,7 @@ public class OperatorServiceTest {
 
     @Test
     public void When_GetOperatorList_Expect_OperatorResponseDtoList() {
-        List<OperatorListResponseDto> operatorListResponseDtoList = operatorService.getOperatorStatList(player.getPlatform(), player.getUserId());
+        List<OperatorListResponseDto> operatorListResponseDtoList = operatorService.getOperatorStatList(player.getPlatform(), player.getUserId(), -1);
 
         OperatorListResponseDto responseDto = operatorListResponseDtoList.get(0);
         assertThat(ash.getCategory()).isEqualTo(responseDto.getCategory());

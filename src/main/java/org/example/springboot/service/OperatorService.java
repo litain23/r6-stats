@@ -44,15 +44,17 @@ public class OperatorService {
 
         WeeklyOperator weeklyOperator = WeeklyOperator.builder()
                 .player(player)
-                .week(UbiApi.week)
+                .week(player.getWeek())
                 .build();
+
+        player.increaseWeek();
 
         weeklyOperatorRepository.save(weeklyOperator);
 
         for(OperatorDto op : operatorDtoList) {
-            Operator operator = new Operator(op, weeklyOperator);
+            Operator operator = new Operator(op);
             operatorRepository.save(operator);
-            weeklyOperator.getOperatorList().add(operator);
+            weeklyOperator.addOperator(operator);
         }
 
         player.getWeeklyOperatorList().add(weeklyOperator);

@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,9 @@ public class Player {
     @OneToMany(mappedBy ="player")
     private List<CasualPvp> casualPvpList = new ArrayList<>();
 
+    @NotNull
+    private int week;
+
     @CreatedDate
     private LocalDateTime createdTime;
 
@@ -65,9 +69,14 @@ public class Player {
         this.platform = platform;
         this.userId = userId;
         this.profileId = profileId;
+        this.week = 0;
     }
 
     public void updateUserId(String userId) {
         this.userId = userId;
+    }
+
+    public void increaseWeek() {
+        this.week++;
     }
 }

@@ -44,8 +44,7 @@ public class OperatorRepositoryTest {
         weeklyOperator = entityManager.persist(
                 WeeklyOperator.builder()
                     .player(player)
-                    .season(17)
-                    .week(0)
+                    .week(1)
                     .build()
         );
     }
@@ -64,7 +63,6 @@ public class OperatorRepositoryTest {
                 .roundWon(10)
                 .timePlayed(10)
                 .totalXp(10)
-                .weeklyOperator(weeklyOperator)
                 .build();
 
         operatorRepository.save(operator);
@@ -87,7 +85,6 @@ public class OperatorRepositoryTest {
                 .roundWon(10)
                 .timePlayed(10)
                 .totalXp(10)
-                .weeklyOperator(weeklyOperator)
                 .build();
         operatorRepository.save(operator);
     }

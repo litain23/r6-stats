@@ -50,7 +50,6 @@ public class UbiApi {
     @ConvertIdToProfileId
     public CasualPvpDto getCasualPvp(String platform, String profileId) {
         String casualPvpUrl = makeGeneralUrl(CASUAL_PVP, platform, profileId);
-
         String response = getDataUsingApi(casualPvpUrl);
         return parser.parseResponseToCasualPvpDto(response, profileId);
     }

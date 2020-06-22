@@ -20,11 +20,6 @@ public class Operator {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name="weekly_operator_id")
-    @NotNull
-    private WeeklyOperator weeklyOperator;
-
     private String name;
     private String operatorIndex;
     private String category;
@@ -43,7 +38,7 @@ public class Operator {
     public Operator() { }
 
     @Builder
-    public Operator(String name, String operatorIndex, String category, int kills, int death, int headShot, int meleeKills, int totalXp, int timePlayed, int roundWon, int roundLost, WeeklyOperator weeklyOperator) {
+    public Operator(String name, String operatorIndex, String category, int kills, int death, int headShot, int meleeKills, int totalXp, int timePlayed, int roundWon, int roundLost) {
         this.name = name;
         this.operatorIndex = operatorIndex;
         this.category = category;
@@ -55,10 +50,9 @@ public class Operator {
         this.timePlayed = timePlayed;
         this.roundWon = roundWon;
         this.roundLost = roundLost;
-        this.weeklyOperator = weeklyOperator;
     }
 
-    public Operator(OperatorDto operatorDto, WeeklyOperator weeklyOperator) {
+    public Operator(OperatorDto operatorDto) {
         this.name = operatorDto.getName();
         this.operatorIndex = operatorDto.getOperatorIndex();
         this.category = operatorDto.getCategory();
@@ -70,6 +64,5 @@ public class Operator {
         this.timePlayed = operatorDto.getTimePlayed();
         this.roundLost = operatorDto.getRoundLost();
         this.roundWon = operatorDto.getRoundWon();
-        this.weeklyOperator= weeklyOperator;
     }
 }

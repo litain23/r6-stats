@@ -27,7 +27,7 @@ public class SeasonOperator {
     @NotNull
     private Player player;
 
-    @OneToMany(mappedBy = "weeklyOperator")
+    @OneToMany
     private List<Operator> operatorList = new ArrayList<>();
 
     @NotBlank
@@ -42,5 +42,9 @@ public class SeasonOperator {
     public SeasonOperator(Player player, int season) {
         this.player = player;
         this.season = season;
+    }
+
+    public void addOperator(Operator op) {
+        this.operatorList.add(op);
     }
 }
