@@ -27,11 +27,10 @@ public class WeeklyOperator {
     @NotNull
     private Player player;
 
-    @OneToMany(mappedBy = "weeklyOperator")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Operator> operatorList = new ArrayList<>();
 
-    private int season;
-
+    @NotNull
     private int week;
 
     @CreationTimestamp
@@ -40,9 +39,12 @@ public class WeeklyOperator {
     public WeeklyOperator() {}
 
     @Builder
-    public WeeklyOperator(Player player, int season, int week) {
+    public WeeklyOperator(Player player, int week) {
         this.player = player;
-        this.season = season;
         this.week = week;
+    }
+
+    public void addOperator(Operator op) {
+        this.operatorList.add(op);
     }
 }

@@ -6,6 +6,7 @@ import org.example.springboot.domain.casualpvp.CasualPvp;
 import org.example.springboot.domain.operator.Operator;
 import org.example.springboot.domain.rankpvp.RankPvp;
 import org.example.springboot.domain.rankstat.RankStat;
+import org.example.springboot.domain.seasonoperator.SeasonOperator;
 import org.example.springboot.domain.weeklyoperator.WeeklyOperator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,9 @@ public class Player {
     private List<WeeklyOperator> weeklyOperatorList = new ArrayList<>();
 
     @OneToMany(mappedBy = "player")
+    private List<SeasonOperator> seasonOperatorList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "player")
     private List<RankStat> rankList = new ArrayList<>();
 
     @OneToMany(mappedBy = "player")
@@ -47,6 +52,9 @@ public class Player {
 
     @OneToMany(mappedBy ="player")
     private List<CasualPvp> casualPvpList = new ArrayList<>();
+
+    @NotNull
+    private int week;
 
     @CreatedDate
     private LocalDateTime createdTime;
@@ -61,9 +69,14 @@ public class Player {
         this.platform = platform;
         this.userId = userId;
         this.profileId = profileId;
+        this.week = 0;
     }
 
     public void updateUserId(String userId) {
         this.userId = userId;
+    }
+
+    public void increaseWeek() {
+        this.week++;
     }
 }

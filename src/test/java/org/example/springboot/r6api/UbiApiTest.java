@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UbiApiTest {
     private static UbiApi ubiApi;
     String platform = "uplay";
-    String username = "piliot";
+    String username = "Piliot";
     LocalDateTime beforeTestTime;
 
     @BeforeClass

@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
@@ -28,11 +27,11 @@ public class SeasonOperator {
     @NotNull
     private Player player;
 
-    @OneToMany(mappedBy = "weeklyOperator")
+    @OneToMany
     private List<Operator> operatorList = new ArrayList<>();
 
     @NotBlank
-    private int season;
+    int season;
 
     @CreationTimestamp
     LocalDateTime createdTime;
@@ -40,8 +39,12 @@ public class SeasonOperator {
     public SeasonOperator() {}
 
     @Builder
-    public SeasonOperator(int season, List<Operator> operators) {
+    public SeasonOperator(Player player, int season) {
+        this.player = player;
         this.season = season;
-        this.operatorList = operators;
+    }
+
+    public void addOperator(Operator op) {
+        this.operatorList.add(op);
     }
 }
