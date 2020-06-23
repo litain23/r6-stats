@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.example.springboot.r6api.UbiApi.currentSeason;
-import static org.example.springboot.r6api.UbiApi.week;
 
 @Component
 public class UbiApiParser {
@@ -178,7 +177,6 @@ public class UbiApiParser {
 
         if(currentSeason < dto.getSeason()) {
             currentSeason = dto.getSeason();
-            week = 0;
         }
         return dto;
     }

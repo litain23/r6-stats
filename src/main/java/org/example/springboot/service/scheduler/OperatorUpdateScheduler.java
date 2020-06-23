@@ -18,8 +18,6 @@ public class OperatorUpdateScheduler {
 
     @Scheduled(cron = "0 0 0 * * *")
     private void autoUpdateOperator() {
-        UbiApi.week++;
-
         List<Player> playerList = playerRepository.findAll();
         for(Player player : playerList) {
             operatorService.saveOperatorStat(player.getPlatform(), player.getUserId());

@@ -14,19 +14,22 @@ public class PlayerService {
     private final UbiApi ubiApi;
 
     public Player findPlayerIfNotExistReturnNewEntity(String platform, String id) {
-        ProfileDto profileDto = ubiApi.getProfile(platform, id);
-        Player player = playerRepository.findByPlatformAndProfileId(platform, profileDto.getUserId());
+        Player player = playerRepository.findByPlatformAndAndUserId(platform, id);
         if(player == null) {
-            player = Player.builder()
-                    .profileId(profileDto.getUserId())
-                    .platform(platform)
-                    .userId(id)
-                    .build();
+            ProfileDto profileDto = ubiApi.getProfile(platform, id);
+            Player playerUsingProfileId = playerRepository.findByPlatformAndProfileId(platform, profileDto.getUserId());
+            // 고유값이 profileId 로 찾는다 - 아이디가 변경될 수도 있기 때문
+            if(playerUsingProfileId == null) {
+                player = Player.builder()
+                        .profileId(profileDto.getUserId())
+                        .platform(platform)
+                        .userId(id)
+                        .build();
 
-            playerRepository.save(player);
-        } else if(player.getUserId() != id) {
-            // ProfileId로 찾았으나, 아이디를 변경하여 DB 저장된 id 랑 다른 경우 업데이트
-            player.updateUserId(id);
+                playerRepository.save(player);
+            } else {
+                playerUsingProfileId.updateUserId(id);
+            }
         }
 
         return player;

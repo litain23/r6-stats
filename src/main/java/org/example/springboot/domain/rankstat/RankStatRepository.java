@@ -7,5 +7,4 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RankStatRepository extends JpaRepository<RankStat, Long> {
-    Optional<List<RankStat>> findByRegionAndPlayer(String region, Player player);
 }

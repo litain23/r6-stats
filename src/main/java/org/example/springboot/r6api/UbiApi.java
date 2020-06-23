@@ -26,7 +26,6 @@ public class UbiApi {
     private static final String PROFILE_URL_TEMPLATE = "https://public-ubiservices.ubi.com/v2/profiles?platformType=%s&nameOnPlatform=%s";
     private static final String GENERAL_URL_TEMPLATE = "https://public-ubiservices.ubi.com/v1/spaces/%s/sandboxes/%s/playerstats2/statistics?populations=%s&statistics=%s";
     public static int currentSeason = 18;
-    public static int week = 0;
 
     private final UbiAuthApi ubiAuthApi;
     private final UbiApiParser parser;
@@ -82,7 +81,7 @@ public class UbiApi {
             String responseProfile = getDataUsingApi(profileUrl);
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(responseProfile, JsonObject.class);
-            JsonArray jsonArray =jsonObject.get("profiles").getAsJsonArray();
+            JsonArray jsonArray = jsonObject.get("profiles").getAsJsonArray();
             return gson.fromJson(jsonArray.get(0), ProfileDto.class);
         } catch (IndexOutOfBoundsException e) {
             throw new R6NotFoundPlayerProfileException("Not found player id or platform");
