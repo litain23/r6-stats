@@ -23,7 +23,6 @@ public class CasualPvpService {
 
     public CasualPvpResponseDto getCasualPvp(String platform, String id) {
         CasualPvpDto casualPvpDto = ubiApi.getCasualPvp(platform, id);
-        playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
         return new CasualPvpResponseDto(casualPvpDto);
     }
 

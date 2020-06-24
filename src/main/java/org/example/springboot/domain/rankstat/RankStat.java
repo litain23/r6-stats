@@ -29,6 +29,8 @@ public class RankStat {
     private int maxRank;
     private int mmr;
     private int maxMmr;
+    private String maxRankString;
+    private String rankString;
 
     private int kills;
     private int death;
@@ -45,7 +47,7 @@ public class RankStat {
     public RankStat() {}
 
     @Builder
-    public RankStat(int rank, int maxRank, int mmr, int maxMmr, int kills, int death, int season, String region, int wins, int losses, int abandons, Player player) {
+    public RankStat(int rank, int maxRank, int mmr, int maxMmr, int kills, int death, int season, String region, int wins, int losses, int abandons, String maxRankString, String rankString, Player player) {
         this.rank = rank;
         this.maxRank = maxRank;
         this.mmr = mmr;
@@ -57,6 +59,8 @@ public class RankStat {
         this.wins = wins;
         this.losses = losses;
         this.abandons = abandons;
+        this.maxRankString = maxRankString;
+        this.rankString = rankString;
         this.player = player;
     }
 
@@ -74,7 +78,8 @@ public class RankStat {
         this.losses = dto.getLosses();
         this.abandons = dto.getAbandons();
         this.player = player;
-
+        this.rankString = dto.getRankString();
+        this.maxRankString = dto.getMaxRankString();
     }
 
     public void updateRankStat(RankStatDto rankStatDto) {
@@ -89,6 +94,8 @@ public class RankStat {
         this.region = rankStatDto.getRegion();
         this.season = rankStatDto.getSeason();
         this.losses = rankStatDto.getLosses();
+        this.rankString = rankStatDto.getRankString();
+        this.maxRankString = rankStatDto.getMaxRankString();
     }
 
 //  UBI API에서는 제공하지만 사용자에게는 제공할 필요가 없다고 판단

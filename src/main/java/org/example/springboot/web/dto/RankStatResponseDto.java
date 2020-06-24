@@ -38,8 +38,8 @@ public class RankStatResponseDto {
         this.season = stat.getSeason();
         this.losses = stat.getLosses();
         this.createdTime = stat.getCreatedTime();
-        this.maxRankString = mmrToRankString(stat.getMaxRank());
-        this.rankString = mmrToRankString(stat.getRank());
+        this.maxRankString = stat.getMaxRankString();
+        this.rankString = stat.getRankString();
     }
 
     public RankStatResponseDto(RankStatDto rankStatDto) {
@@ -55,42 +55,8 @@ public class RankStatResponseDto {
         this.season = rankStatDto.getSeason();
         this.losses = rankStatDto.getLosses();
         this.createdTime = rankStatDto.getCreatedTime();
-        this.maxRankString = mmrToRankString(rankStatDto.getMaxRank());
-        this.rankString = mmrToRankString(rankStatDto.getRank());
-    }
-
-    private String mmrToRankString(int rank) {
-        String rankString;
-        String classes = "UNRANK";
-        int level = 0;
-
-        if(rank >= 1 && rank <= 5){
-            classes = "COPPER";
-            level = 6 - rank;
-        } else if(rank >= 6 && rank <= 10) {
-            classes = "BRONZE";
-            level = 11 - rank;
-        } else if(rank >= 11 && rank <= 15) {
-            classes = "SILVER";
-            level = 16 - rank;
-        } else if(rank >= 16 && rank <=18) {
-            classes = "GOLD";
-            level = 19 - rank;
-        } else if(rank >= 19 && rank <= 21) {
-            classes = "PLATINUM";
-            level = 22 - rank;
-        } else if(rank == 22) {
-            classes = "DIAMOND";
-        } else if(rank == 23) {
-            classes = "CHAMPIONS";
-        }
-
-        if(classes.equals("UNRANK") || classes.equals("DIAMOND") || classes.equals("CHAMPIONS")) {
-            rankString = classes;
-        } else {
-            rankString = classes + " " + level;
-        }
-        return rankString;
+        this.maxRankString = rankStatDto.getMaxRankString();
+        this.rankString = rankStatDto.getRankString();
     }
 }
 

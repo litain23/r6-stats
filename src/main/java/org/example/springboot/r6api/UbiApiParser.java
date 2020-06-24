@@ -174,7 +174,15 @@ public class UbiApiParser {
 
         RankStatDto dto = gson.fromJson(rankStat, RankStatDto.class);
         dto.setCreatedTime(LocalDateTime.now());
+        SeasonMmrStringConverter converter = new SeasonMmrStringConverter();
+        if(dto.getMaxMmr()== 0) {
+            dto.setRankString("UNRANKED");
+            dto.setMaxRankString("UNRANKED");
+        } else {
+            dto.setMaxRankString(converter.convertMmrToStringRank(dto.getSeason(), dto.getMaxMmr()));
+            dto.setRankString(converter.convertMmrToStringRank(dto.getSeason(), dto.getMmr()));
 
+        }
         if(currentSeason < dto.getSeason()) {
             currentSeason = dto.getSeason();
         }

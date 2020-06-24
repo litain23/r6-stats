@@ -13,6 +13,8 @@ public class RankStatDto {
     int maxRank;
     int mmr;
     int maxMmr;
+    String maxRankString;
+    String rankString;
     int kills;
     int death;
 
@@ -42,4 +44,12 @@ public class RankStatDto {
     public void setCreatedTime(LocalDateTime time) {
         this.createdTime = time;
     }
+    public void setMaxRankString(String maxRankString) {
+        this.maxRankString = maxRankString;
+    }
+
+    public void setRankString(String rankString) {
+        this.rankString = rankString;
+    }
+
 }
