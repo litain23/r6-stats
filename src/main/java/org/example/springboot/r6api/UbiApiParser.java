@@ -181,7 +181,6 @@ public class UbiApiParser {
         } else {
             dto.setMaxRankString(converter.convertMmrToStringRank(dto.getSeason(), dto.getMaxMmr()));
             dto.setRankString(converter.convertMmrToStringRank(dto.getSeason(), dto.getMmr()));
-
         }
         if(currentSeason < dto.getSeason()) {
             currentSeason = dto.getSeason();

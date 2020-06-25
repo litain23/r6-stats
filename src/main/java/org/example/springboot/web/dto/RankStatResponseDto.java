@@ -3,6 +3,7 @@ package org.example.springboot.web.dto;
 import lombok.AccessLevel;
 import lombok.Data;
 import org.example.springboot.domain.rankstat.RankStat;
+import org.example.springboot.r6api.SeasonMmrStringConverter;
 import org.example.springboot.r6api.dto.RankStatDto;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,8 @@ public class RankStatResponseDto {
     LocalDateTime createdTime;
     String maxRankString;
     String rankString;
+    int nextRankMmr;
+    String nextRankString;
 
 
     public RankStatResponseDto(RankStat stat) {
@@ -40,6 +43,8 @@ public class RankStatResponseDto {
         this.createdTime = stat.getCreatedTime();
         this.maxRankString = stat.getMaxRankString();
         this.rankString = stat.getRankString();
+        this.nextRankMmr = getNextRankMmr(stat.getSeason(), stat.getMmr());
+        this.nextRankString = getNextRankString(stat.getSeason(), stat.getMmr());
     }
 
     public RankStatResponseDto(RankStatDto rankStatDto) {
@@ -57,6 +62,18 @@ public class RankStatResponseDto {
         this.createdTime = rankStatDto.getCreatedTime();
         this.maxRankString = rankStatDto.getMaxRankString();
         this.rankString = rankStatDto.getRankString();
+        this.nextRankMmr = getNextRankMmr(rankStatDto.getSeason(), rankStatDto.getMmr());
+        this.nextRankString = getNextRankString(rankStatDto.getSeason(), rankStatDto.getMmr());
+    }
+
+    private int getNextRankMmr(int season, int mmr) {
+        SeasonMmrStringConverter converter = new SeasonMmrStringConverter();
+        return converter.getNextRankMmr(season, mmr);
+    }
+
+    private String getNextRankString(int season, int mmr) {
+        SeasonMmrStringConverter converter = new SeasonMmrStringConverter();
+        return converter.getNextRankString(season, mmr);
     }
 }
 

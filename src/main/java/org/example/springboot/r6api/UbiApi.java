@@ -79,7 +79,6 @@ public class UbiApi {
         try {
             String profileUrl = String.format(PROFILE_URL_TEMPLATE, platform, id);
             String responseProfile = getDataUsingApi(profileUrl);
-            System.out.println(responseProfile);
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(responseProfile, JsonObject.class);
             JsonArray jsonArray = jsonObject.get("profiles").getAsJsonArray();

@@ -408,6 +408,26 @@ public class SeasonMmrStringConverter{
         return "UNRANKED";
     }
 
+    public int getNextRankMmr(int season, int mmr) {
+        List<MmrRange> seasonMmrRange = map.get(season);
+        for(MmrRange mmrRange : seasonMmrRange) {
+            if(mmr <= mmrRange.mmrEnd) {
+                return mmrRange.mmrEnd + 1;
+            }
+        }
+        return 0;
+    }
+
+    public String getNextRankString(int season, int mmr) {
+        List<MmrRange> seasonMmrRange = map.get(season);
+        for(int i=0;i<seasonMmrRange.size();i++) {
+            if(mmr <= seasonMmrRange.get(i).mmrEnd) {
+                if(i  == seasonMmrRange.size() - 1) return seasonMmrRange.get(i).name;
+                return seasonMmrRange.get(i + 1).name;
+            }
+        }
+        return "UNRANKED";
+    }
     static class MmrRange {
         String name;
         int mmrEnd;

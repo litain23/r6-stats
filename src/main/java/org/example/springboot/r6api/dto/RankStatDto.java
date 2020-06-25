@@ -13,6 +13,9 @@ public class RankStatDto {
     int maxRank;
     int mmr;
     int maxMmr;
+    int nextRankMmr;
+    String nextRankString;
+
     String maxRankString;
     String rankString;
     int kills;
@@ -23,7 +26,10 @@ public class RankStatDto {
     int wins;
     int losses;
     int abandons;
+
+
     LocalDateTime createdTime;
+
 
     @Builder
     public RankStatDto(int rank, int maxRank, int mmr, int maxMmr, int kills, int death, int season, String region, int wins, int losses, int abandons) {
@@ -52,4 +58,11 @@ public class RankStatDto {
         this.rankString = rankString;
     }
 
+    public void setNextRankMmr(int nextRankMmr) {
+        this.nextRankMmr = nextRankMmr;
+    }
+
+    public void setNextRankString(String nextRankString) {
+        this.nextRankString = nextRankString;
+    }
 }
