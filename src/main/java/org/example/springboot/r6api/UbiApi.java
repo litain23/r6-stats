@@ -41,7 +41,6 @@ public class UbiApi {
     @ConvertIdToProfileId
     public GeneralPvpDto getGeneralPvp(String platform, String profileId) {
         String generalPvpUrl = makeGeneralUrl(GENERAL_PVP, platform, profileId);
-
         String response = getDataUsingApi(generalPvpUrl);
         return parser.parseResponseToGeneralPvpDto(response, profileId);
     }
@@ -58,6 +57,7 @@ public class UbiApi {
         String rankPvpUrl = makeGeneralUrl(RANK_PVP, platform, profileId);
 
         String response = getDataUsingApi(rankPvpUrl);
+        System.out.println(response);
         return parser.parseResponseToRankPvpDto(response, profileId);
     }
 
@@ -86,6 +86,13 @@ public class UbiApi {
         } catch (IndexOutOfBoundsException e) {
             throw new R6NotFoundPlayerProfileException("Not found player id or platform");
         }
+    }
+
+    public boolean checkIsExistUserId(String platform, String profileId) {
+        String generalPvpUrl = makeGeneralUrl(GENERAL_PVP, platform, profileId);
+        String response = getDataUsingApi(generalPvpUrl);
+        parser.parseResponseToGeneralPvpDto(response, profileId);
+        return true;
     }
 
     private String makeGeneralUrl(RequestType requestType, String platform, String userId) {
