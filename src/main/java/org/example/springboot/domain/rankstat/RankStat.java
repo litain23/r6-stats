@@ -47,24 +47,6 @@ public class RankStat {
     public RankStat() {}
 
     @Builder
-    public RankStat(int rank, int maxRank, int mmr, int maxMmr, int kills, int death, int season, String region, int wins, int losses, int abandons, String maxRankString, String rankString, Player player) {
-        this.rank = rank;
-        this.maxRank = maxRank;
-        this.mmr = mmr;
-        this.maxMmr = maxMmr;
-        this.kills = kills;
-        this.death = death;
-        this.season = season;
-        this.region = region;
-        this.wins = wins;
-        this.losses = losses;
-        this.abandons = abandons;
-        this.maxRankString = maxRankString;
-        this.rankString = rankString;
-        this.player = player;
-    }
-
-    @Builder
     public RankStat(RankStatDto dto, Player player) {
         this.rank = dto.getRank();
         this.maxRank = dto.getMaxRank();

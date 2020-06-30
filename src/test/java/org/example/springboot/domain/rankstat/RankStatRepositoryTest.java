@@ -2,6 +2,7 @@ package org.example.springboot.domain.rankstat;
 
 import org.example.springboot.domain.player.Player;
 import org.example.springboot.domain.rankpvp.RankPvpRepository;
+import org.example.springboot.r6api.dto.RankStatDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.validation.ConstraintViolationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.setLenientDateParsing;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -27,6 +29,7 @@ public class RankStatRepositoryTest {
 
     private Player player;
 
+    private RankStatDto rankStatDto;
     @Before
     public void setUp() {
         player = entityManager.persist(
@@ -36,13 +39,16 @@ public class RankStatRepositoryTest {
                         .profileId("test_profile_id")
                         .build()
         );
+
+        rankStatDto = RankStatDto.builder()
+                .maxRank(20) .rank(18) .abandons(1) .death(10) .kills(20) .losses(5)
+                .maxMmr(2500) .mmr(2000) .region("global") .season(18) .wins(10) .build();
     }
 
     @Test
     public void When_SaveRankStat_Expect_Good() {
         RankStat rankStat = RankStat.builder()
-                .maxRank(10).rank(10).abandons(0).death(10).kills(10).losses(10).mmr(1500)
-                .maxMmr(1500).region("apac").season(17).wins(10).player(player).build();
+                .dto(rankStatDto).player(player).build();
 
         rankStatRepository.save(rankStat);
         RankStat found = entityManager.find(RankStat.class, rankStat.getId());
@@ -52,10 +58,7 @@ public class RankStatRepositoryTest {
 
     @Test(expected = ConstraintViolationException.class)
     public void When_SaveRankStatPlayerIsNull_Expect_ConstraintViolation() {
-        RankStat rankStat = RankStat.builder()
-                .maxRank(10).rank(10).abandons(0).death(10).kills(10).losses(10).mmr(1500)
-                .maxMmr(1500).region("apac").season(17).wins(10).build();
-
+        RankStat rankStat = RankStat.builder().dto(rankStatDto).build();
         rankStatRepository.save(rankStat);
     }
 }

@@ -100,42 +100,42 @@ public class RankStatServiceTest {
 
     }
 
-    @Test
-    public void When_GetRankStat_Expect_ListRankStatRegionResponseDto() {
-        List<RankStatRegionResponseDto> responseDtoList = rankStatService.getRankStat(platform, userId, currentSeason);
+//    @Test
+//    public void When_GetRankStat_Expect_ListRankStatRegionResponseDto() {
+//        List<RankStatRegionResponseDto> responseDtoList = rankStatService.getRankStat(platform, userId, currentSeason);
 
-        for(RankStatRegionResponseDto responseDto: responseDtoList) {
-            RankStatDto rankStatDto = regionStatMap.get(responseDto.getRegion()).get(currentSeason);
-            RankStatResponseDto dto = responseDto.getRankStat().get(0);
-            assertThat(dto.getSeason()).isEqualTo(rankStatDto.getSeason());
-            assertThat(dto.getAbandons()).isEqualTo(rankStatDto.getAbandons());
-            assertThat(dto.getCreatedTime()).isEqualTo(rankStatDto.getCreatedTime());
-            assertThat(dto.getDeath()).isEqualTo(rankStatDto.getDeath());
-            assertThat(dto.getKills()).isEqualTo(rankStatDto.getKills());
-            assertThat(dto.getLosses()).isEqualTo(rankStatDto.getLosses());
-            assertThat(dto.getMaxMmr()).isEqualTo(rankStatDto.getMaxMmr());
-            assertThat(dto.getMaxRank()).isEqualTo(rankStatDto.getMaxRank());
-            assertThat(dto.getMmr()).isEqualTo(rankStatDto.getMmr());
-            assertThat(dto.getRank()).isEqualTo(rankStatDto.getRank());
-        }
-    }
+//        for(RankStatRegionResponseDto responseDto: responseDtoList) {
+//            RankStatDto rankStatDto = regionStatMap.get(responseDto.getRegion()).get(currentSeason);
+//            RankStatResponseDto dto = responseDto.getRankStat().get(0);
+//            assertThat(dto.getSeason()).isEqualTo(rankStatDto.getSeason());
+//            assertThat(dto.getAbandons()).isEqualTo(rankStatDto.getAbandons());
+//            assertThat(dto.getCreatedTime()).isEqualTo(rankStatDto.getCreatedTime());
+//            assertThat(dto.getDeath()).isEqualTo(rankStatDto.getDeath());
+//            assertThat(dto.getKills()).isEqualTo(rankStatDto.getKills());
+//            assertThat(dto.getLosses()).isEqualTo(rankStatDto.getLosses());
+//            assertThat(dto.getMaxMmr()).isEqualTo(rankStatDto.getMaxMmr());
+//            assertThat(dto.getMaxRank()).isEqualTo(rankStatDto.getMaxRank());
+//            assertThat(dto.getMmr()).isEqualTo(rankStatDto.getMmr());
+//            assertThat(dto.getRank()).isEqualTo(rankStatDto.getRank());
+//        }
+//    }
 
-    @Test
-    public void When_GetRankStateAllSeason_Expect_ListRankStatRegionResponseDto() {
-        List<RankStatRegionResponseDto> responseDtoList = rankStatService.getRankStatAllSeason(platform, userId);
-        for(RankStatRegionResponseDto responseDto : responseDtoList) {
-            List<RankStatResponseDto> rankStatResponseDtoList = responseDto.getRankStat();
-            List<RankStatDto> rankStatDtoList = regionStatMap.get(responseDto.getRegion());
-            for(RankStatResponseDto rankStatResponseDto : rankStatResponseDtoList) {
-                RankStatDto rankStatDto = rankStatDtoList.get(rankStatResponseDto.getSeason());
-                assertThat(rankStatResponseDto.getDeath()).isEqualTo(rankStatDto.getDeath());
-                assertThat(rankStatResponseDto.getKills()).isEqualTo(rankStatDto.getKills());
-                assertThat(rankStatResponseDto.getLosses()).isEqualTo(rankStatDto.getLosses());
-                assertThat(rankStatResponseDto.getMaxMmr()).isEqualTo(rankStatDto.getMaxMmr());
-                assertThat(rankStatResponseDto.getMaxRank()).isEqualTo(rankStatDto.getMaxRank());
-                assertThat(rankStatResponseDto.getMmr()).isEqualTo(rankStatDto.getMmr());
-                assertThat(rankStatResponseDto.getRank()).isEqualTo(rankStatDto.getRank());
-            }
-        }
-    }
+//    @Test
+//    public void When_GetRankStateAllSeason_Expect_ListRankStatRegionResponseDto() {
+//        List<RankStatRegionResponseDto> responseDtoList = rankStatService.getRankStatAllSeason(platform, userId);
+//        for(RankStatRegionResponseDto responseDto : responseDtoList) {
+//            List<RankStatResponseDto> rankStatResponseDtoList = responseDto.getRankStat();
+//            List<RankStatDto> rankStatDtoList = regionStatMap.get(responseDto.getRegion());
+//            for(RankStatResponseDto rankStatResponseDto : rankStatResponseDtoList) {
+//                RankStatDto rankStatDto = rankStatDtoList.get(rankStatResponseDto.getSeason());
+//                assertThat(rankStatResponseDto.getDeath()).isEqualTo(rankStatDto.getDeath());
+//                assertThat(rankStatResponseDto.getKills()).isEqualTo(rankStatDto.getKills());
+//                assertThat(rankStatResponseDto.getLosses()).isEqualTo(rankStatDto.getLosses());
+//                assertThat(rankStatResponseDto.getMaxMmr()).isEqualTo(rankStatDto.getMaxMmr());
+//                assertThat(rankStatResponseDto.getMaxRank()).isEqualTo(rankStatDto.getMaxRank());
+//                assertThat(rankStatResponseDto.getMmr()).isEqualTo(rankStatDto.getMmr());
+//                assertThat(rankStatResponseDto.getRank()).isEqualTo(rankStatDto.getRank());
+//            }
+//        }
+//    }
 }

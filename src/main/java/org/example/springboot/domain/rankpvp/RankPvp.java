@@ -39,17 +39,6 @@ public class RankPvp {
     public RankPvp() { }
 
     @Builder
-    public RankPvp(int death, int kills, int matchLost, int matchWon, int matchPlayed, int timePlayed, Player player) {
-        this.death = death;
-        this.kills = kills;
-        this.matchLost = matchLost;
-        this.matchPlayed = matchPlayed;
-        this.matchWon = matchWon;
-        this.timePlayed = timePlayed;
-        this.player = player;
-    }
-
-    @Builder
     public RankPvp(RankPvpDto rankPvpDto, Player player) {
         this.death = rankPvpDto.getDeath();
         this.kills = rankPvpDto.getKills();
