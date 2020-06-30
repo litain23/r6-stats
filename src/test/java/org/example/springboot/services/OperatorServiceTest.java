@@ -1,11 +1,10 @@
 package org.example.springboot.services;
 
-import org.example.springboot.domain.operator.Operator;
 import org.example.springboot.domain.player.Player;
 import org.example.springboot.r6api.UbiApi;
 import org.example.springboot.r6api.dto.OperatorDto;
 import org.example.springboot.service.OperatorService;
-import org.example.springboot.web.dto.OperatorListResponseDto;
+import org.example.springboot.web.dto.OperatorResponseDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,9 +51,9 @@ public class OperatorServiceTest {
 
     @Test
     public void When_GetOperatorList_Expect_OperatorResponseDtoList() {
-        List<OperatorListResponseDto> operatorListResponseDtoList = operatorService.getOperatorStatList(player.getPlatform(), player.getUserId(), -1);
+        List<OperatorResponseDto> operatorListResponseDto = operatorService.getOperatorStatList(player.getPlatform(), player.getUserId(), -1);
 
-        OperatorListResponseDto responseDto = operatorListResponseDtoList.get(0);
+        OperatorResponseDto responseDto = operatorListResponseDto.get(0);
         assertThat(ash.getCategory()).isEqualTo(responseDto.getCategory());
         assertThat(ash.getDeath()).isEqualTo(responseDto.getDeath());
         assertThat(ash.getHeadShot()).isEqualTo(responseDto.getHeadShot());

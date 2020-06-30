@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -16,17 +17,19 @@ public class CasualPvpController {
     private final CasualPvpService casualPvpService;
 
     @GetMapping("/api/v1/casualpvp/{platform}/{id}")
-    public ResponseEntity<CasualPvpResponseDto> getCasualPvp(@PathVariable String platform,
+    public CasualPvpResponseDto getCasualPvp(@PathVariable String platform,
                                  @PathVariable String id) {
-        return ResponseEntity.ok(casualPvpService.getCasualPvp(platform, id));
+        return new CasualPvpResponseDto(casualPvpService.getCasualPvp(platform, id));
     }
 
 
     @GetMapping("/api/v1/casualpvp/{platform}/{id}/all")
-    public ResponseEntity<List<CasualPvpResponseDto>> getCasualPvpAll(@PathVariable String platform,
+    public List<CasualPvpResponseDto> getCasualPvpAll(@PathVariable String platform,
                                                       @PathVariable String id) {
 
-        return ResponseEntity.ok(casualPvpService.getCasualPvpAll(platform, id));
+        return casualPvpService.getCasualPvpAll(platform, id).stream()
+                .map(CasualPvpResponseDto::new)
+                .collect(Collectors.toList());
     }
 
 }

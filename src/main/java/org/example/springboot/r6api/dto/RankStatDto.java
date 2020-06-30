@@ -3,6 +3,7 @@ package org.example.springboot.r6api.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import org.example.springboot.domain.rankstat.RankStat;
 
 import java.time.LocalDateTime;
 
@@ -13,9 +14,6 @@ public class RankStatDto {
     int maxRank;
     int mmr;
     int maxMmr;
-    int nextRankMmr;
-    String nextRankString;
-
     String maxRankString;
     String rankString;
     int kills;
@@ -47,6 +45,23 @@ public class RankStatDto {
         this.createdTime = LocalDateTime.now();
     }
 
+    public RankStatDto(RankStat rankStat) {
+        this.mmr = rankStat.getMmr();
+        this.maxMmr = rankStat.getMaxMmr();
+        this.rank = rankStat.getRank();
+        this.rankString = rankStat.getRankString();
+        this.maxRank = rankStat.getMaxRank();
+        this.maxRankString = rankStat.getMaxRankString();
+        this.kills = rankStat.getKills();
+        this.death = rankStat.getDeath();
+        this.season = rankStat.getSeason();
+        this.region = rankStat.getRegion();
+        this.wins = rankStat.getWins();
+        this.losses = rankStat.getLosses();
+        this.abandons = rankStat.getAbandons();
+        this.createdTime = rankStat.getCreatedTime();
+    }
+
     public void setCreatedTime(LocalDateTime time) {
         this.createdTime = time;
     }
@@ -56,13 +71,5 @@ public class RankStatDto {
 
     public void setRankString(String rankString) {
         this.rankString = rankString;
-    }
-
-    public void setNextRankMmr(int nextRankMmr) {
-        this.nextRankMmr = nextRankMmr;
-    }
-
-    public void setNextRankString(String nextRankString) {
-        this.nextRankString = nextRankString;
     }
 }
