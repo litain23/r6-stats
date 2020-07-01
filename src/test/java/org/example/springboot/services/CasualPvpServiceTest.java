@@ -80,14 +80,14 @@ public class CasualPvpServiceTest {
 
     @Test
     public void When_GetCasualPvpNotSave_Expect_CasualPvpResponseDto() {
-        CasualPvpResponseDto responseDto = casualPvpService.getCasualPvp(player.getPlatform(), player.getUserId());
+        CasualPvpDto dto = casualPvpService.getCasualPvp(player.getPlatform(), player.getUserId());
 
-        assertThat(casualPvpDto.getDeath()).isEqualTo(responseDto.getDeath());
-        assertThat(casualPvpDto.getKills()).isEqualTo(responseDto.getKills());
-        assertThat(casualPvpDto.getMatchLost()).isEqualTo(responseDto.getMatchLost());
-        assertThat(casualPvpDto.getMatchPlayed()).isEqualTo(responseDto.getMatchPlayed());
-        assertThat(casualPvpDto.getMatchWon()).isEqualTo(responseDto.getMatchWon());
-        assertThat(casualPvpDto.getTimePlayed()).isEqualTo(responseDto.getTimePlayed());
+        assertThat(casualPvpDto.getDeath()).isEqualTo(dto.getDeath());
+        assertThat(casualPvpDto.getKills()).isEqualTo(dto.getKills());
+        assertThat(casualPvpDto.getMatchLost()).isEqualTo(dto.getMatchLost());
+        assertThat(casualPvpDto.getMatchPlayed()).isEqualTo(dto.getMatchPlayed());
+        assertThat(casualPvpDto.getMatchWon()).isEqualTo(dto.getMatchWon());
+        assertThat(casualPvpDto.getTimePlayed()).isEqualTo(dto.getTimePlayed());
     }
 
     @Test
@@ -100,7 +100,7 @@ public class CasualPvpServiceTest {
     @Test
     public void When_GetCasualPvpList_Expect_ListCasualPvpResponseDto() {
         player.getCasualPvpList().add(new CasualPvp(casualPvpDto, player));
-        List<CasualPvpResponseDto> dtoList = casualPvpService.getCasualPvpAll(player.getPlatform(), player.getUserId());
+        List<CasualPvpDto> dtoList = casualPvpService.getCasualPvpAll(player.getPlatform(), player.getUserId());
         assertThat(dtoList.size()).isEqualTo(2);
     }
 

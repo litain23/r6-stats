@@ -30,6 +30,7 @@ public class OperatorServiceTest {
     Player player = Player.builder()
             .platform("uplay")
             .userId("piliot")
+            .profileId("test_profile_id")
             .build();
 
 
@@ -51,9 +52,9 @@ public class OperatorServiceTest {
 
     @Test
     public void When_GetOperatorList_Expect_OperatorResponseDtoList() {
-        List<OperatorResponseDto> operatorListResponseDto = operatorService.getOperatorStatList(player.getPlatform(), player.getUserId(), -1);
+        List<OperatorDto> operatorStatList = operatorService.getOperatorStatList(player.getPlatform(), player.getUserId(), -1);
 
-        OperatorResponseDto responseDto = operatorListResponseDto.get(0);
+        OperatorDto responseDto = operatorStatList.get(0);
         assertThat(ash.getCategory()).isEqualTo(responseDto.getCategory());
         assertThat(ash.getDeath()).isEqualTo(responseDto.getDeath());
         assertThat(ash.getHeadShot()).isEqualTo(responseDto.getHeadShot());
@@ -65,10 +66,4 @@ public class OperatorServiceTest {
         assertThat(ash.getRoundWon()).isEqualTo(responseDto.getRoundWon());
         assertThat(ash.getTotalXp()).isEqualTo(responseDto.getTotalXp());
     }
-
-    @Test
-    public void When_SaveAutoOperatorList_Expect_Good() {
-
-    }
-
 }

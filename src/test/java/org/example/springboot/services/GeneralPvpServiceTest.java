@@ -52,14 +52,14 @@ public class GeneralPvpServiceTest {
 
     @Test
     public void When_GetGeneralPvp_Expect_GeneralPvpResponseDto() {
-        GeneralPvpResponseDto responseDto = new GeneralPvpResponseDto(ubiApi.getGeneralPvp(player.getPlatform(), player.getUserId()));
+        GeneralPvpDto dto = ubiApi.getGeneralPvp(player.getPlatform(), player.getUserId());
 
-        assertThat(generalPvpDto.getDeath()).isEqualTo(responseDto.getDeath());
-        assertThat(generalPvpDto.getKills()).isEqualTo(responseDto.getKills());
-        assertThat(generalPvpDto.getMatchLost()).isEqualTo(responseDto.getMatchLost());
-        assertThat(generalPvpDto.getMatchPlayed()).isEqualTo(responseDto.getMatchPlayed());
-        assertThat(generalPvpDto.getMatchWon()).isEqualTo(responseDto.getMatchWon());
-        assertThat(generalPvpDto.getTimePlayed()).isEqualTo(responseDto.getTimePlayed());
+        assertThat(generalPvpDto.getDeath()).isEqualTo(dto.getDeath());
+        assertThat(generalPvpDto.getKills()).isEqualTo(dto.getKills());
+        assertThat(generalPvpDto.getMatchLost()).isEqualTo(dto.getMatchLost());
+        assertThat(generalPvpDto.getMatchPlayed()).isEqualTo(dto.getMatchPlayed());
+        assertThat(generalPvpDto.getMatchWon()).isEqualTo(dto.getMatchWon());
+        assertThat(generalPvpDto.getTimePlayed()).isEqualTo(dto.getTimePlayed());
     }
 
 }

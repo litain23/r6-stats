@@ -31,6 +31,7 @@ public class RankStatService {
         return getRankStatUsingR6API(platform, id, season);
     }
 
+    @Transactional
     public List<RankStatDto> getRankStatAllSeason(String platform, String id) {
         Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
         RankStatDto currentRankStatDto = ubiApi.getRankStat(platform, id, CURRENT_SEASON_NAME, CURRENT_SEASON);
@@ -53,8 +54,8 @@ public class RankStatService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
-    void savePreviousSeasons(String platform, String id, int currentSeason, Player player) {
+
+    private void savePreviousSeasons(String platform, String id, int currentSeason, Player player) {
         List<CompletableFuture<RankStatDto>> completableFutureList = new ArrayList<>();
         for(int season = 1; season <= 17; season++) {
             int finalSeason = season;

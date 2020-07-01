@@ -76,14 +76,14 @@ public class RankPvpServiceTest {
 
     @Test
     public void When_GetRankPvpNoSave_Expect_RankPvpResponseDto() {
-        RankPvpResponseDto responseDto= rankPvpService.getRankPvp(platform, userId);
+        RankPvpDto dto = rankPvpService.getRankPvp(platform, userId);
 
-        assertThat(rankPvpDto.getCreatedTime()).isEqualTo(responseDto.getCreatedTime());
-        assertThat(rankPvpDto.getKills()).isEqualTo(responseDto.getKills());
-        assertThat(rankPvpDto.getMatchLost()).isEqualTo(responseDto.getMatchLost());
-        assertThat(rankPvpDto.getMatchPlayed()).isEqualTo(responseDto.getMatchPlayed());
-        assertThat(rankPvpDto.getMatchWon()).isEqualTo(responseDto.getMatchWon());
-        assertThat(rankPvpDto.getTimePlayed()).isEqualTo(responseDto.getTimePlayed());
+        assertThat(rankPvpDto.getCreatedTime()).isEqualTo(dto.getCreatedTime());
+        assertThat(rankPvpDto.getKills()).isEqualTo(dto.getKills());
+        assertThat(rankPvpDto.getMatchLost()).isEqualTo(dto.getMatchLost());
+        assertThat(rankPvpDto.getMatchPlayed()).isEqualTo(dto.getMatchPlayed());
+        assertThat(rankPvpDto.getMatchWon()).isEqualTo(dto.getMatchWon());
+        assertThat(rankPvpDto.getTimePlayed()).isEqualTo(dto.getTimePlayed());
     }
 
     @Test
@@ -97,7 +97,7 @@ public class RankPvpServiceTest {
     @Test
     public void When_GetRankPvpList_Expect_ListRankPvpResponseDto() {
         player.getRankPvpList().add(new RankPvp(rankPvpDto, player));
-        List<RankPvpResponseDto> dtoList = rankPvpService.getRankPvpAll(player.getPlatform(), player.getUserId());
+        List<RankPvpDto> dtoList = rankPvpService.getRankPvpAll(player.getPlatform(), player.getUserId());
         assertThat(dtoList.size()).isEqualTo(2);
     }
 
