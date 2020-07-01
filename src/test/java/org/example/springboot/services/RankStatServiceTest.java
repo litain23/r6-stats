@@ -45,11 +45,6 @@ public class RankStatServiceTest {
     String platform = "uplay";
     String userId = "piliot";
     String profileId = "test_profile_id";
-    int currentSeason = 17;
-    int playStartSeason = 10;
-
-    Map<String, List<RankStatDto>> regionStatMap;
-    String[] regionList = {"apac", "emea", "ncsa"};
 
     private RankStatDto makeRankStatDto(int maxMmr, String region, int season) {
         return RankStatDto.builder()
@@ -57,85 +52,65 @@ public class RankStatServiceTest {
                 .mmr(2500) .rank(20) .region(region) .season(season) .wins(10) .build();
     }
 
+    private RankStatDto makeRankStatDtoBefore12Season(int maxMmr, String region, int season) {
+        return RankStatDto.builder()
+                .abandons(10) .death(0) .kills(0) .losses(10) .maxMmr(maxMmr) .maxRank(20)
+                .mmr(2500) .rank(20) .region(region) .season(season) .wins(10) .build();
+    }
+
     @Before
     public void setUp() {
-        regionStatMap = new HashMap<>();
-        for(String region : regionList) {
-            List<RankStatDto> dtoList = regionStatMap.get(region);
-            if(dtoList == null) {
-                dtoList = new ArrayList<>();
-                dtoList.add(null); // 1부터 시작하기 위해서 null 를 넣는다
-            }
-
-            for(int season = 1; season <= currentSeason; season++) {
-                int maxMmr = 0;
-                if(season >= playStartSeason) maxMmr = 2500;
-                RankStatDto rankstatDto = makeRankStatDto(maxMmr, region, season);
-                dtoList.add(rankstatDto);
-                when(ubiApi.getRankStat(platform, userId, region, season)).thenReturn(
-                        rankstatDto
-                );
-            }
-
-            regionStatMap.put(region, dtoList);
-        }
-
-        when(ubiApi.getRankStat(platform, userId, "apac", -1)).thenReturn(
-                makeRankStatDto(2500, "apac", 17)
+        when(ubiApi.getRankStat(platform, userId, "global", -1)).thenReturn(
+                makeRankStatDto(2500, "global", 18)
         );
 
-        player = Player.builder()
-                .platform(platform)
-                .userId(userId)
-                .profileId(profileId)
-                .build();
-
-        when(playerService.findPlayerIfNotExistReturnNewEntity(platform, userId)).thenReturn(
-                player
+        when(ubiApi.getRankStat(platform, userId, "apac", 16)).thenReturn(
+                makeRankStatDto(2500 - 16, "apac", 16)
         );
 
-        when(rankStatRepository.save(any(RankStat.class))).thenReturn(
-                null
-        );
-
+//        when(ubiApi.getRankStat(platform, userId, "global", 18)).thenReturn(
+//                makeRankStatDto(2500, "global", 18)
+//        }
+//        for(int i=1;i<=17;i++) {
+//            int maxMmr = 2500 - i;
+//            if(i <= 10) maxMmr = 0;
+//            RankStatDto dto = makeRankStatDto(maxMmr, "apac", i);
+//
+//            when(ubiApi.getRankStat(platform, userId, "apac", i)).thenReturn(
+//                    dto
+//            );
+//        }
+//
+//        when(playerService.findPlayerIfNotExistReturnNewEntity(platform, userId)).thenReturn(
+//                player
+//        );
+//
+//        when(rankStatRepository.save(any(RankStat.class))).thenReturn(
+//                null
+//        );
+//
+//        player = Player.builder()
+//                .platform(platform)
+//                .userId(userId)
+//                .profileId(profileId)
+//                .build();
     }
 
     @Test
-    public void When_GetRankStat_Expect_ListRankStatRegionResponseDto() {
-        List<RankStatRegionResponseDto> responseDtoList = rankStatService.getRankStat(platform, userId, currentSeason);
-
-        for(RankStatRegionResponseDto responseDto: responseDtoList) {
-            RankStatDto rankStatDto = regionStatMap.get(responseDto.getRegion()).get(currentSeason);
-            RankStatResponseDto dto = responseDto.getRankStat().get(0);
-            assertThat(dto.getSeason()).isEqualTo(rankStatDto.getSeason());
-            assertThat(dto.getAbandons()).isEqualTo(rankStatDto.getAbandons());
-            assertThat(dto.getCreatedTime()).isEqualTo(rankStatDto.getCreatedTime());
-            assertThat(dto.getDeath()).isEqualTo(rankStatDto.getDeath());
-            assertThat(dto.getKills()).isEqualTo(rankStatDto.getKills());
-            assertThat(dto.getLosses()).isEqualTo(rankStatDto.getLosses());
-            assertThat(dto.getMaxMmr()).isEqualTo(rankStatDto.getMaxMmr());
-            assertThat(dto.getMaxRank()).isEqualTo(rankStatDto.getMaxRank());
-            assertThat(dto.getMmr()).isEqualTo(rankStatDto.getMmr());
-            assertThat(dto.getRank()).isEqualTo(rankStatDto.getRank());
-        }
+    public void When_GetRankStatCurrentSeason_Expect_RankStatDto() {
+        List<RankStatDto> dtoList = rankStatService.getRankStat(platform, userId, -1);
+        RankStatDto globalRegionDto = dtoList.get(0);
+        assertThat(globalRegionDto.getKills()).isEqualTo(10);
+        assertThat(globalRegionDto.getRegion()).isEqualTo("global");
+        assertThat(globalRegionDto.getMaxMmr()).isEqualTo(2500);
     }
 
     @Test
-    public void When_GetRankStateAllSeason_Expect_ListRankStatRegionResponseDto() {
-        List<RankStatRegionResponseDto> responseDtoList = rankStatService.getRankStatAllSeason(platform, userId);
-        for(RankStatRegionResponseDto responseDto : responseDtoList) {
-            List<RankStatResponseDto> rankStatResponseDtoList = responseDto.getRankStat();
-            List<RankStatDto> rankStatDtoList = regionStatMap.get(responseDto.getRegion());
-            for(RankStatResponseDto rankStatResponseDto : rankStatResponseDtoList) {
-                RankStatDto rankStatDto = rankStatDtoList.get(rankStatResponseDto.getSeason());
-                assertThat(rankStatResponseDto.getDeath()).isEqualTo(rankStatDto.getDeath());
-                assertThat(rankStatResponseDto.getKills()).isEqualTo(rankStatDto.getKills());
-                assertThat(rankStatResponseDto.getLosses()).isEqualTo(rankStatDto.getLosses());
-                assertThat(rankStatResponseDto.getMaxMmr()).isEqualTo(rankStatDto.getMaxMmr());
-                assertThat(rankStatResponseDto.getMaxRank()).isEqualTo(rankStatDto.getMaxRank());
-                assertThat(rankStatResponseDto.getMmr()).isEqualTo(rankStatDto.getMmr());
-                assertThat(rankStatResponseDto.getRank()).isEqualTo(rankStatDto.getRank());
-            }
-        }
+    public void When_GetRankStatBeforeCurrentSeason_Expect_RankStatDto() {
+        List<RankStatDto> dtoList = rankStatService.getRankStat(platform, userId, 16);
+        RankStatDto globalRegionDto = dtoList.get(0);
+        assertThat(globalRegionDto.getKills()).isEqualTo(10);
+        assertThat(globalRegionDto.getRegion()).isEqualTo("apac");
+        assertThat(globalRegionDto.getMaxMmr()).isEqualTo(2500 - 16);
     }
 }

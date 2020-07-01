@@ -74,7 +74,7 @@ public class PlayerServiceTest {
         );
 
         when(playerRepository.findByPlatformAndProfileId(platform, profileId)).thenReturn(
-                player = Player.builder()
+                Player.builder()
                         .platform(platform)
                         .profileId(profileId)
                         .userId(userIdInDb) // DB 에서 가져올 땐, 예전 아이디 리턴

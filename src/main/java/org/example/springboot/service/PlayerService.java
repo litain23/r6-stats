@@ -33,10 +33,10 @@ public class PlayerService {
 
                 playerRepository.save(player);
             } else {
-                playerUsingProfileId.updateUserId(id);
+                player = playerUsingProfileId;
+                player.updateUserId(id);
             }
         }
-
         return player;
     }
 }

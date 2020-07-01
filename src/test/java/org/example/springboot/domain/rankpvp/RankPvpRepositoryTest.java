@@ -2,6 +2,7 @@ package org.example.springboot.domain.rankpvp;
 
 import org.example.springboot.domain.player.Player;
 import org.example.springboot.domain.rankstat.RankStat;
+import org.example.springboot.r6api.dto.RankPvpDto;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +30,8 @@ public class RankPvpRepositoryTest {
 
     private Player player;
 
+    private RankPvpDto rankPvpDto;
+
     @Before
     public void setUp() {
         player = entityManager.persist(
@@ -38,6 +41,15 @@ public class RankPvpRepositoryTest {
                         .profileId("test_profile_id")
                         .build()
         );
+
+        rankPvpDto = RankPvpDto.builder()
+                .death(10)
+                .kills(10)
+                .matchLost(10)
+                .matchPlayed(20)
+                .matchWon(10)
+                .timePlayed(100)
+                .build();
     }
 
     @After
@@ -48,12 +60,7 @@ public class RankPvpRepositoryTest {
     @Test
     public void When_SaveRankPvp_Expect_Good() {
         RankPvp rankPvp = RankPvp.builder()
-                .matchPlayed(20)
-                .matchWon(10)
-                .matchLost(10)
-                .timePlayed(20)
-                .kills(20)
-                .death(20)
+                .rankPvpDto(rankPvpDto)
                 .player(player)
                 .build();
 
@@ -65,12 +72,14 @@ public class RankPvpRepositoryTest {
 
     @Test
     public void When_FindRankPvpUsingPlayerId_Expect_Good() {
-        RankPvp rankPvp = RankPvp.builder().matchPlayed(20).matchWon(10).matchLost(10).timePlayed(20).kills(20).death(20).player(player).build();
-        RankPvp rankPvp1 = RankPvp.builder().matchPlayed(20).matchWon(10).matchLost(10).timePlayed(20).kills(20).death(20).player(player).build();
+        RankPvpDto dto1 = RankPvpDto.builder() .death(10) .kills(10) .matchLost(10) .matchPlayed(20) .matchWon(10) .timePlayed(100) .build();
+        RankPvpDto dto2 = RankPvpDto.builder() .death(20) .kills(20) .matchLost(15) .matchPlayed(30) .matchWon(15) .timePlayed(300) .build();
 
-        rankPvpRepository.save(rankPvp);
+        RankPvp rankPvp1 = RankPvp.builder().rankPvpDto(dto1).player(player).build();
+        RankPvp rankPvp2 = RankPvp.builder().rankPvpDto(dto2).player(player).build();
+
+        rankPvpRepository.save(rankPvp2);
         rankPvpRepository.save(rankPvp1);
-
 
         List<RankPvp> findRankPvp = rankPvpRepository.findByPlayer(player);
         assertThat(findRankPvp.size()).isEqualTo(2);
@@ -81,7 +90,7 @@ public class RankPvpRepositoryTest {
 
     @Test(expected = ConstraintViolationException.class)
     public void When_SaveRankPvpPlayerIsNull_Expect_ViolationException() {
-        RankPvp rankPvp = RankPvp.builder().matchPlayed(20).matchWon(10).matchLost(10).timePlayed(20).kills(20).death(20).build();
+        RankPvp rankPvp = RankPvp.builder().rankPvpDto(rankPvpDto).build();
         rankPvpRepository.save(rankPvp);
     }
 }

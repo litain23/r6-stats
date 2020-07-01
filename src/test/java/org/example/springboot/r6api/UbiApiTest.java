@@ -16,7 +16,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UbiApiTest {
     private static UbiApi ubiApi;
     String platform = "uplay";
-    String username = "Piliot";
+    String userId = "Piliot";
+    String profileId;
     LocalDateTime beforeTestTime;
 
     @BeforeClass
@@ -29,60 +30,61 @@ public class UbiApiTest {
     @Before
     public void setUp() {
         beforeTestTime = LocalDateTime.now();
+        profileId = ubiApi.getProfile(platform, userId).getProfileId();
     }
 
     @Test
     public void When_GetRankPvpNormalUser_Expect_Good() {
-        RankPvpDto dto = ubiApi.getRankPvp(platform, username);
+        RankPvpDto dto = ubiApi.getRankPvp(platform, profileId);
         LocalDateTime afterTestTime = LocalDateTime.now();
 
-        assertThat(dto.getDeath()).isGreaterThan(0);
-        assertThat(dto.getKills()).isGreaterThan(0);
-        assertThat(dto.getMatchLost()).isGreaterThan(0);
-        assertThat(dto.getMatchPlayed()).isGreaterThan(0);
-        assertThat(dto.getMatchWon()).isGreaterThan(0);
-        assertThat(dto.getTimePlayed()).isGreaterThan(0);
+        assertThat(dto.getDeath()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getKills()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMatchLost()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMatchPlayed()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMatchWon()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getTimePlayed()).isGreaterThanOrEqualTo(0);
         assertThat(dto.getCreatedTime()).isBetween(beforeTestTime, afterTestTime);
     }
 
     @Test
     public void When_GetCasualPvpNormalUser_Expect_Good() {
-        CasualPvpDto dto = ubiApi.getCasualPvp(platform, username);
+        CasualPvpDto dto = ubiApi.getCasualPvp(platform, profileId);
         LocalDateTime afterTestTime = LocalDateTime.now();
 
-        assertThat(dto.getDeath()).isGreaterThan(0);
-        assertThat(dto.getKills()).isGreaterThan(0);
-        assertThat(dto.getMatchLost()).isGreaterThan(0);
-        assertThat(dto.getMatchPlayed()).isGreaterThan(0);
-        assertThat(dto.getMatchWon()).isGreaterThan(0);
-        assertThat(dto.getTimePlayed()).isGreaterThan(0);
+        assertThat(dto.getDeath()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getKills()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMatchLost()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMatchPlayed()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMatchWon()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getTimePlayed()).isGreaterThanOrEqualTo(0);
         assertThat(dto.getCreatedTime()).isBetween(beforeTestTime, afterTestTime);
     }
 
     @Test
     public void When_GetGeneralPvpNormalUser_Expect_Good() {
-        GeneralPvpDto dto = ubiApi.getGeneralPvp(platform, username);
+        GeneralPvpDto dto = ubiApi.getGeneralPvp(platform, profileId);
         LocalDateTime afterTestTime = LocalDateTime.now();
 
-        assertThat(dto.getDeath()).isGreaterThan(0);
-        assertThat(dto.getKills()).isGreaterThan(0);
-        assertThat(dto.getMatchLost()).isGreaterThan(0);
-        assertThat(dto.getMatchPlayed()).isGreaterThan(0);
-        assertThat(dto.getMatchWon()).isGreaterThan(0);
-        assertThat(dto.getTimePlayed()).isGreaterThan(0);
+        assertThat(dto.getDeath()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getKills()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMatchLost()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMatchPlayed()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMatchWon()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getTimePlayed()).isGreaterThanOrEqualTo(0);
 
-        assertThat(dto.getBulletHit()).isGreaterThan(0);
-        assertThat(dto.getKillAssists()).isGreaterThan(0);
-        assertThat(dto.getHeadShot()).isGreaterThan(0);
-        assertThat(dto.getPenetrationKills()).isGreaterThan(0);
-        assertThat(dto.getMeleeKills()).isGreaterThan(0);
-        assertThat(dto.getRevive()).isGreaterThan(0);
+        assertThat(dto.getBulletHit()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getKillAssists()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getHeadShot()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getPenetrationKills()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMeleeKills()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getRevive()).isGreaterThanOrEqualTo(0);
         assertThat(dto.getCreatedTime()).isBetween(beforeTestTime, afterTestTime);
     }
 
     @Test
     public void When_GetRankStatNormalUser_Expect_Good() {
-        RankStatDto dto = ubiApi.getRankStat(platform, username, "apac",-1);
+        RankStatDto dto = ubiApi.getRankStat(platform, profileId, "global",-1);
         LocalDateTime afterTestTime = LocalDateTime.now();
 
         assertThat(dto.getRank()).isGreaterThanOrEqualTo(0);
@@ -92,7 +94,7 @@ public class UbiApiTest {
         assertThat(dto.getKills()).isGreaterThanOrEqualTo(0);
         assertThat(dto.getDeath()).isGreaterThanOrEqualTo(0);
         assertThat(dto.getSeason()).isGreaterThanOrEqualTo(0);
-        assertThat(dto.getRegion()).isEqualTo("apac");
+        assertThat(dto.getRegion()).isEqualTo("global");
         assertThat(dto.getWins()).isGreaterThanOrEqualTo(0);
         assertThat(dto.getLosses()).isGreaterThanOrEqualTo(0);
         assertThat(dto.getAbandons()).isGreaterThanOrEqualTo(0);
@@ -102,26 +104,26 @@ public class UbiApiTest {
 
     @Test
     public void When_GetRankStatNormalUserBefore13Season_Expect_Good() {
-        RankStatDto dto = ubiApi.getRankStat(platform, username, "apac", 12);
+        RankStatDto dto = ubiApi.getRankStat(platform, profileId, "apac", 12);
         LocalDateTime afterTestTime = LocalDateTime.now();
 
-        assertThat(dto.getRank()).isGreaterThan(0);
-        assertThat(dto.getMaxMmr()).isGreaterThan(0);
-        assertThat(dto.getMaxMmr()).isGreaterThan(0);
-        assertThat(dto.getMmr()).isGreaterThan(0);
+        assertThat(dto.getRank()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMaxMmr()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMaxMmr()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getMmr()).isGreaterThanOrEqualTo(0);
         assertThat(dto.getKills()).isEqualTo(0); // 시즌 13 이전에는 Kill, Death 가 0으로 들어옴
         assertThat(dto.getDeath()).isEqualTo(0);
-        assertThat(dto.getSeason()).isGreaterThan(0);
+        assertThat(dto.getSeason()).isGreaterThanOrEqualTo(0);
         assertThat(dto.getRegion()).isEqualTo("apac");
-        assertThat(dto.getWins()).isGreaterThan(0);
-        assertThat(dto.getLosses()).isGreaterThan(0);
+        assertThat(dto.getWins()).isGreaterThanOrEqualTo(0);
+        assertThat(dto.getLosses()).isGreaterThanOrEqualTo(0);
         assertThat(dto.getAbandons()).isGreaterThanOrEqualTo(0);
         assertThat(dto.getCreatedTime()).isBetween(beforeTestTime, afterTestTime);
     }
 
     @Test
     public void When_GetNormalUserProfile_Expect_Good() {
-        ubiApi.getProfile(platform, username);
+        ubiApi.getProfile(platform, userId);
     }
 
     @Test(expected = R6NotFoundPlayerProfileException.class)
@@ -132,7 +134,7 @@ public class UbiApiTest {
 
     @Test
     public void When_GetOperatorList_Expect_Good() {
-        List<OperatorDto> operatorDtoList = ubiApi.getOperatorsStat(platform, username);
+        List<OperatorDto> operatorDtoList = ubiApi.getOperatorsStat(platform, profileId);
         assertThat(operatorDtoList.size()).isEqualTo(54);
     }
 }

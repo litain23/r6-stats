@@ -3,6 +3,8 @@ package org.example.springboot.r6api.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import org.example.springboot.domain.casualpvp.CasualPvp;
+import org.example.springboot.domain.rankpvp.RankPvp;
 
 import java.time.LocalDateTime;
 
@@ -26,5 +28,14 @@ public class CasualPvpDto {
         this.matchPlayed = matchPlayed;
         this.timePlayed = timePlayed;
         this.createdTime = LocalDateTime.now();
+    }
+
+    public CasualPvpDto(CasualPvp casualPvp) {
+        this.death = casualPvp.getDeath();
+        this.kills = casualPvp.getKills();
+        this.matchLost = casualPvp.getMatchLost();
+        this.matchPlayed = casualPvp.getMatchPlayed();
+        this.matchWon = casualPvp.getMatchWon();
+        this.createdTime = casualPvp.getCreatedTime();
     }
 }

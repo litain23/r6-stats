@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-public class GeneralPvpApiController {
+public class GeneralPvpController {
     private final GeneralPvpService generalPvpService;
 
     @GetMapping("/api/v1/generalpvp/{platform}/{id}")
     public GeneralPvpResponseDto findById(@PathVariable String platform,
                                                          @PathVariable String id) {
-        return generalPvpService.getGeneralPvp(platform, id);
+        return new GeneralPvpResponseDto(generalPvpService.getGeneralPvp(platform, id));
     }
 }

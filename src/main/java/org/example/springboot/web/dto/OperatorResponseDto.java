@@ -7,7 +7,7 @@ import org.example.springboot.r6api.dto.OperatorDto;
 import java.time.LocalDateTime;
 
 @Getter
-public class OperatorListResponseDto {
+public class OperatorResponseDto {
     private String name;
     private String operatorIndex;
     private String category;
@@ -21,7 +21,7 @@ public class OperatorListResponseDto {
     private int roundLost;
     private LocalDateTime createdTime;
 
-    public OperatorListResponseDto(Operator operator) {
+    public OperatorResponseDto(Operator operator) {
         this.name = operator.getName();
         this.category = operator.getCategory();
         this.operatorIndex = operator.getOperatorIndex();
@@ -36,7 +36,7 @@ public class OperatorListResponseDto {
         this.createdTime = operator.getCreatedTime();
     }
 
-    public OperatorListResponseDto(OperatorDto operatorDto) {
+    public OperatorResponseDto(OperatorDto operatorDto) {
         this.name = operatorDto.getName();
         this.category = operatorDto.getCategory();
         this.operatorIndex = operatorDto.getOperatorIndex();
