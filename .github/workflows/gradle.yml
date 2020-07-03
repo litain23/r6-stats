@@ -42,7 +42,7 @@ jobs:
         find . -path '*/build/reports/tests' -type d \
           -exec tar rf "$TARBALL" \
             --xform="s:./:$TARBALL_BASENAME/:" \
-            --xform="s:/build/reports/tests::' \
+            --xform='s:/build/reports/tests::' \
             {} ';'
         
         echo 'Compressing the test reports .. '
