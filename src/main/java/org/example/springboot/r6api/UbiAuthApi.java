@@ -62,23 +62,21 @@ public class UbiAuthApi {
                 token = new Gson().fromJson(br.readLine(), AuthToken.class);
                 return token;
             } else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED || responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
-                throw new R6BadAuthenticationException("fail to login ubi-soft");
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                throw new R6ErrorException(br.readLine());
             } else {
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                throw new R6ErrorException("fail to get Authentication Token");
+                throw new R6ErrorException(br.readLine());
             }
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            throw new R6ErrorException("encode fail");
+            throw new R6ErrorException(e.getMessage());
         } catch (ProtocolException e) {
-            e.printStackTrace();
+            throw new R6ErrorException(e.getMessage());
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            throw new R6ErrorException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new R6ErrorException(e.getMessage());
         }
-
-        return null;
     }
 
     private boolean checkTokenSessionTime() {
