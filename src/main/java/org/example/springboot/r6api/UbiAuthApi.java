@@ -1,7 +1,6 @@
 package org.example.springboot.r6api;
 
 import com.google.gson.Gson;
-import org.example.springboot.exception.r6api.R6BadAuthenticationException;
 import org.example.springboot.exception.r6api.R6ErrorException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -39,6 +38,7 @@ public class UbiAuthApi {
 
         try {
             String encodedIdPw = encodeBase64(email, pw);
+            System.out.println(encodedIdPw);
 
             URL url = new URL(LOGIN_API_URL);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -63,10 +63,10 @@ public class UbiAuthApi {
                 return token;
             } else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED || responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                throw new R6ErrorException(br.readLine());
+                throw new R6ErrorException(responseCode + br.readLine());
             } else {
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                throw new R6ErrorException(br.readLine());
+                throw new R6ErrorException(responseCode + br.readLine());
             }
         } catch (UnsupportedEncodingException e) {
             throw new R6ErrorException(e.getMessage());
