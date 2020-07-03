@@ -26,7 +26,7 @@ public class UbiAuthApiTest {
     }
 
     @Before
-    public void setUpAuthApi() throws IOException {
+    public void setUpAuthApi() {
         ubiAuthApi = getUbiAuthApi();
     }
 

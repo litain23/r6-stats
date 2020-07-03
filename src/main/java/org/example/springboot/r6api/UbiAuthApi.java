@@ -60,15 +60,18 @@ public class UbiAuthApi {
                 token = new Gson().fromJson(br.readLine(), AuthToken.class);
                 return token;
             } else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED || responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
+                System.out.println(responseCode);
                 throw new R6BadAuthenticationException("fail to login ubi-soft");
             } else {
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                System.out.println(br);
+                System.out.println(responseCode);
                 throw new R6ErrorException("fail to get Authentication Token");
             }
         } catch (UnsupportedEncodingException e) {
+            System.out.println("encode fail");
             throw new R6ErrorException("encode fail");
         } catch (IOException e) {
+            System.out.println("fail to getAuthentication Token");
             throw new R6ErrorException("fail to get Authentication Token");
         }
     }
