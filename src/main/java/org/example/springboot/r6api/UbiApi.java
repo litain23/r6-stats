@@ -57,7 +57,6 @@ public class UbiApi {
         String rankPvpUrl = makeGeneralUrl(RANK_PVP, platform, profileId);
 
         String response = getDataUsingApi(rankPvpUrl);
-        System.out.println(response);
         return parser.parseResponseToRankPvpDto(response, profileId);
     }
 

@@ -3,33 +3,25 @@ package org.example.springboot.r6api;
 import org.example.springboot.exception.r6api.R6BadAuthenticationException;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.core.env.Environment;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Map;
 
+import static java.lang.System.getenv;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UbiAuthApiTest {
     private UbiAuthApi ubiAuthApi;
 
-    public static UbiAuthApi getUbiAuthApi() throws IOException {
+    public static UbiAuthApi getUbiAuthApi() {
         UbiAuthApi ubiAuthApi = new UbiAuthApi();
-        File file = new File("src/main/resources/ubi-login.properties");
-        FileReader fileReader = new FileReader(file);
-
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String email = bufferedReader.readLine();
-        email = email.split("=")[1];
-        String pw= bufferedReader.readLine();
-        pw = pw.split("=")[1];
-
-        ubiAuthApi.setEmail(email);
-        ubiAuthApi.setPw(pw);
-
-        bufferedReader.close();;
-        fileReader.close();;
+        Map<String, String> envVariables = System.getenv();
+        ubiAuthApi.setEmail(envVariables.get("ubi_email"));
+        ubiAuthApi.setPw(envVariables.get("ubi_pw"));
 
         return ubiAuthApi;
     }
