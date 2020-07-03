@@ -22,10 +22,9 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Set Environment
-      with:
-        run: echo "Set environment variables"
-        env:
-          - ubi_email: ${{ secrets.ubi_email }}
-          - ubi_pw : ${{ secrets.ubi_pw }}
+      run: echo "Set environment variables"
+      env:
+        ubi_email: ${{ secrets.ubi_email }}
+        ubi_pw : ${{ secrets.ubi_pw }}
     - name: Build with Gradle
       run: ./gradlew build
