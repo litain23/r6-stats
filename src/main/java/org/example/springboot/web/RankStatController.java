@@ -1,21 +1,18 @@
 package org.example.springboot.web;
 
 import lombok.RequiredArgsConstructor;
-import org.example.springboot.domain.rankstat.RankStat;
 import org.example.springboot.r6api.dto.RankStatDto;
 import org.example.springboot.service.RankStatService;
 import org.example.springboot.web.dto.RankStatRegionResponseDto;
-import org.example.springboot.web.dto.RankStatRequestDto;
 import org.example.springboot.web.dto.RankStatResponseDto;
 import org.example.springboot.web.dto.RankStatSeasonResponseDto;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor

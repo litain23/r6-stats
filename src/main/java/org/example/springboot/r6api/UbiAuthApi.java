@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import org.example.springboot.exception.r6api.R6BadAuthenticationException;
 import org.example.springboot.exception.r6api.R6ErrorException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -15,17 +14,16 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
-@PropertySource("classpath:ubi-login.properties")
 @Component
 public class UbiAuthApi {
     private final static String LOGIN_API_URL = "https://public-ubiservices.ubi.com/v3/profiles/sessions";
     public final static String UPP_APP_ID = "39baebad-39e5-4552-8c25-2c9b919064e2";
     private AuthToken token = null;
 
-    @Value("${ubi.email}")
+    @Value("#{systemEnvironment['ubi_email']}")
     private String email;
 
-    @Value("${ubi.pw}")
+    @Value("#{systemEnvironment['ubi_pw']}")
     private String pw;
 
     private String encodeBase64(String email, String pw) throws UnsupportedEncodingException {

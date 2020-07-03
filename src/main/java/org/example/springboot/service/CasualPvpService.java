@@ -6,7 +6,7 @@ import org.example.springboot.domain.casualpvp.CasualPvpRepository;
 import org.example.springboot.domain.player.Player;
 import org.example.springboot.r6api.UbiApi;
 import org.example.springboot.r6api.dto.CasualPvpDto;
-import org.example.springboot.web.dto.CasualPvpResponseDto;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
