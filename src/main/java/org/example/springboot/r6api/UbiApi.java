@@ -2,6 +2,7 @@ package org.example.springboot.r6api;
 
 import com.google.gson.*;
 import lombok.RequiredArgsConstructor;
+import org.example.springboot.exception.r6api.R6BadAuthenticationException;
 import org.example.springboot.exception.r6api.R6NotFoundPlayerProfileException;
 import org.example.springboot.r6api.dto.*;
 import org.example.springboot.service.aspect.ConvertIdToProfileId;
@@ -120,13 +121,11 @@ public class UbiApi {
             if(responseCode == HttpsURLConnection.HTTP_OK || responseCode == HttpsURLConnection.HTTP_ACCEPTED) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 return br.readLine();
+            } else if(responseCode == HttpsURLConnection.HTTP_UNAUTHORIZED || responseCode == HttpsURLConnection.HTTP_FORBIDDEN){
+                throw new R6BadAuthenticationException("Check Ubi Auth token");
             } else {
-                return null;
+                throw new R6BadAuthenticationException("Something wrong ubi api server .. ?");
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

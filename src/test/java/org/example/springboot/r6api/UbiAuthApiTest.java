@@ -22,7 +22,6 @@ public class UbiAuthApiTest {
         Map<String, String> envVariables = System.getenv();
         ubiAuthApi.setEmail(envVariables.get("ubi_email"));
         ubiAuthApi.setPw(envVariables.get("ubi_pw"));
-
         return ubiAuthApi;
     }
 

@@ -21,7 +21,7 @@ public class UbiApiTest {
     LocalDateTime beforeTestTime;
 
     @BeforeClass
-    public static void setUpApi() throws IOException {
+    public static void setUpApi() {
         UbiAuthApi ubiAuthApi = UbiAuthApiTest.getUbiAuthApi();
         UbiApiParser ubiApiParser = new UbiApiParser();
         ubiApi = new UbiApi(ubiAuthApi, ubiApiParser);
