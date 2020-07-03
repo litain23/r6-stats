@@ -5,9 +5,9 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, dev ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, dev ]
 
 jobs:
   build:
@@ -15,11 +15,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
+    - name: Set up JDK 11
       uses: actions/setup-java@v1
       with:
         java-version: 11
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+    - name: Set Environment
+      with:
+        env:
+          - ubi_email: ${{ secrets.ubi_email }}
+          - ubi_pw : ${{ secrets.ubi_pw }}
     - name: Build with Gradle
       run: ./gradlew build
