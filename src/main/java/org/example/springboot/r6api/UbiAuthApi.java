@@ -1,6 +1,7 @@
 package org.example.springboot.r6api;
 
 import com.google.gson.Gson;
+import org.example.springboot.exception.r6api.R6BadAuthenticationException;
 import org.example.springboot.exception.r6api.R6ErrorException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -38,10 +39,9 @@ public class UbiAuthApi {
 
         try {
             String encodedIdPw = encodeBase64(email, pw);
-            System.out.println(encodedIdPw);
 
             URL url = new URL(LOGIN_API_URL);
-            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoInput(true);
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
@@ -57,16 +57,16 @@ public class UbiAuthApi {
             int responseCode = conn.getResponseCode();
 
 
-            if(responseCode == HttpURLConnection.HTTP_ACCEPTED || responseCode == HttpURLConnection.HTTP_OK) {
+            if (responseCode == HttpURLConnection.HTTP_ACCEPTED || responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 token = new Gson().fromJson(br.readLine(), AuthToken.class);
                 return token;
-            } else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED || responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                throw new R6ErrorException(responseCode + br.readLine());
+            } else if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED || responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+                throw new R6BadAuthenticationException(br.readLine());
             } else {
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                throw new R6ErrorException(responseCode + br.readLine());
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+                throw new R6BadAuthenticationException(br.readLine());
             }
         } catch (UnsupportedEncodingException e) {
             throw new R6ErrorException(e.getMessage());

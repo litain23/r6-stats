@@ -1,17 +1,13 @@
 package org.example.springboot.r6api;
 
 import org.example.springboot.exception.r6api.R6BadAuthenticationException;
+import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.springframework.core.env.Environment;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import org.junit.rules.ExpectedException;
 import java.util.Map;
 
-import static java.lang.System.getenv;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UbiAuthApiTest {
@@ -43,8 +39,15 @@ public class UbiAuthApiTest {
         assertThat(token).isEqualTo(afterToken);
     }
 
-    @Test(expected = R6BadAuthenticationException.class)
+    @Rule
+    public ExpectedException exceptionRule = ExpectedException.none();
+
+//    @Test(expected = R6BadAuthenticationException.class)
+    @Test
     public void When_WrongPw_Expect_R6AuthException() {
+        exceptionRule.expect(R6BadAuthenticationException.class);
+        exceptionRule.expectMessage(Matchers.containsString("401"));
+
         ubiAuthApi.setPw("somethingwrong");
         ubiAuthApi.getAuthToken();
     }
