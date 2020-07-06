@@ -3,6 +3,7 @@ package org.example.springboot.r6api.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import org.example.springboot.domain.operator.Operator;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +21,7 @@ public class OperatorDto {
     int timePlayed;
     int roundWon;
     int roundLost;
-    private LocalDateTime createdTime;
+    LocalDateTime createdTime;
 
     @Builder
     public OperatorDto(String name, String operatorIndex, String category, int kills, int death, int headShot, int meleeKills, int totalXp, int timePlayed, int roundWon, int roundLost) {
@@ -36,5 +37,20 @@ public class OperatorDto {
         this.roundWon = roundWon;
         this.roundLost = roundLost;
         this.createdTime = LocalDateTime.now();
+    }
+
+    public OperatorDto(Operator operator) {
+        this.name = operator.getName();
+        this.operatorIndex = operator.getOperatorIndex();
+        this.category = operator.getCategory();
+        this.kills = operator.getKills();
+        this.death = operator.getDeath();
+        this.headShot = operator.getHeadShot();
+        this.meleeKills = operator.getMeleeKills();
+        this.totalXp = operator.getTotalXp();
+        this.timePlayed = operator.getTimePlayed();
+        this.roundWon = operator.getRoundWon();
+        this.roundLost = operator.getRoundLost();
+        this.createdTime = operator.getCreatedTime();
     }
 }

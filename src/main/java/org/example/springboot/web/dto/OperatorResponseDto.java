@@ -21,21 +21,6 @@ public class OperatorResponseDto {
     private int roundLost;
     private LocalDateTime createdTime;
 
-    public OperatorResponseDto(Operator operator) {
-        this.name = operator.getName();
-        this.category = operator.getCategory();
-        this.operatorIndex = operator.getOperatorIndex();
-        this.kills = operator.getKills();
-        this.death = operator.getDeath();
-        this.headShot = operator.getHeadShot();
-        this.meleeKills = operator.getMeleeKills();
-        this.totalXp = operator.getTotalXp();
-        this.timePlayed = operator.getTimePlayed();
-        this.roundLost = operator.getRoundLost();
-        this.roundWon = operator.getRoundWon();
-        this.createdTime = operator.getCreatedTime();
-    }
-
     public OperatorResponseDto(OperatorDto operatorDto) {
         this.name = operatorDto.getName();
         this.category = operatorDto.getCategory();

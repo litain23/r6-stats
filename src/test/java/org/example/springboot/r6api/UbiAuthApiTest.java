@@ -42,7 +42,6 @@ public class UbiAuthApiTest {
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
 
-//    @Test(expected = R6BadAuthenticationException.class)
     @Test
     public void When_WrongPw_Expect_R6AuthException() {
         exceptionRule.expect(R6BadAuthenticationException.class);

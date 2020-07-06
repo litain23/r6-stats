@@ -18,11 +18,11 @@ public class OperatorStatApiController {
 
     @GetMapping("/api/v1/operator/{platform}/{id}")
     public List<OperatorResponseDto> findById(@PathVariable String platform,
-                                                  @PathVariable String id,
-                                                  @RequestParam(defaultValue = "-1", required = false) int season) {
-        return operatorService.getOperatorStatList(platform, id, season).stream()
+                                              @PathVariable String id,
+                                              @RequestParam(defaultValue = "-1", required = false) int season) {
+        return operatorService.getOperatorStatList(platform, id)
+                .stream()
                 .map(OperatorResponseDto::new)
                 .collect(Collectors.toList());
-
     }
 }
