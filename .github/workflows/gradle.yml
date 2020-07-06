@@ -19,38 +19,32 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Set Environment
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Build with Gradle
       env:
         ubi_email: ${{ secrets.ubi_email }}
-        ubi_pw : ${{ secrets.ubi_pw }}
-      run: echo "$ubi_email"
-    - name: Grant execute permission for gradlew
+        ubi_pw: ${{ secrets.ubi_pw }}
       run: |
-        chmod +x gradlew
-        echo "$ubi_email"
-
-#     - name: Build with Gradle
-#       run: |
-#         ./gradlew --version
-#         ./gradlew build
+        ./gradlew --version
+        ./gradlew build
+    - name: If failure then upload test reports
+      if: failure()
+      run: |
+        TARBALL_BASENAME="r6-stats-report"
+        TARBALL="$TARBALL_BASENAME.tar"
         
-#     - name: If failure then upload test reports
-#       if: failure()
-#       run: |
-#         TARBALL_BASENAME="r6-stats-report"
-#         TARBALL="$TARBALL_BASENAME.tar"
+        echo 'Collecting the test report'
+        find . -path '*/build/reports/tests' -type d \
+          -exec tar rf "$TARBALL" \
+            --xform="s:./:$TARBALL_BASENAME/:" \
+            --xform='s:/build/reports/tests::' \
+            {} ';'
         
-#         echo 'Collecting the test report'
-#         find . -path '*/build/reports/tests' -type d \
-#           -exec tar rf "$TARBALL" \
-#             --xform="s:./:$TARBALL_BASENAME/:" \
-#             --xform='s:/build/reports/tests::' \
-#             {} ';'
+        echo 'Compressing the test reports .. '
+        gzip "$TARBALL"
         
-#         echo 'Compressing the test reports .. '
-#         gzip "$TARBALL"
-        
-#         echo 'Uploading the test reports .. '
-#         curl -F "file=@$TARBALL.gz" 'https://file.io/'
-#         echo
-#         echo 'Download the test reports from the URL above.'
+        echo 'Uploading the test reports .. '
+        curl -F "file=@$TARBALL.gz" 'https://file.io/'
+        echo
+        echo 'Download the test reports from the URL above.'
