@@ -66,7 +66,7 @@ public class UbiAuthApi {
                 throw new R6BadAuthenticationException(br.readLine());
             } else {
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-                throw new R6BadAuthenticationException(br.readLine());
+                throw new R6BadAuthenticationException(br.readLine() + email);
             }
         } catch (UnsupportedEncodingException e) {
             throw new R6ErrorException(e.getMessage());
