@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import org.example.springboot.domain.operator.Operator;
 import org.example.springboot.domain.player.Player;
+import org.example.springboot.r6api.dto.OperatorDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"player_id", "season"})})
 public class SeasonOperator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +32,7 @@ public class SeasonOperator {
     @OneToMany
     private List<Operator> operatorList = new ArrayList<>();
 
-    @NotBlank
+    @NotNull
     int season;
 
     @CreationTimestamp
@@ -39,12 +41,9 @@ public class SeasonOperator {
     public SeasonOperator() {}
 
     @Builder
-    public SeasonOperator(Player player, int season) {
+    public SeasonOperator(Player player, int season, List<Operator> operatorList) {
         this.player = player;
         this.season = season;
-    }
-
-    public void addOperator(Operator op) {
-        this.operatorList.add(op);
+        this.operatorList = operatorList;
     }
 }

@@ -148,10 +148,6 @@ public class UbiApiParser {
 
             operatorDtoList.add(op);
         }
-        for(OperatorDto dto : operatorDtoList) {
-            System.out.println(dto);
-        }
-
         return operatorDtoList;
     }
 

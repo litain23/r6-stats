@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.springboot.domain.operator.Operator;
 import org.example.springboot.domain.operator.OperatorRepository;
 import org.example.springboot.domain.player.Player;
+import org.example.springboot.domain.seasonoperator.SeasonOperator;
 import org.example.springboot.domain.seasonoperator.SeasonOperatorRepository;
 import org.example.springboot.domain.weeklyoperator.WeeklyOperator;
 import org.example.springboot.domain.weeklyoperator.WeeklyOperatorRepository;
@@ -13,10 +14,7 @@ import org.example.springboot.web.dto.OperatorResponseDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -24,30 +22,56 @@ import java.util.stream.Collectors;
 public class OperatorService {
     private final PlayerService playerService;
     private final SeasonOperatorRepository seasonOperatorRepository;
+    private final OperatorRepository operatorRepository;
     private final UbiApi ubiApi;
 
     public List<OperatorDto> getOperatorStatList(String platform, String id, int season) {
         List<OperatorDto> operatorDtoList = ubiApi.getOperatorsStat(platform, id);
+        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
 
+        saveIfDontExistCurrentSeasonOperatorData(player, operatorDtoList);
         if(season == -1) {
             return operatorDtoList;
         } else {
-            Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
-            List<OperatorDto> seasonOperatorDto = seasonOperatorRepository.findByPlayerAnAndSeason(player, season)
-                    .stream()
-                    .map(OperatorDto::new)
-                    .sorted(Comparator.comparing(OperatorDto::getName))
-                    .collect(Collectors.toList());
-
-            if(season == ubiApi.currentSeason) {
-                return getDiffOperatorStat(seasonOperatorDto, operatorDtoList);
-            } else if(season < ubiApi.currentSeason){
-                return seasonOperatorDto;
+            SeasonOperator seasonOperator= seasonOperatorRepository.findByPlayerAndSeason(player, season);
+            if(seasonOperator == null || season > ubiApi.currentSeason) {
+                return Collections.EMPTY_LIST;
+            } else if(season == ubiApi.currentSeason){
+                return getDiffOperatorStat(entityToDto(seasonOperator.getOperatorList()), operatorDtoList);
             } else {
-                return null;
+                return entityToDto(seasonOperator.getOperatorList());
             }
         }
     }
+
+    private List<OperatorDto> entityToDto(List<Operator> operatorList) {
+        return operatorList.stream()
+                .map(OperatorDto::new)
+                .collect(Collectors.toList());
+    }
+
+
+    private boolean isExistCurrentSeasonOperatorData(Player player) {
+        SeasonOperator seasonOperator = seasonOperatorRepository.findByPlayerAndSeason(player, ubiApi.currentSeason);
+        return seasonOperator != null && seasonOperator.getOperatorList().isEmpty() != true;
+    }
+
+    private void saveIfDontExistCurrentSeasonOperatorData(Player player, List<OperatorDto> operatorDtoList) {
+        if(!isExistCurrentSeasonOperatorData(player)) {
+            List<Operator> operatorList = operatorDtoList.stream().map(Operator::new).collect(Collectors.toList());
+            for(Operator op : operatorList) {
+                operatorRepository.save(op);
+            }
+
+            SeasonOperator seasonOperator = SeasonOperator.builder()
+                    .operatorList(operatorList)
+                    .season(ubiApi.currentSeason)
+                    .player(player)
+                    .build();
+            seasonOperatorRepository.save(seasonOperator);
+        }
+    }
+
 
     private List<OperatorDto> getDiffOperatorStat(List<OperatorDto> oldOperatorDtoList, List<OperatorDto> newOperatorDtoList) {
         Map<String, OperatorDto> newOperatorDtoMap = newOperatorDtoList.stream()

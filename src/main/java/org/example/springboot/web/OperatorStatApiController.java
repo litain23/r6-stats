@@ -20,7 +20,7 @@ public class OperatorStatApiController {
     public List<OperatorResponseDto> findById(@PathVariable String platform,
                                               @PathVariable String id,
                                               @RequestParam(defaultValue = "-1", required = false) int season) {
-        return operatorService.getOperatorStatList(platform, id)
+        return operatorService.getOperatorStatList(platform, id, season)
                 .stream()
                 .map(OperatorResponseDto::new)
                 .collect(Collectors.toList());
