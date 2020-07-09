@@ -26,11 +26,11 @@ public class OperatorService {
 
     public List<OperatorDto> getSeasonOperatorStatList(Player player, int season) {
         if(ubiApi.currentSeason < season) return Collections.EMPTY_LIST;
-        return ubiApi.getOperatorsStat(player.getUserId(), player.getProfileId());
+        return ubiApi.getOperatorsStat(player.getPlatform(), player.getProfileId());
     }
 
     public List<OperatorDto> getTotalOperatorStatList(Player player) {
-        return ubiApi.getOperatorsStat(player.getUserId(), player.getProfileId());
+        return ubiApi.getOperatorsStat(player.getPlatform(), player.getProfileId());
 //        List<OperatorDto> operatorDtoList = ubiApi.getOperatorsStat(platform, id);
 //        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
 //

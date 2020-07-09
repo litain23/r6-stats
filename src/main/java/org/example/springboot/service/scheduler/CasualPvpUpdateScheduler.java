@@ -19,7 +19,7 @@ public class CasualPvpUpdateScheduler {
     public void autoUpdateCasualPvp() {
         List<Player> playerList = playerRepository.findAll();
         for(Player player : playerList) {
-            casualPvpService.saveCasualPvp(player.getPlatform(), player.getUserId());
+            casualPvpService.saveCasualPvp(player);
         }
     }
 }

@@ -5,15 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.example.springboot.exception.r6api.R6BadAuthenticationException;
 import org.example.springboot.exception.r6api.R6NotFoundPlayerProfileException;
 import org.example.springboot.r6api.dto.*;
-import org.example.springboot.service.aspect.ConvertIdToProfileId;
 import org.springframework.stereotype.Component;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.List;
 
@@ -33,8 +30,7 @@ public class UbiApi {
 
     public List<OperatorDto> getOperatorsStat(String platform, String profileId) {
         String operatorsUrl = makeGeneralUrl(OPERATOR, platform, profileId);
-
-        String response= getDataUsingApi(operatorsUrl);
+        String response = getDataUsingApi(operatorsUrl);
         return parser.parseResponseToOperatorList(response, profileId);
     }
 
