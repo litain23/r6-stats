@@ -1,6 +1,8 @@
 package org.example.springboot.web;
 
 import lombok.RequiredArgsConstructor;
+import org.example.springboot.config.PlayerAnnotation;
+import org.example.springboot.domain.player.Player;
 import org.example.springboot.service.CasualPvpService;
 import org.example.springboot.web.dto.CasualPvpResponseDto;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +19,15 @@ public class CasualPvpController {
     private final CasualPvpService casualPvpService;
 
     @GetMapping("/api/v1/casualpvp/{platform}/{id}")
-    public CasualPvpResponseDto getCasualPvp(@PathVariable String platform,
-                                 @PathVariable String id) {
-        return new CasualPvpResponseDto(casualPvpService.getCasualPvp(platform, id));
+    public CasualPvpResponseDto getCasualPvp(@PlayerAnnotation Player player) {
+        return new CasualPvpResponseDto(casualPvpService.getCasualPvp(player));
     }
 
 
     @GetMapping("/api/v1/casualpvp/{platform}/{id}/all")
-    public List<CasualPvpResponseDto> getCasualPvpAll(@PathVariable String platform,
-                                                      @PathVariable String id) {
+    public List<CasualPvpResponseDto> getCasualPvpAll(@PlayerAnnotation Player player) {
 
-        return casualPvpService.getCasualPvpAll(platform, id).stream()
+        return casualPvpService.getCasualPvpAll(player).stream()
                 .map(CasualPvpResponseDto::new)
                 .collect(Collectors.toList());
     }

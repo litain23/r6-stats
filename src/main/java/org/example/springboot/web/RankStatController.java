@@ -1,6 +1,8 @@
 package org.example.springboot.web;
 
 import lombok.RequiredArgsConstructor;
+import org.example.springboot.config.PlayerAnnotation;
+import org.example.springboot.domain.player.Player;
 import org.example.springboot.r6api.dto.RankStatDto;
 import org.example.springboot.service.RankStatService;
 import org.example.springboot.web.dto.RankStatRegionResponseDto;
@@ -21,9 +23,8 @@ public class RankStatController {
     private final RankStatService rankStatService;
 
     @GetMapping("/api/v1/rank/{platform}/{id}/all")
-    public List<RankStatSeasonResponseDto> getRankStatAllSeason(@PathVariable String platform,
-                                                                @PathVariable String id) {
-        List<RankStatDto> rankStatDtoList = rankStatService.getRankStatAllSeason(platform, id);
+    public List<RankStatSeasonResponseDto> getRankStatAllSeason(@PlayerAnnotation Player player) {
+        List<RankStatDto> rankStatDtoList = rankStatService.getRankStatAllSeason(player);
 
         return convertStatDtoToSeasonDto(
                 rankStatDtoList.stream()
@@ -33,10 +34,9 @@ public class RankStatController {
     }
 
     @GetMapping("/api/v1/rank/{platform}/{id}")
-    public List<RankStatRegionResponseDto> getRankStat(@PathVariable String platform,
-                                                       @PathVariable String id,
+    public List<RankStatRegionResponseDto> getRankStat(@PlayerAnnotation Player player,
                                                        @RequestParam(defaultValue = "-1", required = false) int season) {
-        List<RankStatDto> rankStatDtoList = rankStatService.getRankStat(platform, id, season);
+        List<RankStatDto> rankStatDtoList = rankStatService.getRankStat(player, season);
         return convertStatDtoToRegionDto(
                 rankStatDtoList.stream()
                     .map(RankStatResponseDto::new)
@@ -62,8 +62,6 @@ public class RankStatController {
         for(String region : map.keySet()) {
             ret.add(new RankStatRegionResponseDto(region, map.get(region).get(0)));
         }
-
         return ret;
     }
-
 }

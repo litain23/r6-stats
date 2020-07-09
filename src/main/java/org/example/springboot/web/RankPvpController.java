@@ -1,6 +1,8 @@
 package org.example.springboot.web;
 
 import lombok.RequiredArgsConstructor;
+import org.example.springboot.config.PlayerAnnotation;
+import org.example.springboot.domain.player.Player;
 import org.example.springboot.service.RankPvpService;
 import org.example.springboot.web.dto.RankPvpResponseDto;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +19,9 @@ public class RankPvpController {
     private final RankPvpService RankPvpService;
 
     @GetMapping("/api/v1/rankpvp/{platform}/{id}/all")
-    public List<RankPvpResponseDto> getRankPvpAll(@PathVariable String platform,
-                                                                 @PathVariable String id) {
+    public List<RankPvpResponseDto> getRankPvpAll(@PlayerAnnotation Player player) {
 
-        return RankPvpService.getRankPvpAll(platform, id)
+        return RankPvpService.getRankPvpAll(player)
                 .stream()
                 .map(RankPvpResponseDto::new)
                 .collect(Collectors.toList());
@@ -28,8 +29,7 @@ public class RankPvpController {
     }
 
     @GetMapping("/api/v1/rankpvp/{platform}/{id}")
-    public RankPvpResponseDto getRankPvp(@PathVariable String platform,
-                                         @PathVariable String id) {
-        return new RankPvpResponseDto(RankPvpService.getRankPvp(platform, id));
+    public RankPvpResponseDto getRankPvp(@PlayerAnnotation Player player) {
+        return new RankPvpResponseDto(RankPvpService.getRankPvp(player));
     }
 }

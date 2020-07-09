@@ -23,27 +23,25 @@ public class RankPvpService {
     private final PlayerService playerService;
     private final UbiApi ubiApi;
 
-    public RankPvpDto getRankPvp(String platform, String id) {
-        return ubiApi.getRankPvp(platform, id);
+    public RankPvpDto getRankPvp(Player player) {
+        return ubiApi.getRankPvp(player.getPlatform(), player.getProfileId());
     }
 
     @Transactional
-    public void saveRankPvp(String platform, String id) {
-        RankPvpDto rankPvpDto = ubiApi.getRankPvp(platform, id);
-        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
+    public void saveRankPvp(Player player) {
+        RankPvpDto rankPvpDto = ubiApi.getRankPvp(player.getPlatform(), player.getProfileId());
         RankPvp rankPvp = new RankPvp(rankPvpDto, player);
         rankPvpRepository.save(rankPvp);
         player.getRankPvpList().add(rankPvp);
     }
 
     @Transactional
-    public List<RankPvpDto> getRankPvpAll(String platform, String id) {
-        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
+    public List<RankPvpDto> getRankPvpAll(Player player) {
         List<RankPvpDto> ret = player.getRankPvpList().stream()
                 .map(RankPvpDto::new)
                 .sorted(Comparator.comparing(RankPvpDto::getCreatedTime).reversed())
                 .collect(Collectors.toList());
-        RankPvpDto recentPvp = ubiApi.getRankPvp(platform, id);
+        RankPvpDto recentPvp = ubiApi.getRankPvp(player.getPlatform(), player.getProfileId());
         ret.add(0, recentPvp);
         return ret;
     }

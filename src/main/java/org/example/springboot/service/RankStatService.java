@@ -27,18 +27,17 @@ public class RankStatService {
     private final PlayerService playerService;
     private final UbiApi ubiApi;
 
-    public List<RankStatDto> getRankStat(String platform, String id, int season) {
-        return getRankStatUsingR6API(platform, id, season);
+    public List<RankStatDto> getRankStat(Player player, int season) {
+        return getRankStatUsingR6API(player.getPlatform(), player.getProfileId(), season);
     }
 
     @Transactional
-    public List<RankStatDto> getRankStatAllSeason(String platform, String id) {
-        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
-        RankStatDto currentRankStatDto = ubiApi.getRankStat(platform, id, CURRENT_SEASON_NAME, CURRENT_SEASON);
+    public List<RankStatDto> getRankStatAllSeason(Player player) {
+        RankStatDto currentRankStatDto = ubiApi.getRankStat(player.getPlatform(), player.getProfileId(), CURRENT_SEASON_NAME, CURRENT_SEASON);
         RankStat currentRankStat = new RankStat(currentRankStatDto, player);
 
         if(player.getRankList().isEmpty()) {
-            savePreviousSeasons(platform, id, currentRankStatDto.getSeason(), player);
+            savePreviousSeasons(player, currentRankStatDto.getSeason());
         }
         RankStat lastRankStat = player.getRankList().stream().max(Comparator.comparing(RankStat::getSeason)).orElse(currentRankStat);
         if(lastRankStat.getSeason() == currentRankStatDto.getSeason()){
@@ -55,13 +54,13 @@ public class RankStatService {
     }
 
 
-    private void savePreviousSeasons(String platform, String id, int currentSeason, Player player) {
+    private void savePreviousSeasons(Player player, int currentSeason) {
         List<CompletableFuture<RankStatDto>> completableFutureList = new ArrayList<>();
         for(int season = 1; season <= 17; season++) {
             int finalSeason = season;
             for(String region : PAST_SEASONS_NAME) {
                 completableFutureList.add(CompletableFuture.supplyAsync(() -> {
-                    return ubiApi.getRankStat(platform, id, region, finalSeason);
+                    return ubiApi.getRankStat(player.getPlatform(), player.getProfileId(), region, finalSeason);
                 }));
             }
         }
@@ -69,7 +68,7 @@ public class RankStatService {
         for(int season = 18; season <= currentSeason; season++) {
             int finalSeason = season;
             completableFutureList.add(CompletableFuture.supplyAsync(() -> {
-                return ubiApi.getRankStat(platform, id, CURRENT_SEASON_NAME, finalSeason);
+                return ubiApi.getRankStat(player.getPlatform(), player.getProfileId(), CURRENT_SEASON_NAME, finalSeason);
             }));
         }
 

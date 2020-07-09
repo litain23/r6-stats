@@ -4,7 +4,6 @@ import org.example.springboot.domain.player.Player;
 import org.example.springboot.r6api.UbiApi;
 import org.example.springboot.r6api.dto.OperatorDto;
 import org.example.springboot.service.OperatorService;
-import org.example.springboot.web.dto.OperatorResponseDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,7 +51,7 @@ public class OperatorServiceTest {
 
     @Test
     public void When_GetOperatorList_Expect_OperatorResponseDtoList() {
-        List<OperatorDto> operatorStatList = operatorService.getOperatorStatList(player.getPlatform(), player.getUserId(), -1);
+        List<OperatorDto> operatorStatList = operatorService.getSeasonOperatorStatList(player.getPlatform(), player.getUserId(), -1);
 
         OperatorDto responseDto = operatorStatList.get(0);
         assertThat(ash.getCategory()).isEqualTo(responseDto.getCategory());

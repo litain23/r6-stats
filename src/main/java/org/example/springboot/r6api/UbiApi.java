@@ -31,7 +31,6 @@ public class UbiApi {
     private final UbiAuthApi ubiAuthApi;
     private final UbiApiParser parser;
 
-    @ConvertIdToProfileId
     public List<OperatorDto> getOperatorsStat(String platform, String profileId) {
         String operatorsUrl = makeGeneralUrl(OPERATOR, platform, profileId);
 
@@ -39,21 +38,18 @@ public class UbiApi {
         return parser.parseResponseToOperatorList(response, profileId);
     }
 
-    @ConvertIdToProfileId
     public GeneralPvpDto getGeneralPvp(String platform, String profileId) {
         String generalPvpUrl = makeGeneralUrl(GENERAL_PVP, platform, profileId);
         String response = getDataUsingApi(generalPvpUrl);
         return parser.parseResponseToGeneralPvpDto(response, profileId);
     }
 
-    @ConvertIdToProfileId
     public CasualPvpDto getCasualPvp(String platform, String profileId) {
         String casualPvpUrl = makeGeneralUrl(CASUAL_PVP, platform, profileId);
         String response = getDataUsingApi(casualPvpUrl);
         return parser.parseResponseToCasualPvpDto(response, profileId);
     }
 
-    @ConvertIdToProfileId
     public RankPvpDto getRankPvp(String platform, String profileId) {
         String rankPvpUrl = makeGeneralUrl(RANK_PVP, platform, profileId);
 
@@ -61,7 +57,6 @@ public class UbiApi {
         return parser.parseResponseToRankPvpDto(response, profileId);
     }
 
-    @ConvertIdToProfileId
     public RankStatDto getRankStat(String platform, String profileId, String region, int season) {
         String rankUrl = String.format(RANK_URL_TEMPLATE,
                 Platform.platformToSpaceId(platform),

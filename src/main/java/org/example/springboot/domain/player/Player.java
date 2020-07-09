@@ -8,6 +8,7 @@ import org.example.springboot.domain.rankpvp.RankPvp;
 import org.example.springboot.domain.rankstat.RankStat;
 import org.example.springboot.domain.seasonoperator.SeasonOperator;
 import org.example.springboot.domain.weeklyoperator.WeeklyOperator;
+import org.hibernate.annotations.SQLInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,7 +23,7 @@ import java.util.List;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"userId", "platform"})})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"profileId", "platform"})})
 public class Player {
 
     @Id

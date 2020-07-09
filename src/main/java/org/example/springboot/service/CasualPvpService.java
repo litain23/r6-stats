@@ -18,17 +18,15 @@ import java.util.stream.Collectors;
 @Service
 public class CasualPvpService {
     private final CasualPvpRepository casualPvpRepository;
-    private final PlayerService playerService;
     private final UbiApi ubiApi;
 
-    public CasualPvpDto getCasualPvp(String platform, String id) {
-        return ubiApi.getCasualPvp(platform, id);
+    public CasualPvpDto getCasualPvp(Player player) {
+        return ubiApi.getCasualPvp(player.getPlatform(), player.getProfileId());
     }
 
     @Transactional
-    public void saveCasualPvp(String platform, String id) {
-        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
-        CasualPvpDto casualPvpDto = ubiApi.getCasualPvp(platform, id);
+    public void saveCasualPvp(Player player) {
+        CasualPvpDto casualPvpDto = ubiApi.getCasualPvp(player.getPlatform(), player.getProfileId());
 
         CasualPvp casualPvp = new CasualPvp(casualPvpDto, player);
         casualPvpRepository.save(casualPvp);
@@ -36,14 +34,12 @@ public class CasualPvpService {
     }
 
     @Transactional
-    public List<CasualPvpDto> getCasualPvpAll(String platform, String id) {
-        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
-
+    public List<CasualPvpDto> getCasualPvpAll(Player player) {
         List<CasualPvpDto> ret =  player.getCasualPvpList().stream()
                 .map(CasualPvpDto::new)
                 .sorted(Comparator.comparing(CasualPvpDto::getCreatedTime).reversed())
                 .collect(Collectors.toList());
-        CasualPvpDto recentPvp = ubiApi.getCasualPvp(platform, id);
+        CasualPvpDto recentPvp = ubiApi.getCasualPvp(player.getPlatform(), player.getProfileId());
         ret.add(0, recentPvp);
         return ret;
     }

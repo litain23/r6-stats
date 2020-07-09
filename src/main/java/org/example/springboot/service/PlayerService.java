@@ -15,16 +15,15 @@ public class PlayerService {
     private final UbiApi ubiApi;
 
     public Player findPlayerIfNotExistReturnNewEntity(String platform, String id) {
-        Player player = playerRepository.findByPlatformAndAndUserId(platform, id);
+        // 외부 API 서버가 띄어쓰기를 + 로 구분. 저장할때는 원래 아이디지만, api에 요청할때는 +로 바꿔서 요청
+        String replaceSpaceId = id.replaceAll(" ", "+");
+        ProfileDto profileDto = ubiApi.getProfile(platform, replaceSpaceId);
+
+        // ID 는 변경할 수 있기 때문에, profileId(고유아이디)로 검색
+        Player player = playerRepository.findByPlatformAndProfileId(platform, profileDto.getProfileId());
         if(player == null) {
-            // 게임서버에서 띄어쓰기를 + 로 구분. 저장할때는 원래 아이디지만, api에 요청할때는 +로 바꿔서 요청
-            String removeSpaceId = id.replaceAll(" ", "+");
-            ProfileDto profileDto = ubiApi.getProfile(platform, removeSpaceId);
-            // 고유값이 profileId 로 찾는다 - 유저 아이디가 변경될 수도 있기 때문
-            Player playerUsingProfileId = playerRepository.findByPlatformAndProfileId(platform, profileDto.getProfileId());
-            if(playerUsingProfileId == null) {
+            // 없을 시 자동으로 throw exception
                 ubiApi.checkIsExistUserId(platform, profileDto.getProfileId());
-                // 없을 시 자동으로 throw exception
                 player = Player.builder()
                         .profileId(profileDto.getProfileId())
                         .platform(platform)
@@ -32,8 +31,9 @@ public class PlayerService {
                         .build();
 
                 playerRepository.save(player);
-            } else {
-                player = playerUsingProfileId;
+        } else {
+            // 아이디가 변경됬으면 최신 아이디로 변경
+            if(!player.getUserId().equals(id)) {
                 player.updateUserId(id);
             }
         }
