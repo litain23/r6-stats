@@ -18,21 +18,25 @@ import java.util.Arrays;
 @Service
 public class UserProfileService {
     private final UserProfileRepository userProfileRepository;
+    private final MailService mailService;
     private static final String RANDOM_CODE = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
     @Transactional
     public Long saveUser(SignUpRequestDto requestDto) throws IllegalArgumentException {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+        String emailCode = generateEmailCode(18);
         UserProfile newUser = UserProfile.builder()
                 .username(requestDto.getUsername())
                 .email(requestDto.getEmail())
-                .emailCode(generateEmailCode(18))
+                .emailCode(emailCode)
                 .password(passwordEncoder.encode(requestDto.getPassword()))
                 .build();
         UserRole userRole = new UserRole();
         userRole.setRoleName("USER");
         newUser.setRoles(Arrays.asList(userRole));
+
+        mailService.sendEmailAuthenticationCode(requestDto.getUsername(), requestDto.getEmail(), emailCode);
 
         return userProfileRepository.save(newUser).getId();
     }

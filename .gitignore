@@ -6,3 +6,4 @@ build/
 
 ubi-login.properties
 jwt-secret.properties
+application.properties
