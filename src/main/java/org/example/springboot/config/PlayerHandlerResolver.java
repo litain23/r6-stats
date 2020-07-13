@@ -17,7 +17,6 @@ import java.util.Map;
 public class PlayerHandlerResolver implements HandlerMethodArgumentResolver {
     private final PlayerService playerService;
 
-
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         PlayerAnnotation playerAnnotation = parameter.getParameterAnnotation(PlayerAnnotation.class);

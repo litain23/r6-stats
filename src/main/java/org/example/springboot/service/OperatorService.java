@@ -25,30 +25,28 @@ public class OperatorService {
     private final UbiApi ubiApi;
 
     public List<OperatorDto> getSeasonOperatorStatList(Player player, int season) {
-        if(ubiApi.currentSeason < season) return Collections.EMPTY_LIST;
-        return ubiApi.getOperatorsStat(player.getPlatform(), player.getProfileId());
+        if(ubiApi.currentSeason < season) {
+            return Collections.EMPTY_LIST;
+        }
+
+        SeasonOperator seasonOperator = seasonOperatorRepository.findByPlayerAndSeason(player, season);
+        if(seasonOperator == null) {
+            return Collections.EMPTY_LIST;
+        }
+
+        if(season == ubiApi.currentSeason) {
+            List<OperatorDto> operatorDtoList = ubiApi.getOperatorsStat(player.getPlatform(), player.getProfileId());
+            return getDiffOperatorStat(entityToDto(seasonOperator.getOperatorList()), operatorDtoList);
+        } else {
+            return entityToDto(seasonOperator.getOperatorList());
+        }
     }
 
     public List<OperatorDto> getTotalOperatorStatList(Player player) {
-        return ubiApi.getOperatorsStat(player.getPlatform(), player.getProfileId());
-//        List<OperatorDto> operatorDtoList = ubiApi.getOperatorsStat(platform, id);
-//        Player player = playerService.findPlayerIfNotExistReturnNewEntity(platform, id);
-//
-//        saveIfDontExistCurrentSeasonOperatorData(player, operatorDtoList);
-//        if(season == -1) {
-//            return operatorDtoList;
-//        } else {
-//            SeasonOperator seasonOperator= seasonOperatorRepository.findByPlayerAndSeason(player, season);
-//            if(seasonOperator == null || season > ubiApi.currentSeason) {
-//                return Collections.EMPTY_LIST;
-//            } else if(season == ubiApi.currentSeason){
-//                return getDiffOperatorStat(entityToDto(seasonOperator.getOperatorList()), operatorDtoList);
-//            } else {
-//                return entityToDto(seasonOperator.getOperatorList());
-//            }
-//        }
+        List<OperatorDto> operatorDtoList = ubiApi.getOperatorsStat(player.getPlatform(), player.getProfileId());
+        saveIfDontExistCurrentSeasonOperatorData(player, operatorDtoList);
+        return operatorDtoList;
     }
-
 
     private List<OperatorDto> entityToDto(List<Operator> operatorList) {
         return operatorList.stream()

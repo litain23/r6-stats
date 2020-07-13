@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @Service
 public class RankPvpService {
     private final RankPvpRepository rankPvpRepository;
-    private final PlayerService playerService;
     private final UbiApi ubiApi;
 
     public RankPvpDto getRankPvp(Player player) {

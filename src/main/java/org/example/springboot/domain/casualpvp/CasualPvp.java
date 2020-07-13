@@ -56,6 +56,7 @@ public class CasualPvp {
         this.matchWon = dto.getMatchWon();
         this.matchPlayed = dto.getMatchPlayed();
         this.timePlayed = dto.getTimePlayed();
+        this.createdTime = dto.getCreatedTime();
         this.player = player;
     }
 }

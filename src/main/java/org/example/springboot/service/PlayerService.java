@@ -23,14 +23,14 @@ public class PlayerService {
         Player player = playerRepository.findByPlatformAndProfileId(platform, profileDto.getProfileId());
         if(player == null) {
             // 없을 시 자동으로 throw exception
-                ubiApi.checkIsExistUserId(platform, profileDto.getProfileId());
-                player = Player.builder()
-                        .profileId(profileDto.getProfileId())
-                        .platform(platform)
-                        .userId(id)
-                        .build();
+            ubiApi.checkIsExistUserId(platform, profileDto.getProfileId());
+            player = Player.builder()
+                    .profileId(profileDto.getProfileId())
+                    .platform(platform)
+                    .userId(id)
+                    .build();
 
-                playerRepository.save(player);
+            playerRepository.save(player);
         } else {
             // 아이디가 변경됬으면 최신 아이디로 변경
             if(!player.getUserId().equals(id)) {

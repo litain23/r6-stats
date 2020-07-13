@@ -4,6 +4,7 @@ import org.example.springboot.domain.casualpvp.CasualPvp;
 import org.example.springboot.domain.casualpvp.CasualPvpRepository;
 import org.example.springboot.domain.player.Player;
 import org.example.springboot.domain.player.PlayerRepository;
+import org.example.springboot.domain.player.PlayerRepositoryTest;
 import org.example.springboot.r6api.UbiApi;
 import org.example.springboot.r6api.UbiAuthApiTest;
 import org.example.springboot.r6api.dto.CasualPvpDto;
@@ -34,15 +35,12 @@ public class CasualPvpServiceTest {
     CasualPvpService casualPvpService;
 
     @Mock
-    PlayerService playerService;
-
-    @Mock
     CasualPvpRepository casualPvpRepository;
 
     @Mock
     UbiApi ubiApi;
 
-    Player player;
+    Player player = PlayerRepositoryTest.normalPlayer;
 
     CasualPvpDto casualPvpDto = CasualPvpDto.builder()
             .death(10)
@@ -53,23 +51,9 @@ public class CasualPvpServiceTest {
             .timePlayed(100)
             .build();
 
-    String platform = "uplay";
-    String userId = "piliot";
-    String profileId = "test_profile_id";
-
     @Before
     public void setUp() {
-        player = Player.builder()
-                .platform(platform)
-                .userId(userId)
-                .profileId(profileId)
-                .build();
-
-        when(playerService.findPlayerIfNotExistReturnNewEntity(platform, userId)).thenReturn(
-                player
-        );
-
-        when(ubiApi.getCasualPvp(platform, userId)).thenReturn(
+        when(ubiApi.getCasualPvp(player.getPlatform(), player.getProfileId())).thenReturn(
                 casualPvpDto
         );
 
@@ -79,8 +63,8 @@ public class CasualPvpServiceTest {
     }
 
     @Test
-    public void When_GetCasualPvpNotSave_Expect_CasualPvpResponseDto() {
-        CasualPvpDto dto = casualPvpService.getCasualPvp(player.getPlatform(), player.getUserId());
+    public void When_GetCasualPvp_Expect_CasualPvpResponseDto() {
+        CasualPvpDto dto = casualPvpService.getCasualPvp(player);
 
         assertThat(casualPvpDto.getDeath()).isEqualTo(dto.getDeath());
         assertThat(casualPvpDto.getKills()).isEqualTo(dto.getKills());
@@ -92,7 +76,7 @@ public class CasualPvpServiceTest {
 
     @Test
     public void When_SaveCasualPvp_Expect_CasualPvpResponseDto() {
-        casualPvpService.saveCasualPvp(player.getPlatform(), player.getUserId());
+        casualPvpService.saveCasualPvp(player);
         CasualPvp casualPvp = player.getCasualPvpList().get(0);
         assertThat(casualPvp.getPlayer().getUserId()).isEqualTo(player.getUserId());
     }
@@ -100,8 +84,8 @@ public class CasualPvpServiceTest {
     @Test
     public void When_GetCasualPvpList_Expect_ListCasualPvpResponseDto() {
         player.getCasualPvpList().add(new CasualPvp(casualPvpDto, player));
-        List<CasualPvpDto> dtoList = casualPvpService.getCasualPvpAll(player.getPlatform(), player.getUserId());
-        assertThat(dtoList.size()).isEqualTo(2);
+        List<CasualPvpDto> dtoList = casualPvpService.getCasualPvpAll(player);
+        assertThat(dtoList.size()).isEqualTo(player.getCasualPvpList().size() + 1);
     }
 
 }

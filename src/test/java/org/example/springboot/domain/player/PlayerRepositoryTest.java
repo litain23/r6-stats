@@ -24,6 +24,18 @@ public class PlayerRepositoryTest {
     @Autowired
     private PlayerRepository playerRepository;
 
+    public static final Player normalPlayer = Player.builder()
+            .platform("uplay")
+            .userId("Piliot")
+            .profileId("beec3d7b-a925-48a0-94bd-9896541dcbd5")
+            .build();
+
+    public static final Player abnormalPlayer = Player.builder()
+            .platform("uplay")
+            .userId("sjaklsv102xxda")
+            .profileId("hello this is profile Id")
+            .build();
+
     String username = "piliot";
     String platform = "uplay";
     String profileId = "test_profile_id";

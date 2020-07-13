@@ -1,6 +1,7 @@
 package org.example.springboot.services;
 
 import org.example.springboot.domain.player.Player;
+import org.example.springboot.domain.player.PlayerRepositoryTest;
 import org.example.springboot.r6api.UbiApi;
 import org.example.springboot.r6api.dto.GeneralPvpDto;
 import org.example.springboot.service.GeneralPvpService;
@@ -23,10 +24,7 @@ public class GeneralPvpServiceTest {
     @Mock
     UbiApi ubiApi;
 
-    Player player = Player.builder()
-            .userId("piliot")
-            .platform("uplay")
-            .build();
+    Player player = PlayerRepositoryTest.normalPlayer;
 
     GeneralPvpDto generalPvpDto= GeneralPvpDto.builder()
             .bulletHit(10)
@@ -45,14 +43,14 @@ public class GeneralPvpServiceTest {
 
     @Before
     public void setUp() {
-        when(ubiApi.getGeneralPvp(player.getPlatform(), player.getUserId())).thenReturn(
+        when(ubiApi.getGeneralPvp(player.getPlatform(), player.getProfileId())).thenReturn(
                 generalPvpDto
         );
     }
 
     @Test
     public void When_GetGeneralPvp_Expect_GeneralPvpResponseDto() {
-        GeneralPvpDto dto = ubiApi.getGeneralPvp(player.getPlatform(), player.getUserId());
+        GeneralPvpDto dto = generalPvpService.getGeneralPvp(player);
 
         assertThat(generalPvpDto.getDeath()).isEqualTo(dto.getDeath());
         assertThat(generalPvpDto.getKills()).isEqualTo(dto.getKills());

@@ -42,6 +42,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
-    // https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4
+
     testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.4'
+    testCompile group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.4'
 }
+
