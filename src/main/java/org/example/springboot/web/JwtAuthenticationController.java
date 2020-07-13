@@ -12,10 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -43,10 +40,21 @@ public class JwtAuthenticationController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/signup")
     public ResponseEntity signup(@RequestBody @Valid SignUpRequestDto signUpRequestDto) {
         userProfileService.saveUser(signUpRequestDto);
         return new ResponseEntity<>("{\"status\": \"good\"}", HttpStatus.OK);
+    }
+
+    @GetMapping("/user/authenticate")
+    public ResponseEntity authenticateEmail(@RequestParam String username,
+                                            @RequestParam String code) {
+        boolean isAuthenticated = userProfileService.authenticateEmail(username, code);
+        if(isAuthenticated) {
+            return new ResponseEntity("{\"message\": \"Email Authentication Success\"}", HttpStatus.OK);
+        } else {
+            return new ResponseEntity("{\"message\": \"Email Authentication fail, Check email again\"}", HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

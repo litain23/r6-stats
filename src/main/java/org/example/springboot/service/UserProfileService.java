@@ -3,16 +3,22 @@ package org.example.springboot.service;
 import lombok.RequiredArgsConstructor;
 import org.example.springboot.domain.userprofile.UserProfile;
 import org.example.springboot.domain.userprofile.UserProfileRepository;
+import org.example.springboot.domain.userrole.UserRole;
 import org.example.springboot.web.dto.SignUpRequestDto;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 @RequiredArgsConstructor
 @Service
 public class UserProfileService {
     private final UserProfileRepository userProfileRepository;
+    private static final String RANDOM_CODE = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
     @Transactional
     public Long saveUser(SignUpRequestDto requestDto) throws IllegalArgumentException {
@@ -20,11 +26,34 @@ public class UserProfileService {
 
         UserProfile newUser = UserProfile.builder()
                 .username(requestDto.getUsername())
-                .password(passwordEncoder.encode(requestDto.getPassword()))
                 .email(requestDto.getEmail())
-                .isEnabled(true)
+                .emailCode(generateEmailCode(18))
+                .password(passwordEncoder.encode(requestDto.getPassword()))
                 .build();
+        UserRole userRole = new UserRole();
+        userRole.setRoleName("USER");
+        newUser.setRoles(Arrays.asList(userRole));
 
         return userProfileRepository.save(newUser).getId();
+    }
+
+    @Transactional
+    public boolean authenticateEmail(String username, String code) {
+        UserProfile userProfile = userProfileRepository.findByUsernameAndEmailAuthenticateCode(username, code);
+        if(userProfile != null) {
+            userProfile.setEmailAuthenticated(true);
+            return true;
+        }
+
+        return false;
+    }
+
+
+    private String generateEmailCode(int len) {
+        SecureRandom rnd = new SecureRandom();
+        StringBuilder sb = new StringBuilder(len);
+        for( int i = 0; i < len; i++ )
+            sb.append( RANDOM_CODE.charAt( rnd.nextInt(RANDOM_CODE.length()) ) );
+        return sb.toString();
     }
 }

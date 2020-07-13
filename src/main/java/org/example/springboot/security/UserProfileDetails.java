@@ -1,6 +1,7 @@
 package org.example.springboot.security;
 
 import org.example.springboot.domain.userprofile.UserProfile;
+import org.example.springboot.domain.userrole.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,19 +11,20 @@ import java.util.Collection;
 import java.util.List;
 
 public class UserProfileDetails implements UserDetails {
+    private final String ROLE_PREFIX = "ROLE_";
+
     private String username;
     private String password;
     private boolean isEnabled;
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
-
-    //private Collection<? extends GrantedAuthority> authorities;
+    private List<UserRole> userRoles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> auth = new ArrayList<>();
-        auth.add(new SimpleGrantedAuthority("ROLE_USER"));
+        userRoles.forEach(userRole -> auth.add(new SimpleGrantedAuthority(ROLE_PREFIX + userRole.getRoleName())));
         return auth;
     }
 
@@ -59,7 +61,8 @@ public class UserProfileDetails implements UserDetails {
     public UserProfileDetails(UserProfile userProfile) {
         this.username = userProfile.getUsername();
         this.password = userProfile.getPassword();
-        this.isEnabled = userProfile.isEnabled();
+        this.userRoles = userProfile.getRoles();
+        this.isEnabled = true;
         this.isAccountNonExpired = true;
         this.isAccountNonLocked = true;
         this.isCredentialsNonExpired = true;

@@ -1,5 +1,3 @@
-INSERT INTO user_profile (username, email, password, is_enabled, api_using_cnt)
-values ('test', 'test@test.com', 'password', 1, 0);
 
 INSERT INTO operator_description (name, name_oasis_id, ctu_oasis_id, operator_index, category, statistic_pvp_id, statistic_pve_id, statistic_pvp_oasis_id, statistic_pve_oasis_id)
 values ('caveira', 207671, 207757, '3:8', 'def', 'operatorpvp_caveira_interrogations:1:8', 'operatorpve_caveira_interrogations:1:8', 207945, 207952),
