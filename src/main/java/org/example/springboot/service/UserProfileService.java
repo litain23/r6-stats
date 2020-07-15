@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.springboot.domain.userprofile.UserProfile;
 import org.example.springboot.domain.userprofile.UserProfileRepository;
 import org.example.springboot.domain.userrole.UserRole;
+import org.example.springboot.exception.user.UserProfileNotFound;
 import org.example.springboot.web.dto.SignUpRequestDto;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 @RequiredArgsConstructor
@@ -53,6 +53,9 @@ public class UserProfileService {
         return false;
     }
 
+    public UserProfile getUserProfile(String username) {
+        return userProfileRepository.findByUsername(username).orElseThrow(() -> new UserProfileNotFound("유저를 찾을 수 없습니다."));
+    }
 
     private String generateEmailCode(int len) {
         SecureRandom rnd = new SecureRandom();

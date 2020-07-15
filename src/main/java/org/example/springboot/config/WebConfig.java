@@ -1,7 +1,9 @@
 package org.example.springboot.config;
 
 import lombok.RequiredArgsConstructor;
+import org.example.springboot.domain.userprofile.UserProfileRepository;
 import org.example.springboot.service.PlayerService;
+import org.example.springboot.service.UserProfileService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -15,6 +17,7 @@ import java.util.List;
 public class WebConfig implements WebMvcConfigurer {
     private final String FRONT_END_IP = "http://localhost:3000";
     private final PlayerService playerService;
+    private final UserProfileService userProfileService;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -25,5 +28,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new PlayerHandlerResolver(playerService));
+        resolvers.add(new UserProfileHandlerResolver(userProfileService));
     }
 }

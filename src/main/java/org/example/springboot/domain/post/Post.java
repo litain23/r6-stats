@@ -36,11 +36,11 @@ public class Post {
 
     private int recommendCnt;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    private PostType postType;
+    private PostType type;
 
     @CreatedDate
     private LocalDateTime createdTime;
