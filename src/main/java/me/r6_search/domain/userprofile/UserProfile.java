@@ -1,8 +1,12 @@
 package me.r6_search.domain.userprofile;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import me.r6_search.domain.comment.Comment;
+import me.r6_search.domain.post.Post;
+import me.r6_search.domain.postrecommend.PostRecommend;
 import me.r6_search.domain.userrole.UserRole;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -21,15 +25,29 @@ public class UserProfile {
     private long id;
 
     private String username;
+
     private String email;
+
     private String password;
+
     private String emailAuthenticateCode;
+
     private boolean isEmailAuthenticated;
+
     private boolean isUbiAuthenticated;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "roles")
     private List<UserRole> roles;
+
+    @OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL)
+    private List<Post> postList;
+
+    @OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL)
+    private List<Comment> commentList;
+
+    @OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL)
+    private List<PostRecommend> recommendList;
 
     @CreatedDate
     private LocalDateTime createTime;

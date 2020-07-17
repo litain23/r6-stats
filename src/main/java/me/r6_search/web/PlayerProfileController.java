@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.r6_search.config.PlayerAnnotation;
 import me.r6_search.domain.player.Player;
 import me.r6_search.service.PlayerService;
-import me.r6_search.web.dto.ProfileResponseDto;
+import me.r6_search.web.dto.r6api.ProfileResponseDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

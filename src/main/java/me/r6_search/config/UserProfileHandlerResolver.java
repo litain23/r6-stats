@@ -17,7 +17,6 @@ import java.security.Principal;
 public class UserProfileHandlerResolver implements HandlerMethodArgumentResolver {
     private final UserProfileService userProfileService;
 
-
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         UserProfileAnnotation userProfileAnnotation = parameter.getParameterAnnotation(UserProfileAnnotation.class);
@@ -25,8 +24,12 @@ public class UserProfileHandlerResolver implements HandlerMethodArgumentResolver
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+    public UserProfile resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         Principal user = webRequest.getUserPrincipal();
+        if(user == null) {
+            return null;
+        }
+
         UserProfileDetails details = (UserProfileDetails) ((Authentication) user).getPrincipal();
         return userProfileService.getUserProfile(details.getUsername());
     }

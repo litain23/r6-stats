@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import me.r6_search.domain.comment.Comment;
 import me.r6_search.domain.comment.CommentRepository;
 import me.r6_search.domain.post.Post;
-import me.r6_search.web.dto.comment.CommentDto;
+import me.r6_search.domain.post.PostRepository;
+import me.r6_search.exception.board.PostNotFoundException;
+import me.r6_search.web.dto.comment.CommentResponseDto;
 import me.r6_search.web.dto.comment.CommentSaveRequestDto;
 import me.r6_search.domain.userprofile.UserProfile;
 import me.r6_search.exception.board.CommentIllegalModifyException;
@@ -20,45 +22,44 @@ import java.util.stream.Collectors;
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;
-    private final PostService postService;
+    private final PostRepository postRepository;
 
-    public List<CommentDto> getCommentListAtPost(int postId) {
-        List<Comment> commentList = commentRepository.findByPost(postId);
+    public List<CommentResponseDto> getCommentListAtPost(long postId) {
+        List<Comment> commentList = commentRepository.findByPostId(postId);
         if(commentList == null) return Collections.EMPTY_LIST;
 
         commentList.sort(Comparator.comparing(Comment::getCreatedTime));
-
         Map<Comment, List<Comment>> childCommentMap = commentList.stream()
                 .filter(comment -> comment.getParentComment() != null)
                 .collect(Collectors.groupingBy(Comment::getParentComment));
 
-        List<CommentDto> commentDtoList = new ArrayList<>();
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
         for(Comment comment : commentList) {
-            CommentDto parentCommentDto = CommentDto.of(comment);
+            // 대댓인 경우는 parent comment 가 처리될때, 하위로 들어감
+            if(comment.getParentComment() != null) continue;
+
+            CommentResponseDto commentResponseDto = CommentResponseDto.of(comment);
             if(childCommentMap.containsKey(comment)) {
-                List<CommentDto> childCommentDtoList =
+                List<CommentResponseDto> childCommentResponseDtoList =
                         childCommentMap.get(comment)
                             .stream()
-                            .map(c -> CommentDto.of(c))
+                            .map(c -> CommentResponseDto.of(c))
                             .collect(Collectors.toList());
-                parentCommentDto.setChildCommentDto(childCommentDtoList);
+                commentResponseDto.setChildComment(childCommentResponseDtoList);
             }
-            commentDtoList.add(parentCommentDto);
+            commentResponseDtoList.add(commentResponseDto);
         }
-        return commentDtoList;
+        return commentResponseDtoList;
     }
 
     @Transactional
     public long saveComment(CommentSaveRequestDto requestDto, UserProfile userProfile) {
-        Post post = postService.findPostById(requestDto.getPostId());
-        Comment comment = Comment.builder()
-                .content(requestDto.getContent())
-                .userProfile(userProfile)
-                .post(post)
-                .build();
+        Post post = postRepository.findById(requestDto.getPostId())
+                .orElseThrow(() -> new PostNotFoundException("게시글을 찾을 수 없습니다."));
+
+        Comment comment = requestDto.toEntity(post, userProfile);
 
         long commentId = commentRepository.save(comment).getId();
-
         if(requestDto.getParentCommentId() != 0) {
             Comment parentComment = commentRepository.findById(requestDto.getParentCommentId()).orElseThrow(() -> new CommentNotFoundException("댓글이 존재하지 않습니다."));
             parentComment.addChildComment(comment);
@@ -70,7 +71,6 @@ public class CommentService {
     @Transactional
     public long modifyComment(long commentId, CommentUpdateRequestDto requestDto, UserProfile userProfile) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new CommentNotFoundException("수정할 댓글이 존재하지 않습니다."));
-
         if(comment.getUserProfile().getId() != userProfile.getId()) {
             throw new CommentIllegalModifyException("댓글을 수정할 권한이 없습니다.");
         }
@@ -82,7 +82,6 @@ public class CommentService {
     @Transactional
     public long deleteComment(long commentId, UserProfile userProfile) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new CommentNotFoundException("수정할 댓글이 존재하지 않습니다."));
-
         if(comment.getUserProfile().getId() != userProfile.getId()) {
             throw new CommentIllegalModifyException("댓글을 삭제할 권한이 없습니다.");
         }

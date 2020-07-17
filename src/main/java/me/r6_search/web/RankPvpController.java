@@ -2,7 +2,7 @@ package me.r6_search.web;
 
 import lombok.RequiredArgsConstructor;
 import me.r6_search.config.PlayerAnnotation;
-import me.r6_search.web.dto.RankPvpResponseDto;
+import me.r6_search.web.dto.r6api.RankPvpResponseDto;
 import me.r6_search.domain.player.Player;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

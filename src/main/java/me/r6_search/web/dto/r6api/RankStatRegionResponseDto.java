@@ -1,4 +1,4 @@
-package me.r6_search.web.dto;
+package me.r6_search.web.dto.r6api;
 
 import lombok.Data;
 

@@ -2,12 +2,12 @@ package me.r6_search.web;
 
 import lombok.RequiredArgsConstructor;
 import me.r6_search.config.PlayerAnnotation;
-import me.r6_search.web.dto.RankStatSeasonResponseDto;
+import me.r6_search.web.dto.r6api.RankStatSeasonResponseDto;
 import me.r6_search.domain.player.Player;
 import me.r6_search.r6api.dto.RankStatDto;
 import me.r6_search.service.RankStatService;
-import me.r6_search.web.dto.RankStatRegionResponseDto;
-import me.r6_search.web.dto.RankStatResponseDto;
+import me.r6_search.web.dto.r6api.RankStatRegionResponseDto;
+import me.r6_search.web.dto.r6api.RankStatResponseDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
