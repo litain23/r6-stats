@@ -18,6 +18,7 @@ import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @CrossOrigin
+@RequestMapping("/api/v1")
 @RestController
 public class JwtAuthenticationController {
     private final AuthenticationManager authenticationManager;
@@ -46,7 +47,7 @@ public class JwtAuthenticationController {
         return new ResponseEntity<>("{\"status\": \"good\"}", HttpStatus.OK);
     }
 
-    @GetMapping("/user/authenticate")
+    @GetMapping("/authenticate")
     public ResponseEntity authenticateEmail(@RequestParam String username,
                                             @RequestParam String code) {
         boolean isAuthenticated = userProfileService.authenticateEmail(username, code);
