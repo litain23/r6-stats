@@ -38,7 +38,6 @@ public class SignUpValidatorTest {
         userProfile = UserProfile.builder()
                 .email(testEmail)
                 .password(testPassword)
-                .isEnabled(true)
                 .username(username)
                 .build();
 
