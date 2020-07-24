@@ -16,7 +16,9 @@ public class MailService {
         simpleMailMessage.setTo(email);
         simpleMailMessage.setFrom(SEND_EMAIL_ADDRESS);
         simpleMailMessage.setSubject("R6 Search Me 가입 인증 코드");
-        simpleMailMessage.setText("http://127.0.0.1:8080/user/authenticate?username=" + username + "&code=" + code);
+
+        simpleMailMessage.setText("\n회원가입 해주셔서 감사합니다 ! \n https://r6-search.me/user/authenticate?username=" + username + "&code=" + code +
+                "\n 위의 링크를 누르시면 인증이 됩니다.");
         mailSender.send(simpleMailMessage);
     }
 }

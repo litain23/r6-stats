@@ -25,8 +25,7 @@ public class UserProfileService {
     public Long saveUser(SignUpRequestDto requestDto) throws IllegalArgumentException {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-//        String emailCode = generateEmailCode(18);
-        String emailCode = "123";
+        String emailCode = generateEmailCode(18);
         UserProfile newUser = UserProfile.builder()
                 .username(requestDto.getUsername())
                 .email(requestDto.getEmail())
@@ -47,7 +46,7 @@ public class UserProfileService {
         UserProfile userProfile = userProfileRepository.findByUsernameAndEmailAuthenticateCode(username, code);
         if(userProfile != null) {
             userProfile.setEmailAuthenticated(true);
-            userProfile.getRoles().add(new UserRole("AUTHENTICATED_USED"));
+            userProfile.getRoles().add(new UserRole("AUTHENTICATED_USER"));
             return true;
         }
         return false;
