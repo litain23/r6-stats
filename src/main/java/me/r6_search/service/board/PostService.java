@@ -37,6 +37,7 @@ public class PostService {
     public List<PostSummaryDto> getCategoryPostList(String type, int page) {
         // 공지사항 가져오기
         List<Post> postSummaryList = addNoticePost();
+        // TODO 댓글 개수 추가하기
 
         Pageable pageable = PageRequest.of(page - 1, VIEW_POST_CNT, Sort.Direction.DESC, "createdTime");
         postSummaryList.addAll(postRepository.findByType(PostType.valueOf(type), pageable));
@@ -130,7 +131,7 @@ public class PostService {
 
     private void checkAuthenticationForModify(Post post, UserProfile userProfile){
         // user profile equals 이걸로 하면 안될까 생각해보기
-        if(userProfile.getId() != post.getUserProfile().getId()) {
+        if(userProfile == null || userProfile.getId() != post.getUserProfile().getId()) {
             throw new PostIllegalModifyException("변경할 수 있는 권한이 없습니다.");
         }
     }

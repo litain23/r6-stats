@@ -9,19 +9,17 @@ import me.r6_search.web.dto.comment.CommentUpdateRequestDto;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/c")
 @RestController
 public class CommentController {
     private final CommentService commentService;
 
-    @GetMapping("/post/{postId}/comment")
-    public Object getCommentList(@PathVariable long postId) {
-        return "";
-    }
-
     @PostMapping("/comment")
     public long makeComment(@RequestBody CommentSaveRequestDto requestDto,
-                            @UserProfileAnnotation UserProfile userProfile) {
+                            @UserProfileAnnotation UserProfile userProfile) throws IllegalAccessException {
+        if(userProfile == null) {
+            throw new IllegalAccessException("댓글 작성 권한이 없습니다.");
+        }
         return commentService.saveComment(requestDto, userProfile);
     }
 
@@ -29,14 +27,22 @@ public class CommentController {
     @PutMapping("/comment/{commentId}")
     public long modifyComment(@PathVariable long commentId,
                               @RequestBody CommentUpdateRequestDto requestDto,
-                              @UserProfileAnnotation UserProfile userProfile) {
+                              @UserProfileAnnotation UserProfile userProfile) throws IllegalAccessException {
+
+        if(userProfile == null) {
+            throw new IllegalAccessException("댓글 수정 권한이 없습니다.");
+        }
 
         return commentService.modifyComment(commentId, requestDto, userProfile);
     }
 
     @DeleteMapping("/comment/{commentId}")
     public long deleteComment(@PathVariable long commentId,
-                              @UserProfileAnnotation UserProfile userProfile) {
+                              @UserProfileAnnotation UserProfile userProfile) throws IllegalAccessException {
+
+        if(userProfile == null) {
+            throw new IllegalAccessException("댓글 삭제 권한이 없습니다.");
+        }
         return commentService.deleteComment(commentId, userProfile);
     }
 

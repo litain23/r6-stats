@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/c")
 @RestController
 public class PostController {
     private final PostService postService;
-
 
     @GetMapping("/topic/{type}")
     public List<PostSummaryDto> getPostList(@PathVariable String type,

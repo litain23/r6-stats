@@ -6,6 +6,7 @@ import me.r6_search.security.JwtAuthenticationEntryPoint;
 import me.r6_search.security.UserProfileDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,9 +33,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/signin").permitAll()
-                // For test
-                .anyRequest().permitAll()
-//                .anyRequest().access("hasIpAddress('127.0.0.1') or isAuthenticated()")
+                .antMatchers("/api/v1/c/topic/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/c/post/**").permitAll()
+                .anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint())
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().headers().frameOptions().sameOrigin();
