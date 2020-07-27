@@ -4,8 +4,6 @@ import me.r6_search.web.dto.ErrorResponseDto;
 import me.r6_search.exception.r6api.R6BadAuthenticationException;
 import me.r6_search.exception.r6api.R6ErrorException;
 import me.r6_search.exception.r6api.R6NotFoundPlayerProfileException;
-import me.r6_search.exception.user.UserAuthenticationException;
-import me.r6_search.exception.user.UserSignUpValidateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -24,7 +22,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    protected  ResponseEntity<ErrorResponseDto> handleSignupException(IllegalArgumentException e) {
+    protected  ResponseEntity<ErrorResponseDto> handleSignUpException(IllegalArgumentException e) {
         ErrorResponseDto errorResponseDto = new ErrorResponseDto();
         errorResponseDto.setMessage(e.getMessage());
         errorResponseDto.setStatus(400);
@@ -48,18 +46,5 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ErrorResponseDto> handleR6BadAuthenticationException(R6BadAuthenticationException e) {
         ErrorResponseDto errorResponseDto = new ErrorResponseDto(e.getMessage(), 500);
         return new ResponseEntity<>(errorResponseDto, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-
-    @ExceptionHandler(UserSignUpValidateException.class)
-    protected ResponseEntity<ErrorResponseDto> handleUserValidateException(UserSignUpValidateException e) {
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto(e.getMessage(), 400);
-        return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(UserAuthenticationException.class)
-    protected ResponseEntity<ErrorResponseDto> handlerUserAuthenticationException(UserAuthenticationException e) {
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto(e.getMessage(), 400);
-        return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
     }
 }
