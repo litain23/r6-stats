@@ -1,11 +1,11 @@
 package me.r6_search.services;
 
-import me.r6_search.domain.casualpvp.CasualPvp;
-import me.r6_search.domain.casualpvp.CasualPvpRepository;
-import me.r6_search.domain.player.PlayerRepositoryTest;
+import me.r6_search.model.casualpvp.CasualPvp;
+import me.r6_search.model.casualpvp.CasualPvpRepository;
+import me.r6_search.model.player.PlayerRepositoryTest;
 import me.r6_search.r6api.UbiApi;
 import me.r6_search.service.CasualPvpService;
-import me.r6_search.domain.player.Player;
+import me.r6_search.model.player.Player;
 import me.r6_search.r6api.dto.CasualPvpDto;
 import org.junit.Before;
 import org.junit.Test;

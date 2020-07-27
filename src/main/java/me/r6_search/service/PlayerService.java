@@ -3,8 +3,8 @@ package me.r6_search.service;
 import lombok.RequiredArgsConstructor;
 import me.r6_search.r6api.UbiApi;
 import me.r6_search.r6api.dto.ProfileDto;
-import me.r6_search.domain.player.Player;
-import me.r6_search.domain.player.PlayerRepository;
+import me.r6_search.model.player.Player;
+import me.r6_search.model.player.PlayerRepository;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor

@@ -3,9 +3,9 @@ package me.r6_search.service;
 import lombok.RequiredArgsConstructor;
 import me.r6_search.r6api.UbiApi;
 import me.r6_search.r6api.dto.RankStatDto;
-import me.r6_search.domain.player.Player;
-import me.r6_search.domain.rankstat.RankStat;
-import me.r6_search.domain.rankstat.RankStatRepository;
+import me.r6_search.model.player.Player;
+import me.r6_search.model.rankstat.RankStat;
+import me.r6_search.model.rankstat.RankStatRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

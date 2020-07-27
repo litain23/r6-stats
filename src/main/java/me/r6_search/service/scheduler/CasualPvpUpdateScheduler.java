@@ -2,8 +2,8 @@ package me.r6_search.service.scheduler;
 
 import lombok.RequiredArgsConstructor;
 import me.r6_search.service.CasualPvpService;
-import me.r6_search.domain.player.Player;
-import me.r6_search.domain.player.PlayerRepository;
+import me.r6_search.model.player.Player;
+import me.r6_search.model.player.PlayerRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

@@ -1,12 +1,12 @@
 package me.r6_search.service;
 
 import lombok.RequiredArgsConstructor;
-import me.r6_search.domain.seasonoperator.SeasonOperator;
-import me.r6_search.domain.seasonoperator.SeasonOperatorRepository;
+import me.r6_search.model.seasonoperator.SeasonOperator;
+import me.r6_search.model.seasonoperator.SeasonOperatorRepository;
 import me.r6_search.r6api.UbiApi;
-import me.r6_search.domain.operator.Operator;
-import me.r6_search.domain.operator.OperatorRepository;
-import me.r6_search.domain.player.Player;
+import me.r6_search.model.operator.Operator;
+import me.r6_search.model.operator.OperatorRepository;
+import me.r6_search.model.player.Player;
 import me.r6_search.r6api.dto.OperatorDto;
 import org.springframework.stereotype.Service;
 

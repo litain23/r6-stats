@@ -1,7 +1,7 @@
 package me.r6_search.web.dto.r6api;
 
 import lombok.Data;
-import me.r6_search.domain.casualpvp.CasualPvp;
+import me.r6_search.model.casualpvp.CasualPvp;
 import me.r6_search.r6api.dto.CasualPvpDto;
 
 import java.time.LocalDateTime;

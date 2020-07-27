@@ -3,7 +3,7 @@ package me.r6_search.r6api.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import me.r6_search.domain.rankstat.RankStat;
+import me.r6_search.model.rankstat.RankStat;
 
 import java.time.LocalDateTime;
 

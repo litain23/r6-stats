@@ -1,10 +1,10 @@
 package me.r6_search.service;
 
 import lombok.RequiredArgsConstructor;
-import me.r6_search.domain.rankpvp.RankPvp;
+import me.r6_search.model.rankpvp.RankPvp;
 import me.r6_search.r6api.UbiApi;
-import me.r6_search.domain.player.Player;
-import me.r6_search.domain.rankpvp.RankPvpRepository;
+import me.r6_search.model.player.Player;
+import me.r6_search.model.rankpvp.RankPvpRepository;
 import me.r6_search.r6api.dto.RankPvpDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

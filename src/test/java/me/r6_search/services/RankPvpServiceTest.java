@@ -1,11 +1,11 @@
 package me.r6_search.services;
 
-import me.r6_search.domain.player.PlayerRepositoryTest;
-import me.r6_search.domain.rankpvp.RankPvp;
-import me.r6_search.domain.rankpvp.RankPvpRepository;
+import me.r6_search.model.player.PlayerRepositoryTest;
+import me.r6_search.model.rankpvp.RankPvp;
+import me.r6_search.model.rankpvp.RankPvpRepository;
 import me.r6_search.r6api.UbiApi;
 import me.r6_search.service.RankPvpService;
-import me.r6_search.domain.player.Player;
+import me.r6_search.model.player.Player;
 import me.r6_search.r6api.dto.RankPvpDto;
 import org.junit.Before;
 import org.junit.Test;

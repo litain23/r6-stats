@@ -1,10 +1,10 @@
 package me.r6_search.services;
 
-import me.r6_search.domain.player.PlayerRepositoryTest;
+import me.r6_search.model.player.PlayerRepositoryTest;
 import me.r6_search.r6api.UbiApi;
 import me.r6_search.service.PlayerService;
-import me.r6_search.domain.player.Player;
-import me.r6_search.domain.rankstat.RankStatRepository;
+import me.r6_search.model.player.Player;
+import me.r6_search.model.rankstat.RankStatRepository;
 import me.r6_search.r6api.dto.RankStatDto;
 import me.r6_search.service.RankStatService;
 import org.junit.Test;

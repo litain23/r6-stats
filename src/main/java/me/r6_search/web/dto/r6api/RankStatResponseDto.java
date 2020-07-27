@@ -1,7 +1,7 @@
 package me.r6_search.web.dto.r6api;
 
 import lombok.Data;
-import me.r6_search.domain.rankstat.RankStat;
+import me.r6_search.model.rankstat.RankStat;
 import me.r6_search.r6api.SeasonMmrStringConverter;
 import me.r6_search.r6api.dto.RankStatDto;
 
