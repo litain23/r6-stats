@@ -1,8 +1,8 @@
 package me.r6_search.services;
 
-import me.r6_search.domain.player.PlayerRepositoryTest;
+import me.r6_search.model.player.PlayerRepositoryTest;
 import me.r6_search.r6api.UbiApi;
-import me.r6_search.domain.player.Player;
+import me.r6_search.model.player.Player;
 import me.r6_search.r6api.dto.GeneralPvpDto;
 import me.r6_search.service.GeneralPvpService;
 import org.junit.Before;

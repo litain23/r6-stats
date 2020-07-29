@@ -1,7 +1,7 @@
 package me.r6_search.config;
 
 import lombok.RequiredArgsConstructor;
-import me.r6_search.domain.player.Player;
+import me.r6_search.model.player.Player;
 import me.r6_search.service.PlayerService;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;

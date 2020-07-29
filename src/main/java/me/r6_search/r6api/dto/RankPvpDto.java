@@ -3,7 +3,7 @@ package me.r6_search.r6api.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import me.r6_search.domain.rankpvp.RankPvp;
+import me.r6_search.model.rankpvp.RankPvp;
 
 import java.time.LocalDateTime;
 

@@ -3,7 +3,7 @@ package me.r6_search.web;
 import lombok.RequiredArgsConstructor;
 import me.r6_search.config.PlayerAnnotation;
 import me.r6_search.web.dto.r6api.RankStatSeasonResponseDto;
-import me.r6_search.domain.player.Player;
+import me.r6_search.model.player.Player;
 import me.r6_search.r6api.dto.RankStatDto;
 import me.r6_search.service.RankStatService;
 import me.r6_search.web.dto.r6api.RankStatRegionResponseDto;
@@ -17,11 +17,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@RequestMapping("/api/stat")
 @RestController
 public class RankStatController {
     private final RankStatService rankStatService;
 
-    @GetMapping("/api/v1/rank/{platform}/{id}/all")
+    @GetMapping("/rank/{platform}/{id}/all")
     public List<RankStatSeasonResponseDto> getRankStatAllSeason(@PlayerAnnotation Player player) {
         List<RankStatDto> rankStatDtoList = rankStatService.getRankStatAllSeason(player);
 
@@ -32,7 +33,7 @@ public class RankStatController {
         );
     }
 
-    @GetMapping("/api/v1/rank/{platform}/{id}")
+    @GetMapping("/rank/{platform}/{id}")
     public List<RankStatRegionResponseDto> getRankStat(@PlayerAnnotation Player player,
                                                        @RequestParam(defaultValue = "-1", required = false) int season) {
         List<RankStatDto> rankStatDtoList = rankStatService.getRankStat(player, season);

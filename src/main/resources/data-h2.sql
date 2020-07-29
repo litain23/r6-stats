@@ -1,25 +1,3 @@
-INSERT INTO user_profile (username, email, password, is_email_authenticated, is_ubi_authenticated)
-values
-('admin', 'test@email.com', 'test_password', TRUE, FALSE),
-('user1', 'test@email.com', 'test_password', TRUE, FALSE),
-('user2', 'test@email.com', 'test_password', TRUE, FALSE);
-
-
-INSERT INTO POST (user_profile_id, notice, type, title, content, view_cnt, recommend_cnt, created_time)
-values
-(1, true, 'notice', '공지입니다', '공지입니다', 2, 0, '2020-01-01'),
-(2, false, 'free', 'title1', 'conetne1', 0, 0, '2020-01-01'),
-(2, false, 'free', 'title2', 'conetne2', 0, 0, '2020-01-01'),
-(2, false, 'free', 'title3', 'conetne3', 0, 0, '2020-01-01'),
-(2, false, 'free', 'title4', 'conetne4', 0, 0, '2020-01-01');
-
-INSERT INTO COMMENT (user_profile_id, post_id, content, parent_comment_id, created_time)
-values
-(3, 2, '댓글입니다', null, '2020-01-02'),
-(2, 2, '대댓글입니다', 1, '2020-01-03'),
-(3, 2, '대대ㅡㅅ글입니다', 1, '2020-01-04'),
-(2, 2, '새로운 댓글입니다', null, '2020-01-01');
-
 INSERT INTO operator_description (name, name_oasis_id, ctu_oasis_id, operator_index, category, statistic_pvp_id, statistic_pve_id, statistic_pvp_oasis_id, statistic_pve_oasis_id)
 values ('caveira', 207671, 207757, '3:8', 'def', 'operatorpvp_caveira_interrogations:1:8', 'operatorpve_caveira_interrogations:1:8', 207945, 207952),
   ('smoke', 62253, 62015, '2:1', 'def','operatorpvp_smoke_poisongaskill:2:1', 'operatorpve_smoke_poisongaskill:2:1', 194660, 194660),
